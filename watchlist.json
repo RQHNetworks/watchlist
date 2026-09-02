@@ -1,0 +1,93 @@
+{
+  "watchlist": [
+    {
+      "symbol": "AAPL",
+      "addedDate": "2026-09-02",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": "SMA crossover watch"
+    },
+    {
+      "symbol": "MSFT",
+      "addedDate": "2026-09-02",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "TSLA",
+      "addedDate": "2026-09-02",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": "Earnings countdown"
+    }
+  ],
+  "monitoringConfig": {
+    "smaCrossover": {
+      "sma50Days": 50,
+      "sma200Days": 200,
+      "description": "Flag when 50-day SMA crosses 200-day SMA"
+    },
+    "priceSwing": {
+      "thresholdPercent": 15,
+      "timeframe": "1 day",
+      "description": "Flag when price moves ±15% within 1 day"
+    },
+    "earningsCountdown": {
+      "daysThreshold": 3,
+      "description": "Flag when earnings report is T-minus 3 business days or less"
+    }
+  },
+  "lastUpdated": "2026-09-02"
+}
