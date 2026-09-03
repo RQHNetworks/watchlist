@@ -71,6 +71,1638 @@
         }
       },
       "notes": "Earnings countdown"
+    },
+    {
+      "symbol": "RDW",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "PL",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "LUNR",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "LDOS",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "APP",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "UBER",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "ORCL",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "NVDA",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "META",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "IBM",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "GOOGL",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "AMZN",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "QCOM",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "PLTR",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "PANW",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "NET",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "INTC",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "DELL",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "CRWD",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "CRM",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "AMD",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "SPCX",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "SNOW",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "SMCI",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "RKLB",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "NBIS",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "IONQ",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "GTLB",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "CRWV",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "CART",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "BSX",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "UNH",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "SPOT",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "SBUX",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "NKE",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "NFLX",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "LULU",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "HOOD",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "HIMS",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "EXPE",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "WMT",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "TGT",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "PEP",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "MCD",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "KO",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "JNJ",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "HD",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "COST",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "CAT",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "V",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "SOFI",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "PYPL",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "KLAR",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "JPM",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "GS",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "COIN",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "TMDX",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "RBRK",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "LMT",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "IP",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "ELF",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "BA",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "TTD",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "NOW",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "DUOL",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "CHKP",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "BBY",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
+      "symbol": "ADBE",
+      "addedDate": "2026-09-03",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 15,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
     }
   ],
   "monitoringConfig": {
@@ -89,5 +1721,5 @@
       "description": "Flag when earnings report is T-minus 3 business days or less"
     }
   },
-  "lastUpdated": "2026-09-02"
+  "lastUpdated": "2026-09-03"
 }
