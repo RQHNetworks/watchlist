@@ -42,41 +42,41 @@ DASHBOARD_PROMPT_TEMPLATE = """\
 I want to analyze {TICKER} ({COMPANY}). Build a single combined PNG image with four stacked panels, in this exact order:
 
 Panel 1: 5-year monthly stock price
-Continuous monthly close line, calendar timeline (Jan of 5-years-ago -> today), in blue. Mark and annotate the 52-week high in green and 52-week low in red, each with a small dot marker directly on the chart.
+Continuous monthly close line, calendar timeline (Jan of 5-years-ago -> today), in blue. Mark and annotate the 52-week high in green and 52-week low in red, each with a small dot marker directly o[...]
 
 Panel 2: Revenue & free cash flow by quarter, past 5 years
-Grouped bars on the true calendar-month axis (same numeric x-axis as Panel 1) -- bars sit at the calendar month each quarter's results were actually released, not fiscal quarter-end. Thick/chunky bars.
+Grouped bars on the true calendar-month axis (same numeric x-axis as Panel 1) -- bars sit at the calendar month each quarter's results were actually released, not fiscal quarter-end. Thick/chunky [...]
 Revenue: deep/muted dark orange. Free cash flow: bright green.
 Actuals: solid fill. Estimates (next 4 quarters, from analyst consensus + company guidance): lighter/desaturated fill + hatching + dashed border.
 Legend for all four categories.
 Data-quality rules:
 - Non-calendar fiscal year -> label by fiscal year, note the offset clearly.
 - Spin-off/acquisition/divestiture breaking YoY comparability -> flag explicitly rather than computing a misleading growth rate.
-- Check whether company-reported FCF is quarter-only or YTD/TTM cumulative -- some companies report FCF as trailing-twelve-months only, never discrete quarterly. When that happens, source discrete-quarter FCF from the company's filings and compute per-quarter where possible.
+- Check whether company-reported FCF is quarter-only or YTD/TTM cumulative -- some companies report FCF as trailing-twelve-months only, never discrete quarterly. When that happens, source discrete[...]
 - Re-search very recent quarters rather than relying on cached figures.
 - Sanity-check every bar's release-month placement against the company's actual historical earnings cadence, including for the same fiscal quarter across different years.
 
 Panel 3: Weekly close with 50-day & 200-day SMA, past year
 Weekly closing prices sourced from confirmed weekly/near-weekly data points across multiple sources. Weeks between confirmed anchors may be estimated -- say so in the footer.
-Overlay 50-day and 200-day SMA using actual dated historical readings from a source that publishes SMA history (e.g. wallstreetnumbers.com's /stocks/[ticker]/moving-average page) -- current value, 1-year historical slope, and annotation for any recent crossover.
+Overlay 50-day and 200-day SMA using actual dated historical readings from a source that publishes SMA history (e.g. wallstreetnumbers.com's /stocks/[ticker]/moving-average page) -- current value,[...]
 Blue = weekly close, gold = 50-day SMA, purple = 200-day SMA, small markers on each line. Annotate each SMA's current value directly on the chart.
 
 Panel 4: Earnings per share -- estimated vs. reported (Nasdaq.com style)
-Grouped bars for the last 4 reported quarters (estimated + actual side by side, with a BEAT/MISS/MET label in green/red/neutral beneath each pair), followed by single estimate-only bars for the next 4 quarters.
-Value labels must never overlap or be covered by their own bar. For a positive bar, place the label beyond the bar's tip (further from zero) with vertical alignment "bottom". For a negative bar (a loss), place the label beyond the bar's tip with vertical alignment "top".
+Grouped bars for the last 4 reported quarters (estimated + actual side by side, with a BEAT/MISS/MET label in green/red/neutral beneath each pair), followed by single estimate-only bars for the ne[...]
+Value labels must never overlap or be covered by their own bar. For a positive bar, place the label beyond the bar's tip (further from zero) with vertical alignment "bottom". For a negative bar (a[...]
 Use comparable/non-GAAP EPS, not headline GAAP EPS, if a one-time item would otherwise make the beat/miss comparison meaningless -- note this substitution in the footer.
 Source actual reported EPS and the consensus estimate it beat/missed from financial news at the time of each release -- confirm both numbers per quarter.
 
-Style (whole image): Dark mode throughout (#131519-ish background), off-white header text, muted gray subtext/axis labels/legend text, subtle gridlines. Header row: company name (left) with current stock price and percent change (right).
+Style (whole image): Dark mode throughout (#131519-ish background), off-white header text, muted gray subtext/axis labels/legend text, subtle gridlines. Header row: company name (left) with curren[...]
 
-Technical notes: Python/matplotlib, one tall portrait PNG (~1200x2500-2600px). Escape literal dollar signs in any text string containing two or more of them (\\$ instead of $). Panels use their own appropriate scales and legends.
+Technical notes: Python/matplotlib, one tall portrait PNG (~1200x2500-2600px). Escape literal dollar signs in any text string containing two or more of them (\\$ instead of $). Panels use their ow[...]
 
 Trigger context for this run: {TRIGGER_REASON}
 
 After building the dashboard, follow it with this written analysis:
 1. Distance from 52-week high (or ATH label).
 2. One-word Positive/Negative verdict for Sections 2, 3, and 4, each with a rationale grounded in that panel's actual data.
-3. Next 3 average-down price levels using real technical reference points (support/resistance, moving-average 1-year lows, the 52-week low), nearest-to-current first, with the final level flagged as a stop-loss suggestion.
+3. Next 3 average-down price levels using real technical reference points (support/resistance, moving-average 1-year lows, the 52-week low), nearest-to-current first, with the final level flagged [...]
 Close with a plain not-investment-advice reminder.
 """
 
@@ -171,36 +171,53 @@ def get_company_name(ticker_obj: yf.Ticker, ticker: str) -> str:
 def run_once(watchlist: list = WATCHLIST) -> list:
     today = date.today()
     fired = []
+    
+    print(f"\n[DEBUG] Script running on: {today}")
 
     OUTPUT_DIR.mkdir(exist_ok=True)
 
     for ticker in watchlist:
-        t = yf.Ticker(ticker)
-        hist = t.history(period="1y")  # enough for 200-day SMA plus buffer
-        if hist.empty:
-            print(f"[{ticker}] no price data returned, skipping")
-            continue
+        print(f"\n[{ticker}] Fetching data...")
+        try:
+            t = yf.Ticker(ticker)
+            # Cache-busting: use auto_adjust=True and progress=False
+            # This forces yfinance to fetch fresh data and avoid cached stale data
+            hist = t.history(period="1y", auto_adjust=True, progress=False)
+            if hist.empty:
+                print(f"[{ticker}] no price data returned, skipping")
+                continue
+            
+            # DEBUG: Show the latest data date in the history
+            latest_date = hist.index[-1].date()
+            latest_close = hist["Close"].iloc[-1]
+            prev_close = hist["Close"].iloc[-2] if len(hist) >= 2 else None
+            print(f"[{ticker}] Latest data date: {latest_date}, Close: ${latest_close:.2f}" + 
+                  (f", Prior close: ${prev_close:.2f}" if prev_close else ""))
 
-        events = []
-        for check in (check_sma_cross, check_price_swing):
-            ev = check(hist)
+            events = []
+            for check in (check_sma_cross, check_price_swing):
+                ev = check(hist)
+                if ev:
+                    ev.ticker = ticker
+                    events.append(ev)
+
+            ev = check_earnings_countdown(t, today)
             if ev:
                 ev.ticker = ticker
                 events.append(ev)
 
-        ev = check_earnings_countdown(t, today)
-        if ev:
-            ev.ticker = ticker
-            events.append(ev)
-
-        for ev in events:
-            print(f"TRIGGER FIRED: {ev.ticker} / {ev.trigger_type} / {ev.detail}")
-            fired.append(ev)
-            _write_prompt_file(ev, get_company_name(t, ticker))
-            _append_log(ev)
+            for ev in events:
+                print(f"TRIGGER FIRED: {ev.ticker} / {ev.trigger_type} / {ev.detail}")
+                fired.append(ev)
+                _write_prompt_file(ev, get_company_name(t, ticker))
+                _append_log(ev)
+        
+        except Exception as e:
+            print(f"[{ticker}] ERROR: {type(e).__name__}: {e}")
+            continue
 
     if not fired:
-        print(f"[{today}] No triggers fired for any ticker in the watchlist.")
+        print(f"\n[{today}] No triggers fired for any ticker in the watchlist.")
         # Create a placeholder file so there is always an output artifact uploaded
         placeholder = OUTPUT_DIR / f"no_triggers_{today}.txt"
         placeholder.write_text(f"No triggers fired on {today}\n")
