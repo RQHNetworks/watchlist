@@ -2,9 +2,9 @@ name: Daily Watchlist Monitor
 
 on:
   schedule:
-    # Run at 4:17 PM UTC (12:17 PM ET) on business days
+    # Run at 9:15 PM UTC (4:15 PM ET) on business days
     # Adjust the hour/minute to run after your market close
-    - cron: '17 16 * * 1-5'
+    - cron: '15 21 * * 1-5'
   workflow_dispatch:  # Allow manual trigger
 
 jobs:
