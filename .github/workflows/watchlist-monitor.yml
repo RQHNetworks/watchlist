@@ -62,8 +62,12 @@ jobs:
       - name: Upload triggers artifact
         uses: actions/upload-artifact@v4
         with:
-          name: watchlist-triggers
-          path: triggers
+          name: watchlist-triggers-${{ github.run_number }}
+          path: |
+            triggers
+            trigger_log.jsonl
+    if-no-files-found: warn
+    retention-days: 90
       
       - name: Commit trigger logs and prompts
         run: |
