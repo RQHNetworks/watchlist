@@ -28,7 +28,7 @@ import yfinance as yf
 # Configuration
 # ---------------------------------------------------------------------------
 
-WATCHLIST = ["AAPL", "MSFT", "AMZN", "GOOGL", "TSLA", "RKLB", "WMT"]
+WATCHLIST = ["AAPL", "MSFT", "TSLA", "RDW", "PL", "LUNR", "LDOS", "APP", "UBER", "ORCL", "NVDA", "META", "IBM", "GOOGL", "AMZN", "QCOM", "PLTR", "PANW", "NET", "INTC", "DELL", "CRWD", "CRM", "AMD", "SPCX", "SNOW", "SMCI", "RKLB", "NBIS", "IONQ", "GTLB", "CRWV", "CART", "BSX", "UNH", "SPOT", "SBUX", "NKE", "NFLX", "LULU", "HOOD", "HIMS", "EXPE", "WMT", "TGT", "PEP", "MCD", "KO", "JNJ", "HD", "COST", "CAT", "V", "SOFI", "PYPL", "KLAR", "JPM", "GS", "COIN", "TMDX", "RBRK", "LMT", "IP", "ELF", "BA", "TTD", "NOW", "DUOL", "CHKP", "BBY", "ADBE"]
 
 PRICE_SWING_THRESHOLD = 0.15       # +/- 15%
 EARNINGS_LEAD_BUSINESS_DAYS = 3    # T-minus 3 business days
@@ -42,41 +42,41 @@ DASHBOARD_PROMPT_TEMPLATE = """\
 I want to analyze {TICKER} ({COMPANY}). Build a single combined PNG image with four stacked panels, in this exact order:
 
 Panel 1: 5-year monthly stock price
-Continuous monthly close line, calendar timeline (Jan of 5-years-ago -> today), in blue. Mark and annotate the 52-week high in green and 52-week low in red, each with a small dot marker directly on the line and bold colored callout text. If the current price is at/above the 52-week high, label it All-Time High (ATH) instead. If a real high/low value doesn't land on any point in your monthly series, adjust that month's plotted value to match it -- never plot a marker floating apart from the line.
+Continuous monthly close line, calendar timeline (Jan of 5-years-ago -> today), in blue. Mark and annotate the 52-week high in green and 52-week low in red, each with a small dot marker directly on th[...]
 
 Panel 2: Revenue & free cash flow by quarter, past 5 years
-Grouped bars on the true calendar-month axis (same numeric x-axis as Panel 1) -- bars sit at the calendar month each quarter's results were actually released, not fiscal quarter-end. Thick/chunky bars.
+Grouped bars on the true calendar-month axis (same numeric x-axis as Panel 1) -- bars sit at the calendar month each quarter's results were actually released, not fiscal quarter-end. Thick/chunky bars[...]
 Revenue: deep/muted dark orange. Free cash flow: bright green.
 Actuals: solid fill. Estimates (next 4 quarters, from analyst consensus + company guidance): lighter/desaturated fill + hatching + dashed border.
 Legend for all four categories.
 Data-quality rules:
 - Non-calendar fiscal year -> label by fiscal year, note the offset clearly.
 - Spin-off/acquisition/divestiture breaking YoY comparability -> flag explicitly rather than computing a misleading growth rate.
-- Check whether company-reported FCF is quarter-only or YTD/TTM cumulative -- some companies report FCF as trailing-twelve-months only, never discrete quarterly. When that happens, source discrete-quarter figures from a third party that computes them directly, clearly flag which specific quarters are confirmed vs. estimated to fill gaps, and note methodology differences.
+- Check whether company-reported FCF is quarter-only or YTD/TTM cumulative -- some companies report FCF as trailing-twelve-months only, never discrete quarterly. When that happens, source discrete-qua[...]
 - Re-search very recent quarters rather than relying on cached figures.
 - Sanity-check every bar's release-month placement against the company's actual historical earnings cadence, including for the same fiscal quarter across different years.
 
 Panel 3: Weekly close with 50-day & 200-day SMA, past year
 Weekly closing prices sourced from confirmed weekly/near-weekly data points across multiple sources. Weeks between confirmed anchors may be estimated -- say so in the footer.
-Overlay 50-day and 200-day SMA using actual dated historical readings from a source that publishes SMA history (e.g. wallstreetnumbers.com's /stocks/[ticker]/moving-average page) -- current value, 1-year high/low with dates, and any other dated milestones as additional anchors. Interpolate only between real dated readings. Never compute your own rolling average from the (approximate) weekly price series.
+Overlay 50-day and 200-day SMA using actual dated historical readings from a source that publishes SMA history (e.g. wallstreetnumbers.com's /stocks/[ticker]/moving-average page) -- current value, 1-y[...]
 Blue = weekly close, gold = 50-day SMA, purple = 200-day SMA, small markers on each line. Annotate each SMA's current value directly on the chart.
 
 Panel 4: Earnings per share -- estimated vs. reported (Nasdaq.com style)
-Grouped bars for the last 4 reported quarters (estimated + actual side by side, with a BEAT/MISS/MET label in green/red/neutral beneath each pair), followed by single estimate-only bars for the next 4 quarters. Label the exact dollar value above every bar.
-Value labels must never overlap or be covered by their own bar. For a positive bar, place the label beyond the bar's tip (further from zero) with vertical alignment "bottom". For a negative bar (a loss), place the label beyond the bar's tip in the negative direction (further from zero) with vertical alignment "top". This matters especially for pre-profitability companies where every bar may be negative.
+Grouped bars for the last 4 reported quarters (estimated + actual side by side, with a BEAT/MISS/MET label in green/red/neutral beneath each pair), followed by single estimate-only bars for the next 4[...]
+Value labels must never overlap or be covered by their own bar. For a positive bar, place the label beyond the bar's tip (further from zero) with vertical alignment "bottom". For a negative bar (a los[...]
 Use comparable/non-GAAP EPS, not headline GAAP EPS, if a one-time item would otherwise make the beat/miss comparison meaningless -- note this substitution in the footer.
 Source actual reported EPS and the consensus estimate it beat/missed from financial news at the time of each release -- confirm both numbers per quarter.
 
-Style (whole image): Dark mode throughout (#131519-ish background), off-white header text, muted gray subtext/axis labels/legend text, subtle gridlines. Header row: company name (left) with current stock price opposite the name in the same blue as the price lines, a subtitle below, and an "as of [date]" line. No stat cards. Uniform spacing between every panel -- compute divider-line positions via gs.get_grid_positions(fig) rather than giving them their own GridSpec row. A single footer covering all four panels' sourcing and a not-investment-advice disclaimer.
+Style (whole image): Dark mode throughout (#131519-ish background), off-white header text, muted gray subtext/axis labels/legend text, subtle gridlines. Header row: company name (left) with current st[...]
 
-Technical notes: Python/matplotlib, one tall portrait PNG (~1200x2500-2600px). Escape literal dollar signs in any text string containing two or more of them (\\$ instead of $). Panels use their own appropriate x-axis resolution.
+Technical notes: Python/matplotlib, one tall portrait PNG (~1200x2500-2600px). Escape literal dollar signs in any text string containing two or more of them (\\$ instead of $). Panels use their own ap[...]
 
 Trigger context for this run: {TRIGGER_REASON}
 
 After building the dashboard, follow it with this written analysis:
 1. Distance from 52-week high (or ATH label).
 2. One-word Positive/Negative verdict for Sections 2, 3, and 4, each with a rationale grounded in that panel's actual data.
-3. Next 3 average-down price levels using real technical reference points (support/resistance, moving-average 1-year lows, the 52-week low), nearest-to-current first, with the final level flagged as a materially different technical situation.
+3. Next 3 average-down price levels using real technical reference points (support/resistance, moving-average 1-year lows, the 52-week low), nearest-to-current first, with the final level flagged as a[...]
 Close with a plain not-investment-advice reminder.
 """
 
