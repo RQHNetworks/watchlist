@@ -7,6 +7,9 @@ on:
     - cron: '15 21 * * 1-5'
   workflow_dispatch:  # Allow manual trigger
 
+  permissions:
+    content: write
+
 jobs:
   monitor:
     runs-on: ubuntu-latest
