@@ -112,6 +112,7 @@ jobs:
         id: prompt
         run: |
           base="${TRIGGER_FILE%.txt}"
+          echo "base=$base" >> "$GITHUB_OUTPUT"
           {
             echo 'text<<PROMPT_EOF'
             cat "triggers/${TRIGGER_FILE}"
@@ -131,3 +132,29 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           claude_args: '--allowedTools "Read,Write,Bash,WebFetch,WebSearch"'
           show_full_output: 'true'
+
+      - name: Check dashboard files exist
+        id: check_dashboard
+        run: |
+          png="dashboards/${{ steps.prompt.outputs.base }}.png"
+          md="dashboards/${{ steps.prompt.outputs.base }}.md"
+          if [ -f "$png" ] && [ -f "$md" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Expected $png and $md but one or both are missing; skipping email."
+          fi
+
+      - name: Email dashboard
+        if: steps.check_dashboard.outputs.exists == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp-mail.outlook.com
+          server_port: 587
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          from: Watchlist Monitor <${{ secrets.SMTP_USERNAME }}>
+          to: RQHNetworks@outlook.com
+          subject: "Watchlist trigger: ${{ matrix.trigger_file }}"
+          body: file://dashboards/${{ steps.prompt.outputs.base }}.md
+          attachments: dashboards/${{ steps.prompt.outputs.base }}.png
