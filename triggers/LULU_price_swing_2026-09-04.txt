@@ -30,7 +30,7 @@ Style (whole image): Dark mode throughout (#131519-ish background), off-white he
 
 Technical notes: Python/matplotlib, one tall portrait PNG (~1200x2500-2600px). Escape literal dollar signs in any text string containing two or more of them (\$ instead of $). Panels use their ow[...]
 
-Trigger context for this run: Large daily price move detected today (Daily move down -17.5% (close 121.77 -> 100.47)).
+Trigger context for this run: Large daily price move detected today (Daily move down -18.0% (close 121.77 -> 99.89)).
 
 After building the dashboard, follow it with this written analysis:
 1. Distance from 52-week high (or ATH label).
