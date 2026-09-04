@@ -17,6 +17,8 @@ permissions:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    outputs:
+      triggered_files: ${{ steps.dispatch.outputs.files }}
 
     steps:
       - uses: actions/checkout@v4
@@ -70,3 +72,55 @@ jobs:
           git add trigger_log.jsonl triggers/ 2>/dev/null || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "Watchlist triggers: $(date +%Y-%m-%d)" && git push)
         continue-on-error: true
+
+      - name: Determine which tickers actually triggered
+        if: steps.check_time.outputs.should_run == 'true'
+        id: dispatch
+        run: |
+          files=$(ls triggers/ 2>/dev/null | grep -v '^no_triggers_' | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+          echo "Triggered files: $files"
+
+  analyze:
+    needs: monitor
+    if: needs.monitor.outputs.triggered_files != '' && needs.monitor.outputs.triggered_files != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        trigger_file: ${{ fromJson(needs.monitor.outputs.triggered_files) }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python (for chart rendering)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install chart/data dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas yfinance matplotlib requests beautifulsoup4
+
+      - name: Build prompt for Claude
+        id: prompt
+        run: |
+          {
+            echo 'text<<PROMPT_EOF'
+            cat "triggers/${{ matrix.trigger_file }}"
+            echo ""
+            echo "Save the finished PNG dashboard to dashboards/${{ matrix.trigger_file }}.png"
+            echo "and the written analysis to dashboards/${{ matrix.trigger_file }}.md in this"
+            echo "repository, then commit and push both directly to the main branch."
+            echo 'PROMPT_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run Claude Code on this trigger
+        uses: anthropics/claude-code-action@v1
+        with:
+          prompt: ${{ steps.prompt.outputs.text }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: '--allowedTools "Read,Write,Bash,WebFetch,WebSearch"'
