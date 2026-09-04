@@ -130,3 +130,4 @@ jobs:
           prompt: ${{ steps.prompt.outputs.text }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           claude_args: '--allowedTools "Read,Write,Bash,WebFetch,WebSearch"'
+          show_full_output: 'true'
