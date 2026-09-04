@@ -2,9 +2,13 @@ name: Daily Watchlist Monitor
 
 on:
   schedule:
-    # Run at 9:15 PM UTC (4:15 PM ET) on business days
-    # Adjust the hour/minute to run after your market close
-    - cron: '15 21 * * 1-5'
+    # Target: 4:30 PM ET, every day.
+    # GitHub Actions cron is fixed UTC and can't express "4:30 PM ET" directly
+    # because ET shifts between EDT (UTC-4) and EST (UTC-5) with daylight saving.
+    # We schedule both possible UTC times and let the "Verify run time" step
+    # below skip whichever one doesn't currently correspond to 4:30 PM ET.
+    - cron: '30 20 * * *'  # 4:30 PM EDT (UTC-4), roughly mid-Mar to early-Nov
+    - cron: '30 21 * * *'  # 4:30 PM EST (UTC-5), roughly early-Nov to mid-Mar
   workflow_dispatch:  # Allow manual trigger
 
 permissions:
@@ -19,20 +23,36 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Verify run time (skip the non-matching DST cron trigger)
+        id: check_time
+        run: |
+          current_et_time=$(TZ="America/New_York" date +%H:%M)
+          echo "Current ET time: $current_et_time"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$current_et_time" = "16:30" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping: this is the scheduled trigger for the other DST offset."
+          fi
+
       - name: Set up Python
+        if: steps.check_time.outputs.should_run == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
+        if: steps.check_time.outputs.should_run == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install pandas yfinance
 
       - name: Run watchlist monitor
+        if: steps.check_time.outputs.should_run == 'true'
         run: python watchlist_monitor.py
 
       - name: Upload triggers artifact
+        if: steps.check_time.outputs.should_run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: watchlist-triggers-${{ github.run_number }}
@@ -43,6 +63,7 @@ jobs:
           retention-days: 90
 
       - name: Commit trigger logs and prompts
+        if: steps.check_time.outputs.should_run == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
