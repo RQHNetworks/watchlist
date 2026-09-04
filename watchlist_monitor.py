@@ -17,6 +17,7 @@ notes.
 
 import json
 import os
+import shutil
 from dataclasses import dataclass, asdict
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -183,7 +184,11 @@ def run_once(watchlist: list = None) -> list:
     
     print(f"\n[DEBUG] Script running on: {today}")
 
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    # Start each run with a clean output folder so the artifact only ever
+    # reflects tickers that triggered on *this* run, not prior days.
+    if OUTPUT_DIR.exists():
+        shutil.rmtree(OUTPUT_DIR)
+    OUTPUT_DIR.mkdir()
 
     for ticker in watchlist:
         print(f"\n[{ticker}] Fetching data...")
