@@ -13,6 +13,9 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
 
 jobs:
   monitor:
@@ -108,15 +111,18 @@ jobs:
       - name: Build prompt for Claude
         id: prompt
         run: |
+          base="${TRIGGER_FILE%.txt}"
           {
             echo 'text<<PROMPT_EOF'
-            cat "triggers/${{ matrix.trigger_file }}"
+            cat "triggers/${TRIGGER_FILE}"
             echo ""
-            echo "Save the finished PNG dashboard to dashboards/${{ matrix.trigger_file }}.png"
-            echo "and the written analysis to dashboards/${{ matrix.trigger_file }}.md in this"
+            echo "Save the finished PNG dashboard to dashboards/${base}.png"
+            echo "and the written analysis to dashboards/${base}.md in this"
             echo "repository, then commit and push both directly to the main branch."
             echo 'PROMPT_EOF'
           } >> "$GITHUB_OUTPUT"
+        env:
+          TRIGGER_FILE: ${{ matrix.trigger_file }}
 
       - name: Run Claude Code on this trigger
         uses: anthropics/claude-code-action@v1
