@@ -28,13 +28,20 @@ import yfinance as yf
 # Configuration
 # ---------------------------------------------------------------------------
 
-WATCHLIST = ["AAPL", "MSFT", "TSLA", "RDW", "PL", "LUNR", "LDOS", "APP", "UBER", "ORCL", "NVDA", "META", "IBM", "GOOGL", "AMZN", "QCOM", "PLTR", "PANW", "NET", "INTC", "DELL", "CRWD", "CRM", "AMD"]
+WATCHLIST_FILE = Path("watchlist.json")
 
 PRICE_SWING_THRESHOLD = 0.15       # +/- 15%
 EARNINGS_LEAD_BUSINESS_DAYS = 3    # T-minus 3 business days
 
 OUTPUT_DIR = Path("triggers")
 LOG_PATH = Path("trigger_log.jsonl")
+
+
+def load_watchlist(path: Path = WATCHLIST_FILE) -> list:
+    """Load the tickers to monitor from watchlist.json (the source of truth)."""
+    with open(path) as f:
+        data = json.load(f)
+    return [entry["symbol"] for entry in data["watchlist"]]
 
 # The exact combined-dashboard prompt template we finalized in chat.
 # {TICKER} and {COMPANY} get filled in per-ticker at trigger time.
@@ -168,7 +175,9 @@ def get_company_name(ticker_obj: yf.Ticker, ticker: str) -> str:
         return ticker
 
 
-def run_once(watchlist: list = WATCHLIST) -> list:
+def run_once(watchlist: list = None) -> list:
+    if watchlist is None:
+        watchlist = load_watchlist()
     today = date.today()
     fired = []
     
