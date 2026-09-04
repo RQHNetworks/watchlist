@@ -189,9 +189,7 @@ def run_once(watchlist: list = None) -> list:
         print(f"\n[{ticker}] Fetching data...")
         try:
             t = yf.Ticker(ticker)
-            # Cache-busting: use auto_adjust=True and progress=False
-            # This forces yfinance to fetch fresh data and avoid cached stale data
-            hist = t.history(period="1y", auto_adjust=True, progress=False)
+            hist = t.history(period="1y", auto_adjust=True)
             if hist.empty:
                 print(f"[{ticker}] no price data returned, skipping")
                 continue
