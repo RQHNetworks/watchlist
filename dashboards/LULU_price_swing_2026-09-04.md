@@ -57,15 +57,16 @@ the 200D is printing a fresh one-year low today at $152.77), which means both ar
 and sitting *overhead* as resistance rather than beneath price as support.
 
 The one constructive detail the panel contains makes the damage worse, not better: LULU had
-actually reclaimed its 50-day average and held above it for 23 straight sessions, from July 28
-through September 3. This gap-down destroyed a short-term uptrend that was in the process of
-repairing itself, which is why the last blue segment on the chart is so much steeper than anything
-before it.
+reclaimed its 50-day average, closing above it in 23 of the 28 sessions from July 28 through
+September 3 (longest unbroken run 14 sessions, July 28 – August 14; it slipped back below on
+August 17, 20, 26, 27 and September 1). That recovery was real but not yet clean, and this
+gap-down destroyed it outright — which is why the last blue segment on the chart is so much
+steeper than anything before it.
 
 ### Section 4 — EPS estimated vs. reported: **Positive**
 
 On its own data this panel is the one bright spot: **four beats out of four reported quarters** —
-FY25 Q3 +$0.37, FY25 Q4 +$0.22, FY26 Q1 +$0.01, FY26 Q2 +$0.27 (comparable basis, excluding the
+FY25 Q3 +$0.37, FY25 Q4 +$0.23, FY26 Q1 +$0.01, FY26 Q2 +$0.27 (comparable basis, excluding the
 $0.86/sh tariff-refund benefit that would otherwise make the last bar meaningless). lululemon is
 still converting a shrinking top line into earnings ahead of what the street models.
 
@@ -89,7 +90,7 @@ $107.68 → June 2018 low $113.20) and has not traded there since, so levels 2 a
 | # | Level | Basis | Distance from $100.61 |
 |---|---|---|---|
 | 1 | **$98.00** | Today's intraday 52-week low of $97.99 — the red marker on Panel 1 and the lowest print since May 2018. The obvious first shelf; it either holds as a base or fails and confirms the breakdown. | −2.6% |
-| 2 | **$87.00** | The April 2018 intraday low of $86.65 / March 2018 closing high of $89.12 — the last real horizontal shelf beneath today's price, and the level the 2018 breakout launched from. | −13.5% |
+| 2 | **$87.00** | The April 2018 intraday low of $86.65 / March 2018 month-end close of $89.12 — the last real horizontal shelf beneath today's price, and the level the 2018 breakout launched from. (A thinner intermediate shelf sits at the May 2018 low of $95.39, but that is a single month's wick, not a base.) | −13.5% |
 | 3 | **$77.00** ⚠️ | The December 2017 – February 2018 consolidation ($78.59 Dec 2017 close, $78.21 Jan 2018 close, $74.90 Feb 2018 intraday low). **Deepest / capitulation-only tier.** Reaching it would mean roughly −66% from the 52-week high and would imply the market has stopped pricing LULU as a growth brand entirely. | −23.5% |
 
 ⚠️ Level 3 is flagged as the capitulation tier: it should only be treated as actionable if the
@@ -122,8 +123,8 @@ should be the smallest, not the largest.
 - **Non-GAAP substitution** — FY26 Q2 headline diluted EPS was $2.92, but $0.86/sh of that (net of
   tax) came from one-time IEEPA tariff refunds plus related interest. Panel 4 charts the comparable
   $2.06 so the beat reads +$0.27 rather than a meaningless +$1.13. FY25 Q3's actual is likewise the
-  comparable $2.59. Vendors quote the FY25 Q4 consensus at $4.76–$4.79; the high end is charted and
-  the BEAT verdict holds either way.
+  comparable $2.59. Vendors quote the FY25 Q4 consensus at $4.76–$4.79; the $4.78 cited in coverage
+  at the time of the release is charted, and the BEAT verdict holds across the whole range.
 - **Forward FCF bars are model-derived**, not consensus — no broker publishes a quarterly FCF
   consensus. They apply the prior-year seasonal FCF margin to guided revenue with a haircut for
   the guided earnings decline. Treat them as directional only. Forward revenue bars use company

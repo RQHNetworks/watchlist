@@ -138,7 +138,7 @@ QUARTERS_EST = [
 # ---------------------------------------------------------------------------
 EPS_REPORTED = [
     ("FY25 Q3\nDec 11 '25", 2.22, 2.59),
-    ("FY25 Q4\nMar 17 '26", 4.79, 5.01),
+    ("FY25 Q4\nMar 17 '26", 4.78, 5.01),
     ("FY26 Q1\nJun 4 '26", 1.68, 1.69),
     ("FY26 Q2\nSep 3 '26", 1.79, 2.06),
 ]
@@ -380,8 +380,9 @@ footer(ax3, [
     "200D \\$223.62; the 50D 1-year low of \\$117.57 on Aug 17, 2026; and the 1-year highs of 50D "
     "\\$214.25 / 200D \\$301.56 set Sep 4, 2025. Today's 200D reading is itself a fresh 1-year low.",
     "Price has closed below the 200-day average on every session since Jun 6, 2025. It had, however, "
-    "reclaimed the 50-day from Jul 28 through Sep 3, 2026 \u2014 23 straight sessions \u2014 so this "
-    "gap-down destroyed a short-term uptrend that was in the process of repairing itself. Today's close "
+    "spent 23 of the 28 sessions from Jul 28 through Sep 3, 2026 back above the 50-day \u2014 longest "
+    "unbroken run 14 sessions (Jul 28 \u2013 Aug 14), slipping below on Aug 17, 20, 26, 27 and Sep 1 "
+    "\u2014 so this gap-down destroyed a short-term recovery that was still in progress. Today's close "
     "sits 15.0% under the 50D and 34.1% under the 200D.",
 ])
 
@@ -452,9 +453,9 @@ footer(ax4, [
     "+\\$1.13. FY25 Q3's actual is likewise the comparable \\$2.59.",
     "Each pair was confirmed twice \u2014 AlphaQuery's dated earnings history plus contemporaneous "
     "coverage of the release itself (Zacks/AP for the FY25 Q3 \\$2.22 consensus and the FY25 Q4 "
-    "\\$4.79; CNBC/LSEG and TradingView for the FY26 Q1 \\$1.68; CNBC and Newsquawk for the FY26 Q2 "
+    "\\$4.78; CNBC/LSEG and TradingView for the FY26 Q1 \\$1.68; CNBC and Newsquawk for the FY26 Q2 "
     "\\$1.79). Vendors disagree slightly on the FY25 Q4 consensus, quoted at \\$4.76\u2013\\$4.79; the "
-    "high end is charted and the BEAT verdict holds either way. FY26 Q1's +\\$0.01 is a beat so narrow "
+    "\\$4.78 cited in coverage at the time is charted and the BEAT verdict holds across the range. FY26 Q1's +\\$0.01 is a beat so narrow "
     "it is effectively an in-line print.",
     "FORWARD BARS \u2014 FY26 Q3 \\$0.96 is the midpoint of company guidance of \\$0.93\u2013\\$0.98 "
     "issued Sep 3, 2026, against a pre-print sell-side consensus of \\$2.41 that is now stale and being "
