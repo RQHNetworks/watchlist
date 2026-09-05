@@ -116,6 +116,18 @@ jobs:
         run: |
           base="${TRIGGER_FILE%.txt}"
           echo "base=$base" >> "$GITHUB_OUTPUT"
+
+          # trigger files are named TICKER_TRIGGERTYPE_YYYY-MM-DD.txt, where
+          # TRIGGERTYPE is one of the three fixed trigger types below.
+          if [[ "$base" =~ ^([A-Za-z0-9.]+)_(sma_cross|price_swing|earnings_countdown)_([0-9]{4}-[0-9]{2}-[0-9]{2})$ ]]; then
+            echo "ticker=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+            echo "trigger_type=${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
+            echo "trigger_date=${BASH_REMATCH[3]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "ticker=$base" >> "$GITHUB_OUTPUT"
+            echo "trigger_type=unknown" >> "$GITHUB_OUTPUT"
+            echo "trigger_date=unknown" >> "$GITHUB_OUTPUT"
+          fi
           {
             echo 'text<<PROMPT_EOF'
             cat "triggers/${TRIGGER_FILE}"
@@ -159,6 +171,6 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           from: Watchlist Monitor <${{ secrets.SMTP_USERNAME }}>
           to: RQHNetworks@outlook.com
-          subject: "Watchlist trigger: ${{ matrix.trigger_file }}"
+          subject: "[${{ steps.prompt.outputs.trigger_date }}] [${{ steps.prompt.outputs.ticker }}] [${{ steps.prompt.outputs.trigger_type }}]"
           body: file://dashboards/${{ steps.prompt.outputs.base }}.md
           attachments: dashboards/${{ steps.prompt.outputs.base }}.png
