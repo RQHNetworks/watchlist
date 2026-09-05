@@ -57,23 +57,25 @@ Grouped bars on the true calendar-month axis (same numeric x-axis as Panel 1) --
 Revenue: deep/muted dark orange. Free cash flow: bright green.
 Actuals: solid fill. Estimates (next 4 quarters, from analyst consensus + company guidance): lighter/desaturated fill + hatching + dashed border.
 Legend for all four categories.
-Data-quality rules:
-- Non-calendar fiscal year -> label by fiscal year, note the offset clearly.
-- Spin-off/acquisition/divestiture breaking YoY comparability -> flag explicitly rather than computing a misleading growth rate.
+Data-quality rules (apply these silently -- do not print any of them on the chart, see the no-footnotes rule below):
+- Non-calendar fiscal year -> label bars by fiscal year.
+- Spin-off/acquisition/divestiture breaking YoY comparability -> exclude the distorted comparison rather than computing a misleading growth rate.
 - Check whether company-reported FCF is quarter-only or YTD/TTM cumulative -- some companies report FCF as trailing-twelve-months only, never discrete quarterly. When that happens, source discrete-quarter FCF from the company's filings and compute per-quarter where possible.
 - Re-search very recent quarters rather than relying on cached figures.
 - Sanity-check every bar's release-month placement against the company's actual historical earnings cadence, including for the same fiscal quarter across different years.
 
 Panel #3 - Technicals (50 / 200 day SMA)
-Weekly closing prices sourced from confirmed weekly/near-weekly data points across multiple sources. Weeks between confirmed anchors may be estimated -- say so in the footer.
+Weekly closing prices sourced from confirmed weekly/near-weekly data points across multiple sources.
 Overlay 50-day and 200-day SMA using actual dated historical readings from a source that publishes SMA history (e.g. wallstreetnumbers.com's /stocks/[ticker]/moving-average page) -- current value, 1-year historical slope, and annotation for any recent crossover.
 Blue = weekly close, gold = 50-day SMA, purple = 200-day SMA, small markers on each line. Annotate each SMA's current value directly on the chart.
 
 Panel #4 - Quarterly Earnings (Actuals & Estimates)
 Grouped bars for the last 4 reported quarters (estimated + actual side by side, with a BEAT/MISS/MET label in green/red/neutral beneath each pair), followed by single estimate-only bars for the next 4 quarters.
 Value labels must never overlap or be covered by their own bar. For a positive bar, place the label beyond the bar's tip (further from zero) with vertical alignment "bottom". For a negative bar (a loss), place the label beyond the bar's tip with vertical alignment "top".
-Use comparable/non-GAAP EPS, not headline GAAP EPS, if a one-time item would otherwise make the beat/miss comparison meaningless -- note this substitution in the footer.
+Use comparable/non-GAAP EPS, not headline GAAP EPS, if a one-time item would otherwise make the beat/miss comparison meaningless.
 Source actual reported EPS and the consensus estimate it beat/missed from financial news at the time of each release -- confirm both numbers per quarter.
+
+No footnotes: do not add any footnote, source-note, or explanatory caption text beneath any panel. Each panel should contain only its title, one-line subtitle, and the chart itself -- nothing else below the plot area. Any data-sourcing, methodology, or caveat note (fiscal-year offsets, FCF basis, estimated data points, non-GAAP substitutions, etc.) belongs only in the written analysis below the image, not in the image.
 
 Style (whole image): Dark mode throughout (#131519-ish background), off-white header text, muted gray subtext/axis labels/legend text, subtle gridlines. Header row: company name (left) with current stock price and percent change (right).
 
@@ -97,6 +99,9 @@ One-word Positive/Negative verdict, then one sentence of rationale grounded in t
 
 **Average-Down Levels**
 Next 3 average-down price levels using real technical reference points (support/resistance, moving-average 1-year lows, the 52-week low), nearest-to-current first, as a short bullet list, with the final level flagged as a stop-loss suggestion.
+
+**Data & Method**
+A short bullet list covering anything a reader would otherwise need a footnote for: fiscal-year labeling quirks, how FCF was derived, any non-GAAP substitution, estimated vs. confirmed data points, and sources. This is the only place these notes appear -- the image itself has none.
 
 Close with a single-line plain-text not-investment-advice reminder (not bolded).
 """
