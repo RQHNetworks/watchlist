@@ -3,7 +3,7 @@ watchlist_monitor.py
 
 Checks a watchlist of tickers daily for three trigger conditions:
   1. 50-day / 200-day SMA crossover (golden cross or death cross) happened today
-  2. Next earnings date is exactly T-minus 3 business days away
+  2. Next earnings date is exactly T-minus 5 business days away
   3. Most recent daily close moved +/- 15% or more vs. the prior close
 
 When a trigger fires, it writes a ready-to-use dashboard prompt (with the
@@ -32,7 +32,7 @@ import yfinance as yf
 WATCHLIST_FILE = Path("watchlist.json")
 
 PRICE_SWING_THRESHOLD = 0.15       # +/- 15%
-EARNINGS_LEAD_BUSINESS_DAYS = 3    # T-minus 3 business days
+EARNINGS_LEAD_BUSINESS_DAYS = 5    # T-minus 5 business days
 
 OUTPUT_DIR = Path("triggers")
 LOG_PATH = Path("trigger_log.jsonl")
@@ -145,7 +145,7 @@ def check_price_swing(hist: pd.DataFrame, threshold: float = PRICE_SWING_THRESHO
 
 
 def check_earnings_countdown(ticker_obj: yf.Ticker, today: date) -> TriggerEvent | None:
-    """Detect whether the next earnings date is exactly T-minus 3 business days away."""
+    """Detect whether the next earnings date is exactly T-minus 5 business days away."""
     try:
         edf = ticker_obj.get_earnings_dates(limit=8)
     except Exception:

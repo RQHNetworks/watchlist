@@ -2,13 +2,16 @@ name: Daily Watchlist Monitor
 
 on:
   schedule:
-    # Target: 4:30 PM ET, every day.
+    # Target: 4:30 PM ET, business days only (markets are closed weekends).
     # GitHub Actions cron is fixed UTC and can't express "4:30 PM ET" directly
     # because ET shifts between EDT (UTC-4) and EST (UTC-5) with daylight saving.
     # We schedule both possible UTC times and let the "Verify run time" step
     # below skip whichever one doesn't currently correspond to 4:30 PM ET.
-    - cron: '30 20 * * *'  # 4:30 PM EDT (UTC-4), roughly mid-Mar to early-Nov
-    - cron: '30 21 * * *'  # 4:30 PM EST (UTC-5), roughly early-Nov to mid-Mar
+    # Note: cron day-of-week is in UTC, so 20:30/21:30 UTC Mon-Fri already
+    # lands on the correct ET business day (it's still the same ET day, just
+    # a few hours earlier than midnight UTC).
+    - cron: '30 20 * * 1-5'  # 4:30 PM EDT (UTC-4), roughly mid-Mar to early-Nov
+    - cron: '30 21 * * 1-5'  # 4:30 PM EST (UTC-5), roughly early-Nov to mid-Mar
   workflow_dispatch:  # Allow manual trigger
 
 permissions:
