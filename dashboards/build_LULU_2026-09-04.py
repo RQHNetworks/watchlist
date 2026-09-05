@@ -7,6 +7,8 @@ with 50-200d SMA / EPS estimate vs reported) rendered as one tall dark-mode PNG.
 Price + SMA series come from yfinance daily closes (SMA values reconciled
 exactly against wallstreetnumbers.com published readings). Fundamentals and
 consensus EPS come from the sources listed in the accompanying .md file.
+
+Built against the FINAL Sep 4, 2026 close of $100.61 (-17.38%).
 """
 
 import textwrap
@@ -35,9 +37,9 @@ BLUE = "#4E9BE8"
 GREEN = "#35C75A"
 RED = "#F0455A"
 ORANGE = "#C2652A"          # revenue (deep muted dark orange)
-ORANGE_EST = "#7A4A28"
+ORANGE_EST = "#D69463"      # lighter / desaturated revenue (estimate)
 FCF_GREEN = "#3DDC6B"       # free cash flow (bright green)
-FCF_EST = "#26714A"
+FCF_EST = "#86D7A4"         # lighter / desaturated FCF (estimate)
 GOLD = "#E0B341"
 PURPLE = "#A97BE0"
 NEUTRAL = "#9AA2AB"
@@ -56,7 +58,7 @@ plt.rcParams.update({
 # ---------------------------------------------------------------------------
 COMPANY = "lululemon athletica inc."
 TICKER = "LULU"
-PRICE = 100.50
+PRICE = 100.61
 PREV_CLOSE = 121.77
 CHG = PRICE - PREV_CLOSE
 CHG_PCT = CHG / PREV_CLOSE * 100.0
@@ -118,8 +120,8 @@ QUARTERS = [
     ("FY25 Q2", "2025-08-03", "2025-09-04", 2.525, 0.1508),
     ("FY25 Q3", "2025-11-02", "2025-12-11", 2.566, 0.0824),
     ("FY25 Q4", "2026-02-01", "2026-03-17", 3.641, 0.9597),
-    ("FY26 Q1", "2026-05-03", "2026-06-04", 2.472, 0.0871),
-    ("FY26 Q2", "2026-08-02", "2026-09-03", 2.416, 0.2251),
+    ("FY26 Q1", "2026-05-03", "2026-06-04", 2.472, 0.0870),
+    ("FY26 Q2", "2026-08-02", "2026-09-03", 2.416, 0.2252),
 ]
 # Next four quarters. Revenue: company guidance (Q3), FY-guidance-implied (Q4),
 # street ~flat FY27 (Q1/Q2 FY27). FCF: model-derived (seasonal FCF margin
@@ -136,8 +138,8 @@ QUARTERS_EST = [
 # ---------------------------------------------------------------------------
 EPS_REPORTED = [
     ("FY25 Q3\nDec 11 '25", 2.22, 2.59),
-    ("FY25 Q4\nMar 17 '26", 4.76, 5.01),
-    ("FY26 Q1\nJun 4 '26", 1.67, 1.69),
+    ("FY25 Q4\nMar 17 '26", 4.79, 5.01),
+    ("FY26 Q1\nJun 4 '26", 1.68, 1.69),
     ("FY26 Q2\nSep 3 '26", 1.79, 2.06),
 ]
 EPS_FORWARD = [
@@ -195,7 +197,7 @@ fig.text(0.972, 0.9865, "PRICE-SWING TRIGGER  \u2014  Sep 4, 2026",
          color=OFFWHITE, fontsize=13, fontweight="bold", va="center", ha="right")
 fig.text(0.972, 0.9700, "Q2 FY2026 miss, 2nd straight guidance cut",
          color=MUTED, fontsize=9.6, va="center", ha="right")
-fig.text(0.972, 0.9575, "first sub-\\$100 trade since 2018",
+fig.text(0.972, 0.9575, "first sub-\\$100 trade since May 2018",
          color=MUTED, fontsize=9.6, va="center", ha="right")
 
 # ===========================================================================
@@ -245,8 +247,10 @@ ax1.yaxis.set_major_formatter(lambda v, p: f"{v:,.0f}")
 footer(ax1, [
     "Source: daily closes via Yahoo Finance, resampled to month-end. The 52-week range shown is the "
     "INTRADAY range (\\$97.99 \u2013 \\$225.98), matching the range published by stockanalysis.com; on a "
-    "closing basis the 52-week extremes are \\$215.88 (Jan 6, 2026) and \\$100.57 (Sep 4, 2026), so the "
+    "closing basis the 52-week extremes are \\$215.88 (Jan 6, 2026) and \\$100.61 (Sep 4, 2026), so the "
     "two dots sit slightly off the month-end line by design.",
+    "This is NOT an all-time-high setup: the all-time closing high of \\$511.29 was set on Dec 29, 2023, "
+    "and today's close is a fresh 52-week low \u2014 the lowest LULU has traded since May 2018.",
     "The axis runs to Oct 2027 so Panels 1 and 2 share one numeric calendar axis; everything right of "
     "the dotted line is forward-looking and carries no price history.",
 ])
@@ -269,7 +273,7 @@ for label, qend, rel, rev, fcf in QUARTERS_EST:
     ax2.bar(x - BW / 2, rev, width=BW, color=ORANGE_EST, hatch="////",
             edgecolor=ORANGE, lw=1.1, ls="--", zorder=3)
     ax2.bar(x + BW / 2, fcf, width=BW, color=FCF_EST, hatch="////",
-            edgecolor=FCF_GREEN, lw=1.1, ls="--", zorder=3)
+            edgecolor="#1E7A44", lw=1.1, ls="--", zorder=3)
 
 qx = yfrac("2026-09-03")
 ax2.annotate("FY26 Q2, reported Sep 3, 2026\nrevenue \\$2.42B (\u20134% YoY), comps \u20139%",
@@ -279,7 +283,7 @@ ax2.annotate("FY26 Q2, reported Sep 3, 2026\nrevenue \\$2.42B (\u20134% YoY), co
              arrowprops=dict(arrowstyle="->", color=MUTED, lw=1.0))
 ax2.annotate("53-week fiscal year:\nFY23 Q4 ran 14 weeks",
              xy=(yfrac("2024-03-21") - BW / 2, 3.24),
-             xytext=(yfrac("2023-04-20"), 4.10),
+             xytext=(yfrac("2023-07-01"), 3.96),
              color=NEUTRAL, fontsize=8.8, ha="center", va="top", linespacing=1.5,
              arrowprops=dict(arrowstyle="->", color=DIM, lw=0.9))
 
@@ -296,7 +300,7 @@ ax2.legend(handles=[
     Patch(facecolor=ORANGE_EST, edgecolor=ORANGE, hatch="////", ls="--",
           label="Revenue \u2014 estimate"),
     Patch(facecolor=FCF_GREEN, label="Free cash flow \u2014 actual"),
-    Patch(facecolor=FCF_EST, edgecolor=FCF_GREEN, hatch="////", ls="--",
+    Patch(facecolor=FCF_EST, edgecolor="#1E7A44", hatch="////", ls="--",
           label="Free cash flow \u2014 estimate"),
 ], loc="upper left", ncol=2, frameon=False, fontsize=9.4,
     labelcolor=MUTED, handlelength=1.6, columnspacing=1.4)
@@ -308,9 +312,10 @@ footer(ax2, [
     "neighbours.",
     "FCF BASIS \u2014 lululemon publishes only year-to-date cash-flow statements, never a discrete "
     "quarterly one, so every bar is YTD-differenced (operating cash flow less purchases of property and "
-    "equipment). FY26 Q2: \\$589.3M H1 OCF less \\$214.4M Q1 = \\$374.8M, less \\$149.7M capex = "
-    "\\$225.1M. No acquisition, divestiture or spin-off breaks YoY comparability in this window (the "
-    "MIRROR / lululemon Studio wind-down was immaterial to revenue), so the YoY reads are clean.",
+    "equipment). FY26 Q2: \\$589.3M H1 OCF less \\$214.4M Q1 OCF = \\$374.9M, less (\\$277.1M less "
+    "\\$127.4M) = \\$149.7M capex, giving \\$225.2M. No acquisition, divestiture or spin-off breaks YoY "
+    "comparability in this window (the MIRROR / lululemon Studio wind-down was immaterial to revenue), "
+    "so the YoY reads are clean.",
     "RELEASE MONTHS \u2014 each verified twice, against SEC 8-K filing dates and AlphaQuery. Cadence is "
     "NOT fixed for a given fiscal quarter across years: Q4 moved from Mar 29, 2022 / Mar 28, 2023 to "
     "Mar 21, 2024, Mar 27, 2025 and Mar 17, 2026; Q2 from Sep 8, 2021 to Aug 29, 2024 and back to "
@@ -353,7 +358,7 @@ ax3.annotate(f"close  \\${weekly.iloc[-1]:,.2f}", xy=(last, weekly.iloc[-1]),
              fontweight="bold", ha="center", va="center",
              arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.0, alpha=0.85))
 
-ax3.text(1.0, 302, "The 50D has sat below the 200D in every week shown \u2014\n"
+ax3.text(6.5, 319, "The 50D has sat below the 200D in every week shown \u2014\n"
                    "the death cross itself dates to Apr 25, 2025",
          color=NEUTRAL, fontsize=8.9, ha="left", va="top", linespacing=1.5)
 
@@ -367,16 +372,17 @@ ax3.legend(loc="lower left", frameon=False, fontsize=9.8, labelcolor=MUTED,
            handlelength=1.9)
 footer(ax3, [
     "Weekly closes are every Friday close taken from the full daily series (Yahoo Finance) \u2014 all 53 "
-    "points are confirmed data; none are interpolated or estimated between anchors. Any filled-in week "
-    "would be flagged here.",
+    "points are confirmed data; none are interpolated or estimated between anchors. Had any week needed "
+    "filling in between confirmed anchors it would be flagged here; none did.",
     "The 50D and 200D series are computed from those same daily closes and reconcile EXACTLY to every "
-    "dated reading wallstreetnumbers.com publishes for LULU: Sep 3, 2026 \u2014 50D \\$118.63, 200D "
-    "\\$153.09; Dec 31, 2025 \u2014 50D \\$183.78, 200D \\$223.62; Sep 4, 2025 1-year highs \u2014 50D "
-    "\\$214.25, 200D \\$301.56; and the 50D 1-year low of \\$117.57 on Aug 17, 2026. Today's 200D "
-    "reading of \\$152.77 is itself a fresh 1-year low.",
-    "Price has closed below the 200-day average on every session since Jun 6, 2025 and below the 50-day "
-    "on all but a handful of days since March 2026. Today's close sits 15.1% under the 50D and 34.2% "
-    "under the 200D.",
+    "dated reading wallstreetnumbers.com publishes for LULU: current \u2014 50D \\$118.40, 200D "
+    "\\$152.77; Sep 3, 2026 \u2014 50D \\$118.63, 200D \\$153.09; Dec 31, 2025 \u2014 50D \\$183.78, "
+    "200D \\$223.62; the 50D 1-year low of \\$117.57 on Aug 17, 2026; and the 1-year highs of 50D "
+    "\\$214.25 / 200D \\$301.56 set Sep 4, 2025. Today's 200D reading is itself a fresh 1-year low.",
+    "Price has closed below the 200-day average on every session since Jun 6, 2025. It had, however, "
+    "reclaimed the 50-day from Jul 28 through Sep 3, 2026 \u2014 23 straight sessions \u2014 so this "
+    "gap-down destroyed a short-term uptrend that was in the process of repairing itself. Today's close "
+    "sits 15.0% under the 50D and 34.1% under the 200D.",
 ])
 
 # ===========================================================================
@@ -412,7 +418,7 @@ for i, (lab, est, act) in enumerate(EPS_REPORTED):
     put_label(ax4, pos[i] - w / 2, est, MUTED, weight="normal")
     put_label(ax4, pos[i] + w / 2, act, col)
     tag = "MET" if met else ("BEAT" if beat else "MISS")
-    ax4.text(pos[i], -0.30, f"{tag}   {act - est:+.2f}", color=col,
+    ax4.text(pos[i], -0.30, f"{tag}  {act - est:+.2f}", color=col,
              fontsize=10.4, fontweight="bold", ha="center", va="top")
 
 for j, (lab, est) in enumerate(EPS_FORWARD):
@@ -441,18 +447,21 @@ ax4.legend(handles=[
     handlelength=1.6, columnspacing=1.5)
 footer(ax4, [
     "NON-GAAP SUBSTITUTION \u2014 FY26 Q2 headline diluted EPS was \\$2.92, but it carries \\$0.86/sh "
-    "(net of tax) from one-time IEEPA tariff refunds of \\$134.5M plus \\$4.1M of interest. The "
-    "comparable \\$2.06 is charted instead, so the quarter reads as a +\\$0.27 beat rather than a "
-    "meaningless +\\$1.13. FY25 Q3's actual is likewise the comparable \\$2.59.",
+    "(net of tax) from one-time IEEPA tariff refunds of \\$134.5M plus related interest. The comparable "
+    "\\$2.06 is charted instead, so the quarter reads as a +\\$0.27 beat rather than a meaningless "
+    "+\\$1.13. FY25 Q3's actual is likewise the comparable \\$2.59.",
     "Each pair was confirmed twice \u2014 AlphaQuery's dated earnings history plus contemporaneous "
-    "coverage of the release itself (Zacks/AP for the FY25 Q3 \\$2.22 consensus, TipRanks and CNBC for "
-    "the rest). Vendors disagree slightly on the FY25 Q4 consensus, quoted at \\$4.76\u2013\\$4.79; the "
-    "low end is charted and the BEAT verdict holds either way.",
+    "coverage of the release itself (Zacks/AP for the FY25 Q3 \\$2.22 consensus and the FY25 Q4 "
+    "\\$4.79; CNBC/LSEG and TradingView for the FY26 Q1 \\$1.68; CNBC and Newsquawk for the FY26 Q2 "
+    "\\$1.79). Vendors disagree slightly on the FY25 Q4 consensus, quoted at \\$4.76\u2013\\$4.79; the "
+    "high end is charted and the BEAT verdict holds either way. FY26 Q1's +\\$0.01 is a beat so narrow "
+    "it is effectively an in-line print.",
     "FORWARD BARS \u2014 FY26 Q3 \\$0.96 is the midpoint of company guidance of \\$0.93\u2013\\$0.98 "
-    "issued Sep 3, 2026; the pre-print sell-side consensus of \\$1.17 is stale and is being cut toward "
-    "that guide. FY26 Q4 \\$4.04 is the FY26 EPS guidance midpoint of \\$9.605 less H1 actual of \\$4.61 "
-    "less the Q3 guide. Both forward bars sit on a guidance (as-reported) basis rather than the "
-    "comparable basis used for the actuals. Next report expected Dec 3\u201311, 2026.",
+    "issued Sep 3, 2026, against a pre-print sell-side consensus of \\$2.41 that is now stale and being "
+    "cut toward that guide. FY26 Q4 \\$4.04 is the FY26 EPS guidance midpoint of \\$9.605 "
+    "(\\$9.48\u2013\\$9.73) less H1 actual of \\$4.61 less the Q3 guide. Both forward bars sit on a "
+    "guidance (as-reported) basis rather than the comparable basis used for the actuals. Next report "
+    "expected early-to-mid Dec 2026.",
 ], y=-0.255)
 
 fig.savefig(OUT, facecolor=BG, dpi=100)
