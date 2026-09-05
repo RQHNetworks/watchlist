@@ -172,5 +172,6 @@ jobs:
           from: Watchlist Monitor <${{ secrets.SMTP_USERNAME }}>
           to: RQHNetworks@outlook.com
           subject: "[${{ steps.prompt.outputs.trigger_date }}] [${{ steps.prompt.outputs.ticker }}] [${{ steps.prompt.outputs.trigger_type }}]"
-          body: file://dashboards/${{ steps.prompt.outputs.base }}.md
+          html_body: file://dashboards/${{ steps.prompt.outputs.base }}.md
+          convert_markdown: true
           attachments: dashboards/${{ steps.prompt.outputs.base }}.png
