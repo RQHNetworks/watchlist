@@ -4,7 +4,7 @@ watchlist_monitor.py
 Checks a watchlist of tickers daily for three trigger conditions:
   1. 50-day / 200-day SMA crossover (golden cross or death cross) happened today
   2. Next earnings date is exactly T-minus 5 business days away
-  3. Most recent daily close moved +/- 15% or more vs. the prior close
+  3. Most recent daily close moved +/- 10% or more vs. the prior close
 
 When a trigger fires, it writes a ready-to-use dashboard prompt (with the
 ticker/company name filled in) to an output folder, and appends a row to a
@@ -31,7 +31,7 @@ import yfinance as yf
 
 WATCHLIST_FILE = Path("watchlist.json")
 
-PRICE_SWING_THRESHOLD = 0.15       # +/- 15%
+PRICE_SWING_THRESHOLD = 0.10       # +/- 10%
 EARNINGS_LEAD_BUSINESS_DAYS = 5    # T-minus 5 business days
 
 OUTPUT_DIR = Path("triggers")
