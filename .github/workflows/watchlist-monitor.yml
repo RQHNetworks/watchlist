@@ -96,7 +96,9 @@ jobs:
 
           {
             echo 'body<<BODY_EOF'
-            echo "$todays_events" | jq -r '"- " + .ticker + " (" + .trigger_type + "): " + .detail'
+            echo "Want a full AI-built dashboard for one of these? Reply to this email with its ID line (e.g. quote it back)."
+            echo ""
+            echo "$todays_events" | jq -r '.ticker + "_" + .trigger_type + "_" + .date + " -- " + .ticker + " (" + .trigger_type + "): " + .detail'
             echo 'BODY_EOF'
           } >> "$GITHUB_OUTPUT"
 

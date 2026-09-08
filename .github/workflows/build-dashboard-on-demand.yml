@@ -1,0 +1,111 @@
+name: Build Dashboard On Demand
+
+on:
+  workflow_dispatch:
+    inputs:
+      trigger_file:
+        description: "Trigger identifier, e.g. LULU_price_swing_2026-09-04 (with or without .txt)"
+        required: true
+      recipient:
+        description: "Email address to send the dashboard to"
+        required: false
+        default: RQHNetworks@outlook.com
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Resolve trigger file
+        id: resolve
+        run: |
+          base="${INPUT_TRIGGER_FILE%.txt}"
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+
+          if [ ! -f "triggers/${base}.txt" ]; then
+            echo "::error::triggers/${base}.txt does not exist in this repo. Check the identifier and try again."
+            exit 1
+          fi
+
+          # trigger files are named TICKER_TRIGGERTYPE_YYYY-MM-DD.txt, where
+          # TRIGGERTYPE is one of the three fixed trigger types below.
+          if [[ "$base" =~ ^([A-Za-z0-9.]+)_(sma_cross|price_swing|earnings_countdown)_([0-9]{4}-[0-9]{2}-[0-9]{2})$ ]]; then
+            echo "ticker=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+            echo "trigger_type=${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
+            echo "trigger_date=${BASH_REMATCH[3]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "ticker=$base" >> "$GITHUB_OUTPUT"
+            echo "trigger_type=unknown" >> "$GITHUB_OUTPUT"
+            echo "trigger_date=unknown" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          INPUT_TRIGGER_FILE: ${{ inputs.trigger_file }}
+
+      - name: Set up Python (for chart rendering)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install chart/data dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas yfinance matplotlib requests beautifulsoup4
+
+      - name: Build prompt for Claude
+        id: prompt
+        run: |
+          base="${{ steps.resolve.outputs.base }}"
+          {
+            echo 'text<<PROMPT_EOF'
+            cat "triggers/${base}.txt"
+            echo ""
+            echo "Save the finished PNG dashboard to dashboards/${base}.png"
+            echo "and the written analysis to dashboards/${base}.md in this"
+            echo "repository, then commit and push both directly to the main branch."
+            echo 'PROMPT_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run Claude Code on this trigger
+        uses: anthropics/claude-code-action@v1
+        with:
+          prompt: ${{ steps.prompt.outputs.text }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: '--allowedTools "Read,Write,Bash,WebFetch,WebSearch"'
+          show_full_output: 'true'
+
+      - name: Check dashboard files exist
+        id: check_dashboard
+        run: |
+          png="dashboards/${{ steps.resolve.outputs.base }}.png"
+          md="dashboards/${{ steps.resolve.outputs.base }}.md"
+          if [ -f "$png" ] && [ -f "$md" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Expected $png and $md but one or both are missing; skipping email."
+          fi
+
+      - name: Email dashboard
+        if: steps.check_dashboard.outputs.exists == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          from: Watchlist Monitor <${{ secrets.SMTP_USERNAME }}>
+          to: ${{ inputs.recipient }}
+          subject: "[${{ steps.resolve.outputs.trigger_date }}] [${{ steps.resolve.outputs.ticker }}] [${{ steps.resolve.outputs.trigger_type }}]"
+          html_body: file://dashboards/${{ steps.resolve.outputs.base }}.md
+          convert_markdown: true
+          attachments: dashboards/${{ steps.resolve.outputs.base }}.png
