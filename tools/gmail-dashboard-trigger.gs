@@ -33,36 +33,57 @@ function checkForDashboardRequests() {
   const lastCheckTs = lastCheckStr ? parseInt(lastCheckStr, 10) : (Date.now() - 24 * 60 * 60 * 1000);
   const runStartTs = Date.now();
 
+  Logger.log('Run start: ' + new Date(runStartTs) + ' | lastCheckTs: ' + new Date(lastCheckTs));
+
   const idPattern = /\b([A-Za-z0-9.]+_(?:sma_cross|price_swing|earnings_countdown)_\d{4}-\d{2}-\d{2})\b/g;
 
   // Limit the search window so this stays fast on every poll.
-  const threads = GmailApp.search('subject:"Watchlist Triggers" newer_than:7d', 0, 50);
+  const searchQuery = 'subject:"Watchlist Triggers" newer_than:7d';
+  const threads = GmailApp.search(searchQuery, 0, 50);
+  Logger.log('Search "' + searchQuery + '" found ' + threads.length + ' thread(s).');
 
   const seenIds = new Set();
 
   threads.forEach(function (thread) {
-    thread.getMessages().forEach(function (message) {
+    const messages = thread.getMessages();
+    Logger.log('Thread "' + thread.getFirstMessageSubject() + '" has ' + messages.length + ' message(s).');
+
+    messages.forEach(function (message) {
       const msgTs = message.getDate().getTime();
-      if (msgTs <= lastCheckTs) return;              // already handled in a prior run
-      if (message.getFrom().indexOf(botEmail) !== -1) return; // skip the bot's own outgoing mail
+      const from = message.getFrom();
+
+      if (msgTs <= lastCheckTs) {
+        Logger.log('  SKIP (already handled): from=' + from + ' date=' + message.getDate());
+        return;
+      }
+      if (from.indexOf(botEmail) !== -1) {
+        Logger.log('  SKIP (bot\'s own mail): from=' + from + ' date=' + message.getDate());
+        return;
+      }
 
       const body = message.getPlainBody();
+      Logger.log('  CONSIDERING reply: from=' + from + ' date=' + message.getDate() +
+        ' bodyLength=' + body.length + ' bodySnippet=' + body.substring(0, 200).replace(/\n/g, ' \\n '));
+
       let match;
+      let foundAny = false;
       while ((match = idPattern.exec(body)) !== null) {
         seenIds.add(match[1]);
+        foundAny = true;
+      }
+      if (!foundAny) {
+        Logger.log('  No trigger ID found in this message body.');
       }
     });
   });
+
+  Logger.log('Trigger IDs found this run: ' + (seenIds.size ? Array.from(seenIds).join(', ') : '(none)'));
 
   seenIds.forEach(function (id) {
     dispatchDashboardBuild(owner, repo, token, id);
   });
 
   props.setProperty('LAST_CHECK_TS', String(runStartTs));
-
-  if (seenIds.size > 0) {
-    Logger.log('Dispatched dashboard builds for: ' + Array.from(seenIds).join(', '));
-  }
 }
 
 function dispatchDashboardBuild(owner, repo, token, triggerFile) {
