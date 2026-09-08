@@ -15,3 +15,4 @@
 {"ticker": "LULU", "date": "2026-09-04", "trigger_type": "price_swing", "detail": "Daily move down -17.4% (close 121.77 -> 100.61)"}
 {"ticker": "LULU", "date": "2026-09-04", "trigger_type": "price_swing", "detail": "Daily move down -17.4% (close 121.77 -> 100.61)"}
 {"ticker": "CRWV", "date": "2026-09-08", "trigger_type": "price_swing", "detail": "Daily move up +11.7% (close 89.36 -> 99.83)"}
+{"ticker": "CRWV", "date": "2026-09-08", "trigger_type": "price_swing", "detail": "Daily move up +11.7% (close 89.36 -> 99.83)"}
