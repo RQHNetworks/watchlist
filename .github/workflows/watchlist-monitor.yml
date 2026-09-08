@@ -16,15 +16,10 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
-  issues: write
-  id-token: write
 
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    outputs:
-      triggered_files: ${{ steps.dispatch.outputs.files }}
 
     steps:
       - uses: actions/checkout@v4
@@ -87,81 +82,26 @@ jobs:
           echo "files=$files" >> "$GITHUB_OUTPUT"
           echo "Triggered files: $files"
 
-  analyze:
-    needs: monitor
-    if: needs.monitor.outputs.triggered_files != '' && needs.monitor.outputs.triggered_files != '[]'
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        trigger_file: ${{ fromJson(needs.monitor.outputs.triggered_files) }}
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: Set up Python (for chart rendering)
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install chart/data dependencies
+      - name: Build flag email summary
+        if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
+        id: flagmail
         run: |
-          python -m pip install --upgrade pip
-          pip install pandas yfinance matplotlib requests beautifulsoup4
+          today=$(date +%Y-%m-%d)
+          echo "date=$today" >> "$GITHUB_OUTPUT"
 
-      - name: Build prompt for Claude
-        id: prompt
-        run: |
-          base="${TRIGGER_FILE%.txt}"
-          echo "base=$base" >> "$GITHUB_OUTPUT"
+          todays_events=$(jq -c --arg d "$today" 'select(.date == $d)' trigger_log.jsonl)
 
-          # trigger files are named TICKER_TRIGGERTYPE_YYYY-MM-DD.txt, where
-          # TRIGGERTYPE is one of the three fixed trigger types below.
-          if [[ "$base" =~ ^([A-Za-z0-9.]+)_(sma_cross|price_swing|earnings_countdown)_([0-9]{4}-[0-9]{2}-[0-9]{2})$ ]]; then
-            echo "ticker=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
-            echo "trigger_type=${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
-            echo "trigger_date=${BASH_REMATCH[3]}" >> "$GITHUB_OUTPUT"
-          else
-            echo "ticker=$base" >> "$GITHUB_OUTPUT"
-            echo "trigger_type=unknown" >> "$GITHUB_OUTPUT"
-            echo "trigger_date=unknown" >> "$GITHUB_OUTPUT"
-          fi
+          tickers=$(echo "$todays_events" | jq -r '.ticker' | sort -u | paste -sd, -)
+          echo "tickers=$tickers" >> "$GITHUB_OUTPUT"
+
           {
-            echo 'text<<PROMPT_EOF'
-            cat "triggers/${TRIGGER_FILE}"
-            echo ""
-            echo "Save the finished PNG dashboard to dashboards/${base}.png"
-            echo "and the written analysis to dashboards/${base}.md in this"
-            echo "repository, then commit and push both directly to the main branch."
-            echo 'PROMPT_EOF'
+            echo 'body<<BODY_EOF'
+            echo "$todays_events" | jq -r '"- " + .ticker + " (" + .trigger_type + "): " + .detail'
+            echo 'BODY_EOF'
           } >> "$GITHUB_OUTPUT"
-        env:
-          TRIGGER_FILE: ${{ matrix.trigger_file }}
 
-      - name: Run Claude Code on this trigger
-        uses: anthropics/claude-code-action@v1
-        with:
-          prompt: ${{ steps.prompt.outputs.text }}
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          claude_args: '--allowedTools "Read,Write,Bash,WebFetch,WebSearch"'
-          show_full_output: 'true'
-
-      - name: Check dashboard files exist
-        id: check_dashboard
-        run: |
-          png="dashboards/${{ steps.prompt.outputs.base }}.png"
-          md="dashboards/${{ steps.prompt.outputs.base }}.md"
-          if [ -f "$png" ] && [ -f "$md" ]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Expected $png and $md but one or both are missing; skipping email."
-          fi
-
-      - name: Email dashboard
-        if: steps.check_dashboard.outputs.exists == 'true'
+      - name: Email trigger flags
+        if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -171,7 +111,5 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           from: Watchlist Monitor <${{ secrets.SMTP_USERNAME }}>
           to: RQHNetworks@outlook.com
-          subject: "[${{ steps.prompt.outputs.trigger_date }}] [${{ steps.prompt.outputs.ticker }}] [${{ steps.prompt.outputs.trigger_type }}]"
-          html_body: file://dashboards/${{ steps.prompt.outputs.base }}.md
-          convert_markdown: true
-          attachments: dashboards/${{ steps.prompt.outputs.base }}.png
+          subject: "[${{ steps.flagmail.outputs.date }}] Watchlist Triggers: ${{ steps.flagmail.outputs.tickers }}"
+          body: ${{ steps.flagmail.outputs.body }}
