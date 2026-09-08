@@ -86,19 +86,37 @@ jobs:
         if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
         id: flagmail
         run: |
-          today=$(date +%Y-%m-%d)
-          echo "date=$today" >> "$GITHUB_OUTPUT"
+          echo "date=$(date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
 
-          todays_events=$(jq -c --arg d "$today" 'select(.date == $d)' trigger_log.jsonl)
+          # Match against the exact files that fired THIS run (from the
+          # previous step), not against today's wall-clock date - a
+          # trigger's logged .date is the latest trading day in its price
+          # history, which can lag behind the day the workflow actually
+          # runs (e.g. over a weekend, or if a feed hasn't updated yet).
+          mapfile -t files < <(echo '${{ steps.dispatch.outputs.files }}' | jq -r '.[]')
 
-          tickers=$(echo "$todays_events" | jq -r '.ticker' | sort -u | paste -sd, -)
+          tickers_list=()
+          lines=""
+          for f in "${files[@]}"; do
+            base="${f%.txt}"
+            if [[ "$base" =~ ^([A-Za-z0-9.]+)_(sma_cross|price_swing|earnings_countdown)_([0-9]{4}-[0-9]{2}-[0-9]{2})$ ]]; then
+              t="${BASH_REMATCH[1]}"; ty="${BASH_REMATCH[2]}"; d="${BASH_REMATCH[3]}"
+              detail=$(jq -r --arg t "$t" --arg ty "$ty" --arg d "$d" \
+                'select(.ticker == $t and .trigger_type == $ty and .date == $d) | .detail' \
+                trigger_log.jsonl | tail -1)
+              tickers_list+=("$t")
+              lines+="${base} -- ${t} (${ty}): ${detail}"$'\n'
+            fi
+          done
+
+          tickers=$(printf '%s\n' "${tickers_list[@]}" | sort -u | paste -sd, -)
           echo "tickers=$tickers" >> "$GITHUB_OUTPUT"
 
           {
             echo 'body<<BODY_EOF'
             echo "Want a full AI-built dashboard for one of these? Reply to this email with its ID line (e.g. quote it back)."
             echo ""
-            echo "$todays_events" | jq -r '.ticker + "_" + .trigger_type + "_" + .date + " -- " + .ticker + " (" + .trigger_type + "): " + .detail'
+            printf '%s' "$lines"
             echo 'BODY_EOF'
           } >> "$GITHUB_OUTPUT"
 
