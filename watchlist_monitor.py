@@ -3,7 +3,8 @@ watchlist_monitor.py
 
 Checks a watchlist of tickers daily for three trigger conditions:
   1. 50-day / 200-day SMA crossover (golden cross or death cross) happened today
-  2. Next earnings date is exactly T-minus 5 business days away
+  2. Next earnings date has come within T-minus 5 business days (flags once,
+     the first day it enters the window)
   3. Most recent daily close moved +/- 10% or more vs. the prior close
 
 When a trigger fires, it writes a ready-to-use dashboard prompt (with the
@@ -17,6 +18,7 @@ notes.
 
 import json
 import os
+import re
 import shutil
 from dataclasses import dataclass, asdict
 from datetime import date, datetime, timedelta
@@ -162,8 +164,41 @@ def check_price_swing(hist: pd.DataFrame, threshold: float = PRICE_SWING_THRESHO
     )
 
 
-def check_earnings_countdown(ticker_obj: yf.Ticker, today: date) -> TriggerEvent | None:
-    """Detect whether the next earnings date is exactly T-minus 5 business days away."""
+_EARNINGS_DATE_RE = re.compile(r"Earnings on (\d{4}-\d{2}-\d{2})")
+
+
+def _earnings_already_flagged(ticker: str, earnings_date: date) -> bool:
+    """True if trigger_log.jsonl already has an earnings_countdown row for this
+    ticker and earnings date, so a multi-day window doesn't refire daily."""
+    if not LOG_PATH.exists():
+        return False
+    with open(LOG_PATH) as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if row.get("ticker") != ticker or row.get("trigger_type") != "earnings_countdown":
+                continue
+            m = _EARNINGS_DATE_RE.search(row.get("detail", ""))
+            if m and m.group(1) == str(earnings_date):
+                return True
+    return False
+
+
+def check_earnings_countdown(ticker_obj: yf.Ticker, today: date, ticker: str) -> TriggerEvent | None:
+    """Detect whether the next earnings date has come within T-minus N business days.
+
+    Uses a <= threshold rather than an exact match: yfinance's earnings-date
+    estimate for a future quarter is often only confirmed/updated shortly
+    before the report, so a single-day equality check can skip straight over
+    the target countdown value and silently never fire. Dedupes against the
+    trigger log so the same earnings date only flags once (the first day it
+    enters the window), rather than every day inside it.
+    """
     try:
         edf = ticker_obj.get_earnings_dates(limit=8)
     except Exception:
@@ -177,13 +212,15 @@ def check_earnings_countdown(ticker_obj: yf.Ticker, today: date) -> TriggerEvent
     next_earnings = min(upcoming)
 
     bdays_away = business_days_between(today, next_earnings)
-    if bdays_away != EARNINGS_LEAD_BUSINESS_DAYS:
+    if bdays_away > EARNINGS_LEAD_BUSINESS_DAYS:
+        return None
+    if _earnings_already_flagged(ticker, next_earnings):
         return None
     return TriggerEvent(
-        ticker="",
+        ticker=ticker,
         date=str(today),
         trigger_type="earnings_countdown",
-        detail=f"Earnings on {next_earnings} ({EARNINGS_LEAD_BUSINESS_DAYS} business days away)",
+        detail=f"Earnings on {next_earnings} ({bdays_away} business day{'s' if bdays_away != 1 else ''} away)",
     )
 
 
@@ -231,9 +268,8 @@ def run_once(watchlist: list = None) -> list:
                     ev.ticker = ticker
                     events.append(ev)
 
-            ev = check_earnings_countdown(t, today)
+            ev = check_earnings_countdown(t, today, ticker)
             if ev:
-                ev.ticker = ticker
                 events.append(ev)
 
             for ev in events:
