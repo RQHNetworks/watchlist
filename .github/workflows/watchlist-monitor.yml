@@ -29,12 +29,29 @@ jobs:
       - name: Verify run time (skip the non-matching DST cron trigger)
         id: check_time
         run: |
-          current_et_time=$(TZ="America/New_York" date +%H:%M)
-          echo "Current ET time: $current_et_time"
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$current_et_time" = "16:30" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          # Don't compare wall-clock time to an exact "16:30" - GitHub Actions
+          # routinely queues scheduled runs several to 10+ minutes late, which
+          # made this guard fail closed (skipping real monitoring runs) far
+          # more often than it should. Instead, use github.event.schedule -
+          # the literal cron string GitHub says triggered this run - and
+          # compare that to the current DST offset, which doesn't drift with
+          # scheduling delay the way wall-clock minutes do.
+          current_et_offset=$(TZ="America/New_York" date +%z)
+          schedule="${{ github.event.schedule }}"
+          echo "Current ET UTC offset: $current_et_offset | Triggering schedule: $schedule"
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            should_run=true
+          elif [ "$schedule" = "30 20 * * 1-5" ] && [ "$current_et_offset" = "-0400" ]; then
+            should_run=true   # EDT cron, and we're currently in EDT
+          elif [ "$schedule" = "30 21 * * 1-5" ] && [ "$current_et_offset" = "-0500" ]; then
+            should_run=true   # EST cron, and we're currently in EST
           else
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            should_run=false
+          fi
+
+          echo "should_run=$should_run" >> "$GITHUB_OUTPUT"
+          if [ "$should_run" = "false" ]; then
             echo "Skipping: this is the scheduled trigger for the other DST offset."
           fi
 
