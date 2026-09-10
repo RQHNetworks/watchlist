@@ -19,3 +19,14 @@
 {"ticker": "ORCL", "date": "2026-09-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-10 (2 business days away)"}
 {"ticker": "CRWV", "date": "2026-09-08", "trigger_type": "price_swing", "detail": "Daily move up +11.7% (close 89.36 -> 99.83)"}
 {"ticker": "ADBE", "date": "2026-09-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-10 (2 business days away)"}
+{"ticker": "SPOT", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=506.43, 200-day=505.90"}
+{"ticker": "ABT", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=104.99, 200-day=104.92"}
+{"ticker": "COO", "date": "2026-09-10", "trigger_type": "price_swing", "detail": "Daily move down -14.7% (close 63.48 -> 54.17)"}
+{"ticker": "CPRT", "date": "2026-09-10", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-10 (0 business days away)"}
+{"ticker": "DHR", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=202.25, 200-day=201.99"}
+{"ticker": "FDS", "date": "2026-09-10", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-17 (5 business days away)"}
+{"ticker": "KR", "date": "2026-09-10", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-11 (1 business day away)"}
+{"ticker": "LEN", "date": "2026-09-10", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-16 (4 business days away)"}
+{"ticker": "NEM", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=108.91, 200-day=108.67"}
+{"ticker": "SPGI", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=427.66, 200-day=427.52"}
+{"ticker": "WEC", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=109.95, 200-day=109.98"}
