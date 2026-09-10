@@ -112,8 +112,17 @@ jobs:
           # runs (e.g. over a weekend, or if a feed hasn't updated yet).
           mapfile -t files < <(echo '${{ steps.dispatch.outputs.files }}' | jq -r '.[]')
 
+          # Grouped by trigger type so the email stays readable as the
+          # watchlist grows: earnings countdown (closest date first), then
+          # SMA cross (golden crosses before death crosses), then price
+          # swings (up moves before down moves).
           tickers_list=()
-          lines=""
+          earnings_lines=()
+          golden_lines=()
+          death_lines=()
+          up_lines=()
+          down_lines=()
+
           for f in "${files[@]}"; do
             base="${f%.txt}"
             if [[ "$base" =~ ^([A-Za-z0-9.]+)_(sma_cross|price_swing|earnings_countdown)_([0-9]{4}-[0-9]{2}-[0-9]{2})$ ]]; then
@@ -122,18 +131,59 @@ jobs:
                 'select(.ticker == $t and .trigger_type == $ty and .date == $d) | .detail' \
                 trigger_log.jsonl | tail -1)
               tickers_list+=("$t")
-              lines+="${base} -- ${t} (${ty}): ${detail}"$'\n'
+              line="${base} -- ${t} (${ty}): ${detail}"
+
+              case "$ty" in
+                earnings_countdown)
+                  days=$(echo "$detail" | grep -oE '[0-9]+ business day' | grep -oE '[0-9]+' || echo 999)
+                  earnings_lines+=("$(printf '%03d' "$days")|$line")
+                  ;;
+                sma_cross)
+                  if [[ "$detail" == golden* ]]; then
+                    golden_lines+=("$line")
+                  else
+                    death_lines+=("$line")
+                  fi
+                  ;;
+                price_swing)
+                  if [[ "$detail" == *"move up"* ]]; then
+                    up_lines+=("$line")
+                  else
+                    down_lines+=("$line")
+                  fi
+                  ;;
+              esac
             fi
           done
 
           tickers=$(printf '%s\n' "${tickers_list[@]}" | sort -u | paste -sd, -)
           echo "tickers=$tickers" >> "$GITHUB_OUTPUT"
 
+          sorted_earnings=()
+          if [ "${#earnings_lines[@]}" -gt 0 ]; then
+            mapfile -t sorted_earnings < <(printf '%s\n' "${earnings_lines[@]}" | sort -t'|' -k1,1n | cut -d'|' -f2-)
+          fi
+
           {
             echo 'body<<BODY_EOF'
             echo "Want a full AI-built dashboard for one of these? Reply to this email with its ID line (e.g. quote it back)."
             echo ""
-            printf '%s' "$lines"
+            if [ "${#sorted_earnings[@]}" -gt 0 ]; then
+              echo "=== Earnings Countdown (closest first) ==="
+              printf '%s\n' "${sorted_earnings[@]}"
+              echo ""
+            fi
+            if [ "${#golden_lines[@]}" -gt 0 ] || [ "${#death_lines[@]}" -gt 0 ]; then
+              echo "=== SMA Cross (golden, then death) ==="
+              [ "${#golden_lines[@]}" -gt 0 ] && printf '%s\n' "${golden_lines[@]}"
+              [ "${#death_lines[@]}" -gt 0 ] && printf '%s\n' "${death_lines[@]}"
+              echo ""
+            fi
+            if [ "${#up_lines[@]}" -gt 0 ] || [ "${#down_lines[@]}" -gt 0 ]; then
+              echo "=== Price Swings > 10% (up, then down) ==="
+              [ "${#up_lines[@]}" -gt 0 ] && printf '%s\n' "${up_lines[@]}"
+              [ "${#down_lines[@]}" -gt 0 ] && printf '%s\n' "${down_lines[@]}"
+            fi
             echo 'BODY_EOF'
           } >> "$GITHUB_OUTPUT"
 
