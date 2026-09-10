@@ -30,3 +30,10 @@
 {"ticker": "NEM", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=108.91, 200-day=108.67"}
 {"ticker": "SPGI", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=427.66, 200-day=427.52"}
 {"ticker": "WEC", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=109.95, 200-day=109.98"}
+{"ticker": "SPOT", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=506.43, 200-day=505.90"}
+{"ticker": "ABT", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=104.99, 200-day=104.92"}
+{"ticker": "COO", "date": "2026-09-10", "trigger_type": "price_swing", "detail": "Daily move down -14.7% (close 63.48 -> 54.17)"}
+{"ticker": "DHR", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=202.25, 200-day=201.99"}
+{"ticker": "NEM", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=108.91, 200-day=108.67"}
+{"ticker": "SPGI", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=427.66, 200-day=427.52"}
+{"ticker": "WEC", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=109.95, 200-day=109.98"}
