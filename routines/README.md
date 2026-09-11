@@ -124,9 +124,32 @@ CONSTRAINTS
 
 ## Arming it
 
-Once an open-egress environment exists, the Routine can be created directly —
-it needs no connectors, so it does not have to be made from the claude.ai
-Routines UI.
+Create the Routine from the web form at
+[claude.ai/code/routines](https://claude.ai/code/routines) -> **New routine**:
+
+| Field        | Value                                                        |
+| ------------ | ------------------------------------------------------------ |
+| Name         | Daily watchlist dashboards                                   |
+| Instructions | the prompt block above                                       |
+| Repositories | `RQHNetworks/watchlist`                                      |
+| Environment  | the open-egress environment from Prerequisites                |
+| Trigger      | Schedule -> daily, 5:15 PM local (the form converts to UTC)  |
+| Connectors   | remove all; this design needs none                            |
+
+**Selecting the repository is not optional and is easy to miss.** A routine
+clones the repositories listed on it at the start of every run. A routine
+created without one produces a session with no clone, so it cannot read
+`triggers/` or write `dashboards/routine/` — it will appear to run fine and
+silently accomplish nothing. Two probe runs were lost this way: the run status
+showed SUCCEEDED both times, because that status only means the session started
+and exited without an infrastructure error, not that the task succeeded.
+
+Note that Claude pushes to `claude/`-prefixed branches without restriction, so
+committing to the project's working branch needs no extra permission.
+
+Creating routines programmatically (for example via an MCP `create_trigger`
+tool) is not equivalent: that path has no repositories parameter, and produces
+exactly the repo-less sessions described above.
 
 ## Deprecating the old path later
 
