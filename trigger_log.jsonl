@@ -37,3 +37,7 @@
 {"ticker": "NEM", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=108.91, 200-day=108.67"}
 {"ticker": "SPGI", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=427.66, 200-day=427.52"}
 {"ticker": "WEC", "date": "2026-09-10", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=109.95, 200-day=109.98"}
+{"ticker": "DELL", "date": "2026-09-11", "trigger_type": "price_swing", "detail": "Daily move up +12.0% (close 506.62 -> 567.29)"}
+{"ticker": "GNRC", "date": "2026-09-11", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=208.94, 200-day=209.35"}
+{"ticker": "HPE", "date": "2026-09-11", "trigger_type": "price_swing", "detail": "Daily move up +12.4% (close 55.22 -> 62.09)"}
+{"ticker": "TRI", "date": "2026-09-11", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=98.92, 200-day=98.86"}

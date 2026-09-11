@@ -1,4 +1,4 @@
-I want to analyze SPOT (Spotify Technology S.A.). Build a single combined PNG image with four stacked panels, in this exact order:
+I want to analyze DELL (Dell Technologies Inc.). Build a single combined PNG image with four stacked panels, in this exact order:
 
 Panel #1 - 5 Year Stock Chart
 Continuous monthly close line, calendar timeline (Jan of 5-years-ago -> today), in blue. Mark and annotate the 52-week high in green and 52-week low in red, each with a small dot marker directly on the chart.
@@ -32,7 +32,7 @@ Style (whole image): Dark mode throughout (#131519-ish background), off-white he
 
 Technical notes: Python/matplotlib, one tall portrait PNG (~1200x2500-2600px). Escape literal dollar signs in any text string containing two or more of them (\$ instead of $). Panels use their own appropriate scales and legends.
 
-Trigger context for this run: 50/200-day SMA crossover detected today (golden cross (50-day crossed above 200-day): 50-day=506.43, 200-day=505.90).
+Trigger context for this run: Large daily price move detected today (Daily move up +12.0% (close 506.62 -> 567.29)).
 
 After building the dashboard, also write a short analysis in Markdown, using exactly these bolded section headers so it renders cleanly as an HTML email. Keep every section to at most two short sentences - this is a quick-scan summary, not a report:
 
