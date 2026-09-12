@@ -14,9 +14,13 @@ be exercised on the same triggers and compared before either is retired.
 | Build host     | GitHub Actions runner (`claude-code-action`)     | Claude Routine session                     |
 | Billed as      | Anthropic API credits                            | Claude plan usage                          |
 | Output         | `dashboards/<TICKER>_<TYPE>_<DATE>.png`          | `dashboards/routine/<TICKER>_<DATE>.png`   |
+| Commits to     | `main`                                           | `claude/routine-dashboards` branch only    |
 
 Output filenames deliberately differ so the two paths never overwrite each
-other, and so a side-by-side comparison of the same trigger is possible.
+other, and so a side-by-side comparison of the same trigger is possible. They
+also land on different branches: this path commits only to
+`claude/routine-dashboards` and never to `main`, so nothing it does can disturb
+the existing pipeline while both are running.
 
 ## Why this path needs no email at all
 
@@ -60,7 +64,23 @@ Each firing starts a fresh session, so this is written to stand alone.
 ```text
 Build dashboards for today's watchlist triggers.
 
-Work in the RQHNetworks/watchlist repository. Start by pulling the latest main.
+Work in the RQHNetworks/watchlist repository.
+
+STEP 0 - SET UP THE WORKING BRANCH
+This path never commits to main. It owns the branch claude/routine-dashboards.
+Run exactly this, which resumes that branch if it exists and creates it from
+main on the first run, then brings in today's triggers either way:
+
+  git fetch origin
+  git checkout -B claude/routine-dashboards origin/claude/routine-dashboards \
+    || git checkout -B claude/routine-dashboards origin/main
+  git merge origin/main --no-edit
+
+The merge matters: triggers/ is committed to main by the GitHub Actions monitor,
+so without it you would be working against a stale queue. Branches prefixed with
+claude/ are always accepted on push, whereas a push to main is rejected when the
+branch carries commits authored by someone else - and main carries commits from
+the GitHub Actions bot, so pushing there would fail.
 
 STEP 1 - VERIFY NETWORK, FAIL LOUDLY IF BLOCKED
 Confirm you can actually reach financial data before doing anything else:
@@ -81,9 +101,10 @@ gets exactly one dashboard, and you mention every one of its triggers in the
 trigger-context section of that dashboard.
 
 STEP 3 - IDEMPOTENCY GUARD, DO NOT SKIP
-For each ticker, if dashboards/routine/<TICKER>_<DATE>.png already exists on
-main, that ticker is already done - skip it silently. Without this check a
-re-fire rebuilds everything and burns quota for no reason.
+For each ticker, if dashboards/routine/<TICKER>_<DATE>.png already exists on the
+claude/routine-dashboards branch you checked out in STEP 0, that ticker is
+already done - skip it silently. Without this check a re-fire rebuilds
+everything and burns quota for no reason.
 
 STEP 4 - BUILD
 For each remaining ticker, read one of its triggers/*.txt files. That file
@@ -108,9 +129,16 @@ SMTP_USERNAME and SMTP_PASSWORD come from the environment. If they are missing,
 the script says so - report that rather than silently skipping delivery.
 
 STEP 6 - COMMIT AND REPORT
-Commit and push the new files in dashboards/routine/ to main. Finish with a
-short summary: which tickers you built, which you skipped as already done, and
-anything that failed and why.
+Commit the new files in dashboards/routine/ and push them to the working branch:
+
+  git push -u origin claude/routine-dashboards
+
+Never push to main. If the push fails, say so explicitly in your summary - the
+emails will already have gone out, but a failed push breaks the STEP 3 guard and
+the next run would rebuild the same dashboards.
+
+Finish with a short summary: which tickers you built, which you skipped as
+already done, and anything that failed and why.
 
 CONSTRAINTS
 - Do not modify .github/workflows/, watchlist_monitor.py, or
@@ -124,9 +152,32 @@ CONSTRAINTS
 
 ## Arming it
 
-Once an open-egress environment exists, the Routine can be created directly —
-it needs no connectors, so it does not have to be made from the claude.ai
-Routines UI.
+Create the Routine from the web form at
+[claude.ai/code/routines](https://claude.ai/code/routines) -> **New routine**:
+
+| Field        | Value                                                        |
+| ------------ | ------------------------------------------------------------ |
+| Name         | Daily watchlist dashboards                                   |
+| Instructions | the prompt block above                                       |
+| Repositories | `RQHNetworks/watchlist`                                      |
+| Environment  | the open-egress environment from Prerequisites                |
+| Trigger      | Schedule -> daily, 5:15 PM local (the form converts to UTC)  |
+| Connectors   | remove all; this design needs none                            |
+
+**Selecting the repository is not optional and is easy to miss.** A routine
+clones the repositories listed on it at the start of every run. A routine
+created without one produces a session with no clone, so it cannot read
+`triggers/` or write `dashboards/routine/` — it will appear to run fine and
+silently accomplish nothing. Two probe runs were lost this way: the run status
+showed SUCCEEDED both times, because that status only means the session started
+and exited without an infrastructure error, not that the task succeeded.
+
+Note that Claude pushes to `claude/`-prefixed branches without restriction, so
+committing to the project's working branch needs no extra permission.
+
+Creating routines programmatically (for example via an MCP `create_trigger`
+tool) is not equivalent: that path has no repositories parameter, and produces
+exactly the repo-less sessions described above.
 
 ## Deprecating the old path later
 
