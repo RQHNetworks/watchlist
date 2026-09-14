@@ -55,7 +55,9 @@ jobs:
               out="panels/${t}_sma_${d}.png"
 
               # One bad ticker must not lose the rest of the batch.
-              if python3 charts/sma_panel.py --ticker "$t" --out "$out"; then
+              # --as-of pins the chart to the trigger's own date, so its numbers
+              # match the email body instead of drifting to whenever this ran.
+              if python3 charts/sma_panel.py --ticker "$t" --out "$out" --as-of "$d"; then
                 tickers+=("$t")
                 attachments+=("$out")
                 detail=$(jq -r --arg t "$t" --arg d "$d" \
