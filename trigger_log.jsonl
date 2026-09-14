@@ -41,3 +41,13 @@
 {"ticker": "GNRC", "date": "2026-09-11", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=208.94, 200-day=209.35"}
 {"ticker": "HPE", "date": "2026-09-11", "trigger_type": "price_swing", "detail": "Daily move up +12.4% (close 55.22 -> 62.09)"}
 {"ticker": "TRI", "date": "2026-09-11", "trigger_type": "sma_cross", "detail": "golden cross (50-day crossed above 200-day): 50-day=98.92, 200-day=98.86"}
+{"ticker": "RDW", "date": "2026-09-14", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=10.68, 200-day=10.72"}
+{"ticker": "PANW", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move up +13.6% (close 330.65 -> 375.51)"}
+{"ticker": "CRWD", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move up +14.7% (close 206.74 -> 237.21)"}
+{"ticker": "RBRK", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move up +14.1% (close 86.65 -> 98.85)"}
+{"ticker": "ALAB", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -10.1% (close 291.22 -> 261.93)"}
+{"ticker": "COHR", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -11.0% (close 305.37 -> 271.67)"}
+{"ticker": "EXC", "date": "2026-09-14", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=45.04, 200-day=45.06"}
+{"ticker": "GLW", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -12.7% (close 166.40 -> 145.33)"}
+{"ticker": "TER", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -11.8% (close 379.72 -> 335.07)"}
+{"ticker": "TPR", "date": "2026-09-14", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=137.44, 200-day=137.77"}
