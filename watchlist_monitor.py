@@ -115,6 +115,7 @@ class TriggerEvent:
     date: str
     trigger_type: str
     detail: str
+    company: str = ""
 
 
 def business_days_between(d1: date, d2: date) -> int:
@@ -139,7 +140,9 @@ def check_sma_cross(hist: pd.DataFrame) -> TriggerEvent | None:
     if not crossed:
         return None
 
-    cross_type = "golden cross (50-day crossed above 200-day)" if diff_today > 0 else "death cross (50-day crossed below 200-day)"
+    # "golden"/"death" already says which line went which way, so the
+    # parenthetical spelling it out was just noise in the email.
+    cross_type = "golden cross" if diff_today > 0 else "death cross"
     return TriggerEvent(
         ticker="",  # filled by caller
         date=str(hist.index[-1].date()),
@@ -272,10 +275,15 @@ def run_once(watchlist: list = None) -> list:
             if ev:
                 events.append(ev)
 
+            # Looked up once per ticker rather than per event, and only when
+            # something actually fired, so it costs nothing on a quiet day.
+            company = get_company_name(t, ticker) if events else ticker
+
             for ev in events:
+                ev.company = company
                 print(f"TRIGGER FIRED: {ev.ticker} / {ev.trigger_type} / {ev.detail}")
                 fired.append(ev)
-                _write_prompt_file(ev, get_company_name(t, ticker))
+                _write_prompt_file(ev, company)
                 _append_log(ev)
         
         except Exception as e:

@@ -122,6 +122,7 @@ jobs:
           death_lines=()
           up_lines=()
           down_lines=()
+          ids=()
 
           for f in "${files[@]}"; do
             base="${f%.txt}"
@@ -130,8 +131,20 @@ jobs:
               detail=$(jq -r --arg t "$t" --arg ty "$ty" --arg d "$d" \
                 'select(.ticker == $t and .trigger_type == $ty and .date == $d) | .detail' \
                 trigger_log.jsonl | tail -1)
+              company=$(jq -r --arg t "$t" --arg ty "$ty" --arg d "$d" \
+                'select(.ticker == $t and .trigger_type == $ty and .date == $d) | .company // ""' \
+                trigger_log.jsonl | tail -1)
               tickers_list+=("$t")
-              line="${base} -- ${t} (${ty}): ${detail}"
+
+              # The date lives in the subject line, and the trigger IDs are
+              # collected into a footer, so each line here is just the readable
+              # facts: symbol, company, what happened.
+              if [ -n "$company" ] && [ "$company" != "$t" ]; then
+                line="${t} (${company}): ${detail}"
+              else
+                line="${t}: ${detail}"
+              fi
+              ids+=("$base")
 
               case "$ty" in
                 earnings_countdown)
@@ -166,8 +179,6 @@ jobs:
 
           {
             echo 'body<<BODY_EOF'
-            echo "Want a full AI-built dashboard for one of these? Reply to this email with its ID line (e.g. quote it back)."
-            echo ""
             if [ "${#sorted_earnings[@]}" -gt 0 ]; then
               echo "=== Earnings Countdown (closest first) ==="
               printf '%s\n' "${sorted_earnings[@]}"
@@ -183,7 +194,14 @@ jobs:
               echo "=== Price Swings > 10% (up, then down) ==="
               [ "${#up_lines[@]}" -gt 0 ] && printf '%s\n' "${up_lines[@]}"
               [ "${#down_lines[@]}" -gt 0 ] && printf '%s\n' "${down_lines[@]}"
+              echo ""
             fi
+            # Kept out of the trigger lines above so they stay readable, but
+            # still present: the Gmail Apps Script bridge matches these IDs in
+            # a reply, and they carry the date it needs.
+            echo "--"
+            echo "Want a full AI-built dashboard? Reply quoting one of these IDs:"
+            printf '  %s\n' "${ids[@]}"
             echo 'BODY_EOF'
           } >> "$GITHUB_OUTPUT"
 

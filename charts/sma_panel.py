@@ -123,10 +123,13 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
 
     latest = float(close.iloc[-1])
     # Header drawn in figure coords with explicit separation; anchoring the
-    # subtitle to the axes put it on top of the title.
-    fig.text(0.07, 0.945, f"{ticker} — Technicals (50 / 200-day SMA)",
+    # subtitle to the axes put it on top of the title. The company name sits
+    # beside the symbol so the chart identifies itself without the email.
+    heading = f"{ticker} — {company}" if company and company != ticker else ticker
+    fig.text(0.07, 0.945, heading,
              color=TEXT_PRIMARY, fontsize=15, fontweight="bold", va="top")
-    fig.text(0.07, 0.888, f"{company or ticker}   ·   last close {latest:,.2f}",
+    fig.text(0.07, 0.888,
+             f"Technicals (50 / 200-day SMA)   ·   last close {latest:,.2f}",
              color=TEXT_MUTED, fontsize=10, va="top")
 
     # Headroom so the legend never sits on the data.
@@ -168,6 +171,10 @@ def main() -> None:
     p.add_argument("--period", default="2y",
                    help="History window. 2y keeps a full year of 200-day SMA "
                         "after the 200-session warmup; 1y leaves only ~50 points.")
+    p.add_argument("--company",
+                   help="Company name shown beside the symbol. Defaults to a "
+                        "yfinance lookup; pass it to keep the chart's name "
+                        "identical to the email's.")
     p.add_argument("--as-of", dest="as_of",
                    help="Trigger date (YYYY-MM-DD). History is truncated here so "
                         "the chart reproduces exactly what the monitor saw. Without "
@@ -186,10 +193,13 @@ def main() -> None:
         if hist.empty:
             raise SystemExit(f"No {args.ticker} history on or before {args.as_of}")
 
-    try:
-        company = t.info.get("longName", args.ticker)
-    except Exception:
-        company = args.ticker
+    if args.company:
+        company = args.company
+    else:
+        try:
+            company = t.info.get("longName", args.ticker)
+        except Exception:
+            company = args.ticker
 
     result = build(args.ticker, hist, args.out, company)
     print(result)
