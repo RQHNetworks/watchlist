@@ -32,7 +32,7 @@ Style (whole image): Dark mode throughout (#131519-ish background), off-white he
 
 Technical notes: Python/matplotlib, one tall portrait PNG (~1200x2500-2600px). Escape literal dollar signs in any text string containing two or more of them (\$ instead of $). Panels use their own appropriate scales and legends.
 
-Trigger context for this run: Large daily price move detected today (Daily move up +14.1% (close 86.65 -> 98.85)).
+Trigger context for this run: Large daily price move detected today (Daily move up +15.6% (close 86.65 -> 100.20)).
 
 After building the dashboard, also write a short analysis in Markdown, using exactly these bolded section headers so it renders cleanly as an HTML email. Keep every section to at most two short sentences - this is a quick-scan summary, not a report:
 

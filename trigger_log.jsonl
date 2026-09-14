@@ -51,3 +51,15 @@
 {"ticker": "GLW", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -12.7% (close 166.40 -> 145.33)"}
 {"ticker": "TER", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -11.8% (close 379.72 -> 335.07)"}
 {"ticker": "TPR", "date": "2026-09-14", "trigger_type": "sma_cross", "detail": "death cross (50-day crossed below 200-day): 50-day=137.44, 200-day=137.77"}
+{"ticker": "RDW", "date": "2026-09-14", "trigger_type": "sma_cross", "detail": "death cross: 50-day=10.68, 200-day=10.72", "company": "Redwire Corporation"}
+{"ticker": "PANW", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move up +13.1% (close 330.65 -> 373.94)", "company": "Palo Alto Networks, Inc."}
+{"ticker": "CRWD", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move up +13.9% (close 206.74 -> 235.38)", "company": "CrowdStrike Holdings, Inc."}
+{"ticker": "RBRK", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move up +15.6% (close 86.65 -> 100.20)", "company": "RBRK"}
+{"ticker": "ALAB", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -11.7% (close 291.22 -> 257.04)", "company": "Astera Labs, Inc."}
+{"ticker": "COHR", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -12.7% (close 305.37 -> 266.50)", "company": "Coherent Corp."}
+{"ticker": "EXC", "date": "2026-09-14", "trigger_type": "sma_cross", "detail": "death cross: 50-day=45.04, 200-day=45.06", "company": "Exelon Corporation"}
+{"ticker": "GLW", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -13.7% (close 166.40 -> 143.60)", "company": "Corning Incorporated"}
+{"ticker": "HPE", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -10.8% (close 62.09 -> 55.41)", "company": "Hewlett Packard Enterprise Company"}
+{"ticker": "SWKS", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -10.3% (close 88.35 -> 79.26)", "company": "Skyworks Solutions, Inc."}
+{"ticker": "TER", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -13.3% (close 379.72 -> 329.20)", "company": "Teradyne, Inc."}
+{"ticker": "TPR", "date": "2026-09-14", "trigger_type": "sma_cross", "detail": "death cross: 50-day=137.43, 200-day=137.76", "company": "Tapestry, Inc."}
