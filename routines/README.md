@@ -53,8 +53,31 @@ Routine session has no Gmail connector:
 - `SMTP_PASSWORD` — that account's Google app password
 - `DASHBOARD_RECIPIENT` — optional; defaults to `RQHNetworks@outlook.com`
 
-**3. Schedule.** The monitor runs at 20:30 UTC and takes about 7 minutes, so
-fire this daily at **21:15 UTC** — after triggers are committed, not polling.
+**3. Schedule: `30 22 * * 1-5` (22:30 UTC, weekdays).** Not polling — the
+monitor's output is already committed by then.
+
+The UTC time matters, and 21:15 UTC was wrong. A routine's cron is stored and
+evaluated in **UTC** and does not follow daylight saving, while the monitor
+deliberately switches between two crons so it always lands at 4:30 PM ET:
+
+| | monitor fires | 21:15 UTC routine | 22:30 UTC routine |
+| --- | --- | --- | --- |
+| EDT (Mar-Nov) | 20:30 UTC = 4:30 PM ET | 5:15 PM ET, 45 min after | 6:30 PM ET |
+| EST (Nov-Mar) | 21:30 UTC = 4:30 PM ET | **4:15 PM ET, 15 min BEFORE** | 5:30 PM ET |
+
+At 21:15 UTC the routine would have started running *ahead* of the monitor every
+day from November, quietly building dashboards from the previous day's triggers.
+It would not error - the worst kind of failure. 22:30 UTC clears the monitor in
+both regimes, with the monitor finishing around 4:52 PM ET worst case (allowing
+for GitHub's scheduling delay plus the ~6.5 minute scan).
+
+Weekdays only, because the monitor does not run weekends; a daily routine would
+otherwise wake to a stale queue every Saturday and Sunday.
+
+Because the creation form takes a *local* time and converts it once, the stored
+UTC value is the one that matters. Set the cron explicitly with `/schedule
+update` in the CLI rather than re-entering a local time later, which would
+re-snapshot whatever offset happened to be in effect.
 Re-fires are harmless because of the idempotency check below.
 
 ## The Routine prompt
@@ -161,7 +184,7 @@ Create the Routine from the web form at
 | Instructions | the prompt block above                                       |
 | Repositories | `RQHNetworks/watchlist`                                      |
 | Environment  | the open-egress environment from Prerequisites                |
-| Trigger      | Schedule -> daily, 5:15 PM local (the form converts to UTC)  |
+| Trigger      | Schedule -> weekdays; then set `30 22 * * 1-5` via `/schedule update` (see Prerequisites for why the UTC value matters) |
 | Connectors   | remove all; this design needs none                            |
 
 **Selecting the repository is not optional and is easy to miss.** A routine
