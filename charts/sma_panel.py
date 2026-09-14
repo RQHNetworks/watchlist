@@ -92,14 +92,32 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
 
     # Direct labels at the right edge. Text wears ink tokens, never the series
     # colour - the adjacent line carries identity.
+    #
+    # The two SMAs sit almost on top of each other right after a cross, which
+    # rendered the labels as one illegible smudge. Push them apart when the gap
+    # is smaller than the text, so the values stay readable at exactly the
+    # moment the chart matters most.
     last_x = close.index[-1]
+    ends = []
     for series, name in ((sma50, "50d"), (sma200, "200d")):
         value = series.dropna()
-        if value.empty:
-            continue
-        ax.annotate(f"  {name} {value.iloc[-1]:,.2f}",
-                    xy=(last_x, value.iloc[-1]),
-                    xytext=(6, 0), textcoords="offset points",
+        if not value.empty:
+            ends.append([name, float(value.iloc[-1]), 0.0])
+
+    if len(ends) == 2:
+        y_px = [ax.transData.transform((0, e[1]))[1] for e in ends]
+        gap = abs(y_px[0] - y_px[1])
+        min_gap = 15.0
+        if gap < min_gap:
+            nudge = (min_gap - gap) / 2
+            hi = 0 if ends[0][1] >= ends[1][1] else 1
+            ends[hi][2] = nudge
+            ends[1 - hi][2] = -nudge
+
+    for name, value, dy in ends:
+        ax.annotate(f"  {name} {value:,.2f}",
+                    xy=(last_x, value),
+                    xytext=(6, dy), textcoords="offset points",
                     color=TEXT_SECONDARY, fontsize=9,
                     va="center", zorder=5)
 
@@ -150,12 +168,23 @@ def main() -> None:
     p.add_argument("--period", default="2y",
                    help="History window. 2y keeps a full year of 200-day SMA "
                         "after the 200-session warmup; 1y leaves only ~50 points.")
+    p.add_argument("--as-of", dest="as_of",
+                   help="Trigger date (YYYY-MM-DD). History is truncated here so "
+                        "the chart reproduces exactly what the monitor saw. Without "
+                        "it the chart computes as of now and silently disagrees "
+                        "with the trigger it is illustrating.")
     args = p.parse_args()
 
     t = yf.Ticker(args.ticker)
     hist = t.history(period=args.period, auto_adjust=True)
     if hist.empty:
         raise SystemExit(f"No price history returned for {args.ticker}")
+
+    if args.as_of:
+        cutoff = pd.Timestamp(args.as_of).date()
+        hist = hist[hist.index.date <= cutoff]
+        if hist.empty:
+            raise SystemExit(f"No {args.ticker} history on or before {args.as_of}")
 
     try:
         company = t.info.get("longName", args.ticker)
