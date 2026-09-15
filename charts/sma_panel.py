@@ -32,6 +32,17 @@ COLOR_CLOSE = "#3987e5"
 COLOR_SMA50 = "#c98500"
 COLOR_SMA200 = "#199e70"
 
+# For the header's percent change. The sign already carries the meaning, so the
+# colour is redundant encoding rather than the only signal. The palette's
+# standard red (#d03b3b) measures 3.80:1 here, under the 4.5:1 text bar, so the
+# dark-surface step is used instead.
+STATUS_UP = "#0ca30c"    # 5.45:1
+STATUS_DOWN = "#e66767"  # 5.66:1
+
+# Plotted window. History is fetched well beyond this so the 200-day SMA has
+# its warmup off-screen and still spans the whole chart.
+DISPLAY_YEARS = 2
+
 
 def find_last_crossover(sma50: pd.Series, sma200: pd.Series):
     """Date and direction of the most recent 50/200 crossover, or (None, None)."""
@@ -48,12 +59,25 @@ def find_last_crossover(sma50: pd.Series, sma200: pd.Series):
     return date, "golden" if bool(sign.loc[date]) else "death"
 
 
-def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None = None) -> dict:
-    close = hist["Close"]
-    sma50 = close.rolling(50).mean()
-    sma200 = close.rolling(200).mean()
+def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None = None,
+          display_years: float = DISPLAY_YEARS) -> dict:
+    # SMAs are computed over the FULL history, then everything is trimmed to the
+    # display window. A rolling(200) has no value until its 200th session, so
+    # computing and plotting over the same 2-year window left the 200-day line
+    # starting ~39% across - it looked like missing data but was just warmup.
+    # Fetching extra history that is never plotted lets all three lines span the
+    # chart edge to edge.
+    close_full = hist["Close"]
+    sma50_full = close_full.rolling(50).mean()
+    sma200_full = close_full.rolling(200).mean()
+
+    plot_start = close_full.index[-1] - pd.DateOffset(years=display_years)
+    close = close_full.loc[close_full.index >= plot_start]
+    sma50 = sma50_full.loc[sma50_full.index >= plot_start]
+    sma200 = sma200_full.loc[sma200_full.index >= plot_start]
 
     weekly = close.resample("W").last().dropna()
+    # Search inside the displayed window so the marker can never land off-chart.
     cross_date, cross_type = find_last_crossover(sma50, sma200)
 
     fig, ax = plt.subplots(figsize=(12, 6.5), dpi=110)
@@ -76,10 +100,16 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
                 markerfacecolor=TEXT_PRIMARY, markeredgecolor=SURFACE,
                 markeredgewidth=2, zorder=6)
         label = f"{'Golden' if cross_type == 'golden' else 'Death'} cross\n{cross_date.date()}"
+        # Always to the right of the marker line. Everything left of the cross
+        # is history the chart exists to show, so a box placed there covers the
+        # data; to the right there is either the post-cross tail or, for a fresh
+        # trigger, the margin. Sat high enough to clear the value labels, which
+        # share that margin.
         ax.annotate(
             label,
             xy=(cross_date, cross_price),
-            xytext=(12, 22),
+            xytext=(14, 34),
+            ha="left",
             textcoords="offset points",
             color=TEXT_PRIMARY,
             fontsize=9.5,
@@ -90,8 +120,11 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
             zorder=7,
         )
 
-    # Direct labels at the right edge. Text wears ink tokens, never the series
-    # colour - the adjacent line carries identity.
+    # Direct labels at the right edge, each in its own line's colour so a value
+    # can be traced to its curve at a glance. Colour normally stays out of text,
+    # but each of these measures above 4.5:1 against the surface (blue 5.02,
+    # gold 5.95, aqua 5.37), so they clear the contrast bar for text rather than
+    # only the looser one for graphics.
     #
     # The two SMAs sit almost on top of each other right after a cross, which
     # rendered the labels as one illegible smudge. Push them apart when the gap
@@ -99,10 +132,11 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
     # moment the chart matters most.
     last_x = close.index[-1]
     ends = []
-    for series, name in ((sma50, "50d"), (sma200, "200d")):
+    for series, name, colour in ((sma50, "50d", COLOR_SMA50),
+                                 (sma200, "200d", COLOR_SMA200)):
         value = series.dropna()
         if not value.empty:
-            ends.append([name, float(value.iloc[-1]), 0.0])
+            ends.append([name, float(value.iloc[-1]), 0.0, colour])
 
     if len(ends) == 2:
         y_px = [ax.transData.transform((0, e[1]))[1] for e in ends]
@@ -114,23 +148,34 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
             ends[hi][2] = nudge
             ends[1 - hi][2] = -nudge
 
-    for name, value, dy in ends:
+    for name, value, dy, colour in ends:
         ax.annotate(f"  {name} {value:,.2f}",
                     xy=(last_x, value),
                     xytext=(6, dy), textcoords="offset points",
-                    color=TEXT_SECONDARY, fontsize=9,
+                    color=colour, fontsize=9, fontweight="bold",
                     va="center", zorder=5)
 
     latest = float(close.iloc[-1])
+    prev = float(close.iloc[-2]) if len(close) >= 2 else latest
+    change = (latest / prev - 1) if prev else 0.0
+
     # Header drawn in figure coords with explicit separation; anchoring the
     # subtitle to the axes put it on top of the title. The company name sits
     # beside the symbol so the chart identifies itself without the email.
     heading = f"{ticker} — {company}" if company and company != ticker else ticker
     fig.text(0.07, 0.945, heading,
              color=TEXT_PRIMARY, fontsize=15, fontweight="bold", va="top")
-    fig.text(0.07, 0.888,
-             f"Technicals (50 / 200-day SMA)   ·   last close {latest:,.2f}",
+    fig.text(0.07, 0.888, "Technicals (50 / 200-day SMA)",
              color=TEXT_MUTED, fontsize=10, va="top")
+
+    # Last close sits top-right, the corner the eye goes to for "what is it now".
+    fig.text(0.955, 0.945, f"{latest:,.2f}",
+             color=TEXT_PRIMARY, fontsize=17, fontweight="bold",
+             va="top", ha="right")
+    fig.text(0.955, 0.888,
+             f"last close   {change:+.2%}",
+             color=STATUS_UP if change >= 0 else STATUS_DOWN,
+             fontsize=10, va="top", ha="right")
 
     # Headroom so the legend never sits on the data.
     low = float(min(weekly.min(), sma200.min(skipna=True), sma50.min(skipna=True)))
@@ -148,7 +193,9 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
     for text in legend.get_texts():
         text.set_color(TEXT_SECONDARY)
 
-    fig.subplots_adjust(left=0.07, right=0.90, top=0.84, bottom=0.10)
+    # Right margin holds the value labels and, for a fresh cross, the annotation
+    # box too - both sit outside the plot so neither covers the data.
+    fig.subplots_adjust(left=0.07, right=0.865, top=0.84, bottom=0.10)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, facecolor=SURFACE)
     plt.close(fig)
@@ -168,9 +215,13 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ticker", required=True)
     p.add_argument("--out", required=True, type=Path)
-    p.add_argument("--period", default="2y",
-                   help="History window. 2y keeps a full year of 200-day SMA "
-                        "after the 200-session warmup; 1y leaves only ~50 points.")
+    p.add_argument("--period", default="3y",
+                   help="History FETCHED. Must exceed the plotted window by more "
+                        "than the 200-session warmup, or the 200-day SMA starts "
+                        "partway across the chart instead of spanning it.")
+    p.add_argument("--display-years", dest="display_years", type=float,
+                   default=DISPLAY_YEARS,
+                   help="History PLOTTED. The rest is warmup and stays off-chart.")
     p.add_argument("--company",
                    help="Company name shown beside the symbol. Defaults to a "
                         "yfinance lookup; pass it to keep the chart's name "
@@ -201,7 +252,7 @@ def main() -> None:
         except Exception:
             company = args.ticker
 
-    result = build(args.ticker, hist, args.out, company)
+    result = build(args.ticker, hist, args.out, company, args.display_years)
     print(result)
 
 
