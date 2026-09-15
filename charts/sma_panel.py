@@ -100,15 +100,16 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
                 markerfacecolor=TEXT_PRIMARY, markeredgecolor=SURFACE,
                 markeredgewidth=2, zorder=6)
         label = f"{'Golden' if cross_type == 'golden' else 'Death'} cross\n{cross_date.date()}"
-        # A freshly triggered cross sits at the right edge, where a rightward
-        # box runs into the value labels. Flip it leftward there.
-        span = close.index[-1] - close.index[0]
-        near_right = (close.index[-1] - cross_date) < span * 0.25
+        # Always to the right of the marker line. Everything left of the cross
+        # is history the chart exists to show, so a box placed there covers the
+        # data; to the right there is either the post-cross tail or, for a fresh
+        # trigger, the margin. Sat high enough to clear the value labels, which
+        # share that margin.
         ax.annotate(
             label,
             xy=(cross_date, cross_price),
-            xytext=(-12, 22) if near_right else (12, 22),
-            ha="right" if near_right else "left",
+            xytext=(14, 34),
+            ha="left",
             textcoords="offset points",
             color=TEXT_PRIMARY,
             fontsize=9.5,
@@ -192,7 +193,9 @@ def build(ticker: str, hist: pd.DataFrame, out_path: Path, company: str | None =
     for text in legend.get_texts():
         text.set_color(TEXT_SECONDARY)
 
-    fig.subplots_adjust(left=0.07, right=0.90, top=0.84, bottom=0.10)
+    # Right margin holds the value labels and, for a fresh cross, the annotation
+    # box too - both sit outside the plot so neither covers the data.
+    fig.subplots_adjust(left=0.07, right=0.865, top=0.84, bottom=0.10)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, facecolor=SURFACE)
     plt.close(fig)
