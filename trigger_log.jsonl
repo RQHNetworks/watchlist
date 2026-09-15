@@ -63,3 +63,8 @@
 {"ticker": "SWKS", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -10.3% (close 88.35 -> 79.26)", "company": "Skyworks Solutions, Inc."}
 {"ticker": "TER", "date": "2026-09-14", "trigger_type": "price_swing", "detail": "Daily move down -13.3% (close 379.72 -> 329.20)", "company": "Teradyne, Inc."}
 {"ticker": "TPR", "date": "2026-09-14", "trigger_type": "sma_cross", "detail": "death cross: 50-day=137.43, 200-day=137.76", "company": "Tapestry, Inc."}
+{"ticker": "CRM", "date": "2026-09-15", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=202.28, 200-day=200.74", "company": "Salesforce, Inc."}
+{"ticker": "AXON", "date": "2026-09-15", "trigger_type": "price_swing", "detail": "Daily move down -10.1% (close 490.18 -> 440.87)", "company": "Axon Enterprise, Inc."}
+{"ticker": "AZO", "date": "2026-09-15", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-22 (5 business days away)", "company": "AutoZone, Inc."}
+{"ticker": "SPGI", "date": "2026-09-15", "trigger_type": "sma_cross", "detail": "death cross: 50-day=426.53, 200-day=426.81", "company": "S&P Global Inc."}
+{"ticker": "SWKS", "date": "2026-09-15", "trigger_type": "price_swing", "detail": "Daily move up +12.1% (close 79.26 -> 88.89)", "company": "Skyworks Solutions, Inc."}
