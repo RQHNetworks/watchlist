@@ -72,3 +72,9 @@
 {"ticker": "COIN", "date": "2026-09-15", "trigger_type": "price_swing", "detail": "Daily move down -10.1% (close 191.45 -> 172.11)", "company": "Coinbase Global, Inc."}
 {"ticker": "SPGI", "date": "2026-09-15", "trigger_type": "sma_cross", "detail": "death cross: 50-day=426.51, 200-day=426.80", "company": "S&P Global Inc."}
 {"ticker": "SWKS", "date": "2026-09-15", "trigger_type": "price_swing", "detail": "Daily move up +13.6% (close 79.26 -> 90.00)", "company": "Skyworks Solutions, Inc."}
+{"ticker": "CNP", "date": "2026-09-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=40.98, 200-day=41.02", "company": "CenterPoint Energy, Inc."}
+{"ticker": "CTAS", "date": "2026-09-16", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-23 (5 business days away)", "company": "Cintas Corporation"}
+{"ticker": "GIS", "date": "2026-09-16", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-23 (5 business days away)", "company": "General Mills, Inc."}
+{"ticker": "JBHT", "date": "2026-09-16", "trigger_type": "price_swing", "detail": "Daily move down -13.3% (close 273.05 -> 236.73)", "company": "J.B. Hunt Transport Services, Inc."}
+{"ticker": "NXPI", "date": "2026-09-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=243.02, 200-day=243.87", "company": "NXP Semiconductors N.V."}
+{"ticker": "PAYX", "date": "2026-09-16", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-23 (5 business days away)", "company": "Paychex, Inc."}
