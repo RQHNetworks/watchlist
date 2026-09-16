@@ -1,5 +1,11 @@
 # Claude Routine dashboard path (parallel to the GitHub Actions path)
 
+**Status: paused (2026-09-16).** The Routine was consuming too much session
+capacity per firing (four parallel per-ticker research-and-build agents) and
+has been paused from the Routine's schedule at claude.ai/code/routines. The
+code and docs below are otherwise unchanged and the path can be re-armed by
+un-pausing the Routine there.
+
 A second, independent way to turn watchlist triggers into dashboards. It runs
 **alongside** the existing GitHub Actions path, which is untouched, so both can
 be exercised on the same triggers and compared before either is retired.
