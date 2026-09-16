@@ -105,9 +105,15 @@ jobs:
         run: |
           # The report needs green for a gain and red for a loss, which plain
           # text cannot carry, so the body is generated as HTML by a script
-          # rather than assembled here. It also handles the ordering rules
-          # (earnings soonest first, winners by largest gain, losers by largest
-          # loss) that were awkward to express in bash.
+          # rather than assembled here. It also handles the ordering rules and
+          # the table layout, which were awkward to express in bash.
+          #
+          # This step reaches the network: it fetches 15 months of history for
+          # each ticker that fired, to fill the 3/6/12-month return columns.
+          # Only fired tickers, so typically under a dozen against the 536 the
+          # monitor scanned. A fetch failure degrades that ticker's returns to
+          # n/a rather than failing the step - the rest of the row comes from
+          # the already-committed trigger log and is still correct.
           summary=$(python3 emails/flag_email.py --out flag_email.html)
           echo "Flag email summary: $summary"
           echo "date=$(echo "$summary" | jq -r .date)" >> "$GITHUB_OUTPUT"
