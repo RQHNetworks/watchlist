@@ -344,6 +344,23 @@ def main() -> None:
 
     buckets, tickers, as_of = collect()
     returns = fetch_returns(as_of, offline=args.offline)
+
+    # Log what was actually computed. A failed fetch already warns, but a
+    # horizon that lands on n/a does not - that is the legitimate short-history
+    # case. Without this line an email where every return silently rendered
+    # n/a would look identical in the log to a healthy one.
+    for t in sorted(returns):
+        cells = " ".join(
+            f"{h}m=" + ("n/a" if returns[t][h] is None else f"{returns[t][h]:+.2%}")
+            for h in HORIZONS)
+        print(f"  returns {t:<6s} {cells}")
+    missing = sum(1 for t in returns for h in HORIZONS if returns[t][h] is None)
+    total = len(returns) * len(HORIZONS)
+    if total and missing == total:
+        print(f"WARNING: all {total} return values are n/a - the fetch is "
+              f"producing nothing, even though no individual ticker errored.")
+    elif missing:
+        print(f"NOTE: {missing}/{total} return values are n/a.")
     ids = sorted(e["id"] for group in buckets.values() for e in group)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
