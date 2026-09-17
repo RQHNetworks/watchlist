@@ -83,3 +83,6 @@
 {"ticker": "DRI", "date": "2026-09-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-24 (5 business days away)", "company": "Darden Restaurants, Inc."}
 {"ticker": "JBHT", "date": "2026-09-16", "trigger_type": "price_swing", "detail": "Daily move down -13.3% (close 273.05 -> 236.73)", "company": "J.B. Hunt Transport Services, Inc."}
 {"ticker": "NXPI", "date": "2026-09-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=241.95, 200-day=242.78", "company": "NXP Semiconductors N.V."}
+{"ticker": "CNP", "date": "2026-09-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=40.98, 200-day=41.02", "company": "CenterPoint Energy, Inc."}
+{"ticker": "JBHT", "date": "2026-09-16", "trigger_type": "price_swing", "detail": "Daily move down -13.3% (close 273.05 -> 236.73)", "company": "J.B. Hunt Transport Services, Inc."}
+{"ticker": "NXPI", "date": "2026-09-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=241.95, 200-day=242.78", "company": "NXP Semiconductors N.V."}
