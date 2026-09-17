@@ -200,3 +200,41 @@ jobs:
           # size, while the action reads the file directly.
           html_body: file://flag_email.html
           attachments: ${{ steps.panels.outputs.attachments }}
+
+      - name: Build triggers notes newsletter
+        if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
+        id: notes
+        run: |
+          # Second email. Deliberately built AFTER the report has been sent, so
+          # nothing in here can delay or block it - continue-on-error means a
+          # failure here costs the newsletter only, never the report.
+          #
+          # No model and no API cost: every sentence states arithmetic or
+          # quotes a dated headline. Fundamentals are fetched only for tickers
+          # with an earnings trigger, headlines only where a write-up quotes
+          # them, so a quiet day costs nothing extra.
+          summary=$(python3 emails/newsletter.py --out newsletter.html)
+          echo "Newsletter summary: $summary"
+          echo "$summary" | jq -e . > /dev/null || {
+            echo "::error::newsletter.py wrote non-JSON to stdout."
+            exit 1
+          }
+          echo "date=$(echo "$summary" | jq -r .date)" >> "$GITHUB_OUTPUT"
+        continue-on-error: true
+
+      - name: Email triggers notes
+        # outcome, not conclusion: continue-on-error forces conclusion to
+        # success, so only outcome distinguishes a real build from a failed one.
+        # Without this an unbuilt newsletter would be mailed as an empty body.
+        if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]' && steps.notes.outcome == 'success'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          from: Watchlist Monitor <${{ secrets.SMTP_USERNAME }}>
+          to: RQHNetworks@outlook.com
+          subject: "[${{ steps.notes.outputs.date }}] Watchlist Triggers Notes"
+          html_body: file://newsletter.html
