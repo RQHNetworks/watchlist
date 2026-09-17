@@ -161,6 +161,17 @@ jobs:
           # the already-committed trigger log and is still correct.
           summary=$(python3 emails/flag_email.py --out flag_email.html)
           echo "Flag email summary: $summary"
+
+          # Guard the stdout contract. Diagnostics from the script go to
+          # stderr; stdout carries only the JSON summary. When that slipped,
+          # jq failed, both outputs came back empty, and the mail went out
+          # titled "[] Watchlist Triggers:" - a silent defect, because every
+          # step still reported success. Fail the step instead.
+          echo "$summary" | jq -e . > /dev/null || {
+            echo "::error::flag_email.py wrote non-JSON to stdout; refusing to send an untitled email."
+            exit 1
+          }
+
           echo "date=$(echo "$summary" | jq -r .date)" >> "$GITHUB_OUTPUT"
           echo "tickers=$(echo "$summary" | jq -r .tickers)" >> "$GITHUB_OUTPUT"
 

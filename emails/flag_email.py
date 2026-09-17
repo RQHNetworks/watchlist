@@ -19,6 +19,7 @@ subject line without re-deriving any of it.
 import argparse
 import json
 import re
+import sys
 from datetime import date, datetime
 from pathlib import Path
 
@@ -94,6 +95,16 @@ def pretty_date(d: date) -> str:
     return f"{d.strftime('%B')} {d.day}<sup>{ordinal(d.day)}</sup>"
 
 
+def log(msg: str) -> None:
+    """Diagnostics go to stderr.
+
+    Only the JSON summary may touch stdout: the workflow captures it and
+    pipes it into jq to build the subject line, so a stray line there empties
+    the subject instead of failing loudly.
+    """
+    print(msg, file=sys.stderr)
+
+
 def load_log() -> list:
     if not LOG_PATH.exists():
         return []
@@ -125,7 +136,7 @@ def fetch_returns(tickers: dict, offline: bool = False) -> dict:
         import pandas as pd
         import yfinance as yf
     except ImportError as e:
-        print(f"WARNING: {e}; returns will render as n/a")
+        log(f"WARNING: {e}; returns will render as n/a")
         return out
 
     for ticker, as_of in tickers.items():
@@ -135,7 +146,7 @@ def fetch_returns(tickers: dict, offline: bool = False) -> dict:
         try:
             hist = yf.Ticker(ticker).history(period=FETCH_PERIOD, auto_adjust=True)
             if hist.empty:
-                print(f"WARNING: no history for {ticker}; returns n/a")
+                log(f"WARNING: no history for {ticker}; returns n/a")
                 continue
 
             close = hist["Close"].copy()
@@ -145,7 +156,7 @@ def fetch_returns(tickers: dict, offline: bool = False) -> dict:
             close = close[~close.index.duplicated(keep="last")].sort_index()
             close = close[close.index <= pd.Timestamp(as_of)]
             if close.empty:
-                print(f"WARNING: no {ticker} history at or before {as_of}; n/a")
+                log(f"WARNING: no {ticker} history at or before {as_of}; n/a")
                 continue
 
             anchor_date = close.index[-1]
@@ -162,7 +173,7 @@ def fetch_returns(tickers: dict, offline: bool = False) -> dict:
                     continue
                 out[ticker][months] = anchor / float(past) - 1
         except Exception as e:
-            print(f"WARNING: returns for {ticker} failed: {type(e).__name__}: {e}")
+            log(f"WARNING: returns for {ticker} failed: {type(e).__name__}: {e}")
 
     return out
 
@@ -353,14 +364,14 @@ def main() -> None:
         cells = " ".join(
             f"{h}m=" + ("n/a" if returns[t][h] is None else f"{returns[t][h]:+.2%}")
             for h in HORIZONS)
-        print(f"  returns {t:<6s} {cells}")
+        log(f"  returns {t:<6s} {cells}")
     missing = sum(1 for t in returns for h in HORIZONS if returns[t][h] is None)
     total = len(returns) * len(HORIZONS)
     if total and missing == total:
-        print(f"WARNING: all {total} return values are n/a - the fetch is "
-              f"producing nothing, even though no individual ticker errored.")
+        log(f"WARNING: all {total} return values are n/a - the fetch is "
+            f"producing nothing, even though no individual ticker errored.")
     elif missing:
-        print(f"NOTE: {missing}/{total} return values are n/a.")
+        log(f"NOTE: {missing}/{total} return values are n/a.")
     ids = sorted(e["id"] for group in buckets.values() for e in group)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
