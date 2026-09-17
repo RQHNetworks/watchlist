@@ -65,7 +65,7 @@ jobs:
         if: steps.check_time.outputs.should_run == 'true'
         run: |
           python -m pip install --upgrade pip
-          pip install pandas yfinance
+          pip install pandas yfinance matplotlib
 
       - name: Run watchlist monitor
         if: steps.check_time.outputs.should_run == 'true'
@@ -99,6 +99,51 @@ jobs:
           echo "files=$files" >> "$GITHUB_OUTPUT"
           echo "Triggered files: $files"
 
+      - name: Build SMA cross panels
+        if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
+        id: panels
+        run: |
+          # Panels used to live in their own workflow, chained off this one via
+          # workflow_run, because they were emailed separately. Now that they
+          # ride along on the flag email they have to be built BEFORE it is
+          # sent, so they moved in here. A workflow_run job is sent after the
+          # email has already gone out and could never attach to it.
+          mkdir -p panels
+          attachments=""
+
+          mapfile -t files < <(ls triggers/ 2>/dev/null | grep '_sma_cross_' || true)
+          for f in "${files[@]}"; do
+            base="${f%.txt}"
+            if [[ "$base" =~ ^([A-Za-z0-9.]+)_sma_cross_([0-9]{4}-[0-9]{2}-[0-9]{2})$ ]]; then
+              t="${BASH_REMATCH[1]}"; d="${BASH_REMATCH[2]}"
+              out="panels/${t}_sma_${d}.png"
+
+              company=$(jq -r --arg t "$t" --arg d "$d" \
+                'select(.ticker == $t and .trigger_type == "sma_cross" and .date == $d) | .company // ""' \
+                trigger_log.jsonl | tail -1)
+
+              # --as-of pins the chart to the trigger's own date so its numbers
+              # match the email body. --company keeps the name identical too.
+              panel_args=(--ticker "$t" --out "$out" --as-of "$d")
+              [ -n "$company" ] && panel_args+=(--company "$company")
+
+              # One bad ticker must not cost the whole email. A panel that
+              # fails is simply not attached; the report still lists the cross.
+              if python3 charts/sma_panel.py "${panel_args[@]}"; then
+                attachments="${attachments:+$attachments,}${out}"
+              else
+                echo "::warning::Panel build failed for ${t}; sending without it."
+              fi
+            fi
+          done
+
+          # An empty string is falsy to the mail action, which then sets
+          # attachments to undefined - so a day with no crossover sends the
+          # report exactly as before, with nothing attached and no error.
+          echo "attachments=${attachments}" >> "$GITHUB_OUTPUT"
+          echo "Attaching: ${attachments:-<none>}"
+        continue-on-error: true
+
       - name: Build flag email summary
         if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
         id: flagmail
@@ -119,6 +164,14 @@ jobs:
           echo "date=$(echo "$summary" | jq -r .date)" >> "$GITHUB_OUTPUT"
           echo "tickers=$(echo "$summary" | jq -r .tickers)" >> "$GITHUB_OUTPUT"
 
+      - name: Upload panels artifact
+        if: steps.check_time.outputs.should_run == 'true' && steps.panels.outputs.attachments != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: sma-panels-${{ github.run_number }}
+          path: panels
+          retention-days: 90
+
       - name: Email trigger flags
         if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
         uses: dawidd6/action-send-mail@v3
@@ -135,3 +188,4 @@ jobs:
           # KB of HTML and outputs are neither meant for nor reliable at that
           # size, while the action reads the file directly.
           html_body: file://flag_email.html
+          attachments: ${{ steps.panels.outputs.attachments }}
