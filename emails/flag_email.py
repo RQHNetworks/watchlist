@@ -209,7 +209,10 @@ def collect() -> tuple:
         company = match.get("company") or ""
         tickers.append(ticker)
         as_of[ticker] = day
-        entry = {"ticker": ticker, "company": company, "id": path.stem}
+        # detail is carried for newsletter.py, which parses the SMA values
+        # and swing closes back out of it. The report itself ignores it.
+        entry = {"ticker": ticker, "company": company, "id": path.stem,
+                 "detail": detail}
 
         if kind == "earnings_countdown":
             days = DAYS_RE.search(detail)
