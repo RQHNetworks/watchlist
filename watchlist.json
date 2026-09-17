@@ -1703,8 +1703,7 @@
         }
       },
       "notes": ""
-    }
-,
+    },
     {
       "symbol": "A",
       "addedDate": "2026-09-10",
@@ -9386,6 +9385,30 @@
       "notes": ""
     },
     {
+      "symbol": "OKLO",
+      "addedDate": "2026-09-17",
+      "triggers": {
+        "smaCrossover": {
+          "enabled": true,
+          "sma50": null,
+          "sma200": null,
+          "lastCrossover": null
+        },
+        "priceSwing": {
+          "enabled": true,
+          "threshold": 10,
+          "lastSwing": null
+        },
+        "earningsCountdown": {
+          "enabled": true,
+          "daysUntilEarnings": null,
+          "earningsDate": null,
+          "lastReported": null
+        }
+      },
+      "notes": ""
+    },
+    {
       "symbol": "OMC",
       "addedDate": "2026-09-10",
       "triggers": {
@@ -12882,5 +12905,5 @@
       "description": "Flag when earnings report is T-minus 5 business days or less"
     }
   },
-  "lastUpdated": "2026-09-10"
+  "lastUpdated": "2026-09-17"
 }
