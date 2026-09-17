@@ -86,3 +86,8 @@
 {"ticker": "CNP", "date": "2026-09-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=40.98, 200-day=41.02", "company": "CenterPoint Energy, Inc."}
 {"ticker": "JBHT", "date": "2026-09-16", "trigger_type": "price_swing", "detail": "Daily move down -13.3% (close 273.05 -> 236.73)", "company": "J.B. Hunt Transport Services, Inc."}
 {"ticker": "NXPI", "date": "2026-09-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=241.95, 200-day=242.78", "company": "NXP Semiconductors N.V."}
+{"ticker": "GDDY", "date": "2026-09-17", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=95.31, 200-day=95.06", "company": "GoDaddy Inc."}
+{"ticker": "GNRC", "date": "2026-09-17", "trigger_type": "price_swing", "detail": "Daily move up +18.3% (close 175.11 -> 207.23)", "company": "Generac Holdings Inc."}
+{"ticker": "MCHP", "date": "2026-09-17", "trigger_type": "sma_cross", "detail": "death cross: 50-day=77.09, 200-day=77.44", "company": "Microchip Technology Incorporated"}
+{"ticker": "MDT", "date": "2026-09-17", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=88.50, 200-day=88.37", "company": "Medtronic plc"}
+{"ticker": "PCG", "date": "2026-09-17", "trigger_type": "sma_cross", "detail": "death cross: 50-day=16.58, 200-day=16.62", "company": "PG&E Corporation"}
