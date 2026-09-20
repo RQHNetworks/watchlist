@@ -10,7 +10,8 @@ cost. That constrains the prose: every sentence states arithmetic or names a
 source. It deliberately does not say what a number means, because inferring
 "this news will move the stock" is exactly the judgement a deterministic
 script cannot make, and a template that pretends to would be worse than
-silence. Headlines are listed with their dates and left to the reader.
+silence. Headlines are quoted as published, filtered to those about the
+company itself, and left to the reader.
 
 Tables, colours, return maths and name shortening are imported from
 flag_email rather than copied, so the two emails cannot drift apart.
@@ -32,6 +33,25 @@ MAX_HEADLINES = 3
 # report. Without a window the provider's ordering is the only filter,
 # and stale items surface on quiet symbols.
 EARNINGS_NEWS_DAYS = 30
+
+# Yahoo tags peers onto ordinary company news for context - "Costco raises
+# membership fees" arrives tagged with WMT, TGT, BJ and PG - so a low count
+# throws away real headlines. Set high enough to catch only a genuine sector
+# wrap, and let the name requirement and the round-up pattern do the real work.
+MAX_TAGGED_TICKERS = 6
+
+ROUNDUP_RE = re.compile(
+    r"stocks? to watch|to watch today|movers|market wrap|mid-?day|premarket|"
+    r"pre-?market|after-?hours|top (gainers|losers|picks)|biggest (gainers|"
+    r"losers|movers)|trending ticker|what to watch|things to know|"
+    r"\b\d+\s+(stocks|things|names|picks)\b|market (open|close|today)|"
+    r"wall street (today|lunch)|stocks making the biggest",
+    re.IGNORECASE,
+)
+
+# Words too generic to identify a company on their own.
+_STOPWORDS = {"the", "and", "for", "inc", "corp", "group", "global", "holdings",
+              "international", "technologies", "systems", "industries", "company"}
 
 SMA_RE = re.compile(r"50-day=([\d.]+), 200-day=([\d.]+)")
 SWING_RE = re.compile(r"close ([\d.]+) -> ([\d.]+)")
@@ -151,40 +171,39 @@ def earnings_record(t, as_of: date) -> dict:
     return out
 
 
-def headlines(t, limit: int = MAX_HEADLINES, since: date | None = None,
-              until: date | None = None) -> list:
-    """(date, title, summary) triples, newest first.
+def headlines(t, ticker: str, company: str, limit: int = MAX_HEADLINES,
+              since: date | None = None, until: date | None = None) -> tuple:
+    """(kept, stats): kept is a list of (date, title), newest first.
 
-    The summary is Yahoo's own blurb for the article, passed through - yfinance
-    returns the provider's article objects untouched. Nothing here writes a
-    summary; that would need a model. When the provider supplies none, the
-    headline stands alone.
+    Headlines only - no blurb, no link. A headline states a fact; the blurb was
+    the news provider's own prose, and reproducing that is a different act.
 
-    `until` bounds the window at the top so a re-run days later still shows the
-    news that sat around the trigger, not whatever is newest at run time - the
-    same as-of discipline the charts and returns follow.
+    Filtered to headlines actually about this company. Yahoo's stream tags a
+    symbol onto round-ups and sector pieces, so "5 stocks to watch" arrives
+    looking like news about whichever of the five you asked for. `stats` counts
+    what was dropped and why, so an empty block can say which it was instead of
+    looking identical to an outage.
+
+    `until` bounds the window at the top, so a re-run days later still shows
+    the news that sat around the trigger rather than whatever is newest at run
+    time - the same as-of discipline the charts and returns follow.
 
     Schema-tolerant: yfinance has moved these keys between releases, and a
     headline block is not worth failing an email over.
     """
-    out = []
+    kept, stats = [], {"seen": 0, "off_window": 0, "not_specific": 0}
     try:
         items = t.news or []
     except Exception as e:
         fe.log(f"WARNING: news fetch failed: {type(e).__name__}: {e}")
-        return out
+        return kept, stats
 
     for it in items:
         c = it.get("content", it) if isinstance(it, dict) else {}
-        title = c.get("title") or it.get("title")
+        title = (c.get("title") or it.get("title") or "").strip()
         if not title:
             continue
-        blurb = (c.get("summary") or c.get("description")
-                 or it.get("summary") or "").strip()
-        # Yahoo sometimes repeats the headline as the summary; printing both
-        # then reads as a stutter.
-        if blurb and blurb.rstrip(".").lower() == title.rstrip(".").lower():
-            blurb = ""
+        stats["seen"] += 1
 
         when = None
         raw = c.get("pubDate") or c.get("displayTime")
@@ -200,27 +219,94 @@ def headlines(t, limit: int = MAX_HEADLINES, since: date | None = None,
                     when = datetime.utcfromtimestamp(int(ts)).date()
                 except (ValueError, OSError):
                     when = None
+
         if when and ((since and when < since) or (until and when > until)):
+            stats["off_window"] += 1
             continue
-        out.append((when, title, blurb))
-        if len(out) >= limit:
+        if not is_about(title, ticker, company, _tagged_tickers(c, it)):
+            stats["not_specific"] += 1
+            continue
+
+        kept.append((when, title))
+        if len(kept) >= limit:
             break
+    return kept, stats
+
+
+def _tagged_tickers(c: dict, it: dict) -> list:
+    """Symbols Yahoo attached to the article, wherever it put them."""
+    for path in (c.get("finance", {}), c, it):
+        if not isinstance(path, dict):
+            continue
+        for key in ("stockTickers", "tickers", "relatedTickers"):
+            v = path.get(key)
+            if isinstance(v, list) and v:
+                out = []
+                for x in v:
+                    if isinstance(x, dict):
+                        sym = x.get("symbol") or x.get("ticker")
+                        if sym:
+                            out.append(str(sym).upper())
+                    elif isinstance(x, str):
+                        out.append(x.upper())
+                if out:
+                    return out
+    return []
+
+
+def _name_tokens(ticker: str, company: str) -> list:
+    """Strings whose presence in a headline means it is about this company."""
+    out = [ticker.upper()]
+    short = fe.short_company(company or "")
+    if short and short.upper() != ticker.upper():
+        out.append(short)
+        first = re.split(r"[\s,]+", short)[0]
+        # 3 is deliberate: "NXP" and "DTE" are the distinctive part of their
+        # names, and requiring 4 would silently drop every headline about them.
+        if len(first) >= 3 and first.lower() not in _STOPWORDS:
+            out.append(first)
     return out
 
 
-def news_bullet(items: list, label: str) -> str:
+def is_about(title: str, ticker: str, company: str, tagged: list) -> bool:
+    """True when the headline is about this company rather than merely tagged.
+
+    Two independent failure modes: a round-up that happens to list the symbol,
+    and a headline about a peer that Yahoo filed under it. Requiring the name
+    in the title handles the second; the round-up pattern and a generous tag
+    ceiling handle the first without discarding peer-tagged real news.
+    """
+    if tagged and len(tagged) > MAX_TAGGED_TICKERS:
+        return False
+    if ROUNDUP_RE.search(title):
+        return False
+    for tok in _name_tokens(ticker, company):
+        # A short all-caps token is matched case-sensitively, so a two-letter
+        # symbol like DD cannot match the "dd" inside "Suddenly".
+        flags = 0 if tok.isupper() and len(tok) <= 5 else re.IGNORECASE
+        if re.search(rf"(?<![A-Za-z0-9]){re.escape(tok)}(?![A-Za-z0-9])",
+                     title, flags):
+            return True
+    return False
+
+
+def news_bullet(items: list, label: str, stats: dict | None = None) -> str:
     if not items:
-        return (f'<b>{label}:</b> <span style="color:{SLOT};">no headlines '
-                f'returned for this symbol in the window.</span>')
-    parts = []
-    for when, title, blurb in items:
-        d = f"{when:%b %d} — " if when else ""
-        line = (f'<span style="color:{fe.INK};">{d}<b>{title}</b></span>')
-        if blurb:
-            line += (f'<br><span style="color:{fe.MUTED};">{blurb}</span>')
-        parts.append(line)
-    inner = "".join(f'<div style="margin:0 0 8px 0;">{x}</div>' for x in parts)
-    return f"<b>{label}:</b><div style=\"margin:6px 0 0 0;\">{inner}</div>"
+        st = stats or {}
+        if st.get("not_specific"):
+            n = st["not_specific"]
+            why = (f"{n} headline{'s' if n != 1 else ''} in the window mentioned "
+                   f"this symbol but were round-ups or about other companies.")
+        elif st.get("off_window"):
+            why = "headlines were returned, but none from around the trigger."
+        else:
+            why = "no headlines returned for this symbol."
+        return f'<b>{label}:</b> <span style="color:{SLOT};">{why}</span>'
+    lis = "".join(
+        f'<div style="color:{fe.INK};margin:0 0 6px 0;">'
+        f'{f"{when:%b %d} — " if when else ""}{title}</div>'
+        for when, title in items)
+    return f'<b>{label}:</b><div style="margin:6px 0 0 0;">{lis}</div>'
 
 
 def price_shape(t, as_of: date) -> dict:
@@ -417,13 +503,15 @@ def render(buckets, returns, funds, earns, news, shapes, report_date: date) -> s
             title = fe.stock_label(e).replace(f"{t} (", f"{t} — ").rstrip(")")
             if key == "earnings":
                 bl = earnings_bullets(e, ret, funds.get(t, {}), earns.get(t, {}))
-                bl.append(news_bullet(news.get(t, []), "News"))
+                kept, nstats = news.get(t, ([], {}))
+                bl.append(news_bullet(kept, "News", nstats))
             elif key == "sma":
                 bl = sma_bullets(e, ret, shapes.get(t, {}))
             else:
                 # The move itself is already the table's own column, so the
                 # note is the news around it and nothing else.
-                bl = [news_bullet(news.get(t, []), "On the day")]
+                kept, nstats = news.get(t, ([], {}))
+                bl = [news_bullet(kept, "On the day", nstats)]
             body.append(writeup(title, bl))
 
     body.append(
@@ -432,10 +520,10 @@ def render(buckets, returns, funds, earns, news, shapes, report_date: date) -> s
         f'Every figure above is computed from daily closes and the company\'s own '
         f'quarterly statements, or quoted from a dated headline. Free cash flow is '
         f'operating cash flow minus capital expenditure, which is not always a '
-        f'company\'s own headline definition. Headlines are listed with their dates '
-        f'and are not interpreted. Where a blurb appears under a headline it is '
-        f'the news provider\'s own summary, passed through, not a summary written '
-        f'for this email. Not investment advice.</div>')
+        f'company\'s own headline definition. Headlines are quoted as '
+        f'published, filtered to those about the company itself rather than '
+        f'round-ups that merely tag it, and are not interpreted. '
+        f'Not investment advice.</div>')
 
     return (
         f'<html><body style="margin:0;padding:0;background-color:{fe.BG};">'
@@ -461,6 +549,10 @@ def main() -> None:
     returns = fe.fetch_returns(as_of, offline=args.offline)
 
     funds, earns, news, shapes = {}, {}, {}, {}
+    # Needed to tell a headline about this company from one that merely
+    # tags it, keyed off the same name the tables show.
+    e_company = {e['ticker']: e.get('company', '')
+                 for group in buckets.values() for e in group}
     if not args.offline:
         try:
             import yfinance as yf
@@ -485,13 +577,16 @@ def main() -> None:
                     funds[t] = fundamentals(obj)
                     earns[t] = earnings_record(obj, trig)
                     news[t] = headlines(
-                        obj, since=trig - timedelta(days=EARNINGS_NEWS_DAYS))
+                        obj, t, e_company.get(t, ""),
+                        since=trig - timedelta(days=EARNINGS_NEWS_DAYS),
+                        until=trig)
                 if t in px_tickers:
                     trig = datetime.strptime(as_of[t], "%Y-%m-%d").date()
                     # The day of the move, plus the evening before it: news
                     # published after one close is what moves the next one.
                     # `until` keeps a re-run from showing later news instead.
-                    news[t] = headlines(obj, since=trig - timedelta(days=1),
+                    news[t] = headlines(obj, t, e_company.get(t, ""),
+                                        since=trig - timedelta(days=1),
                                         until=trig)
                 if t in sma_tickers:
                     shapes[t] = price_shape(
@@ -499,7 +594,8 @@ def main() -> None:
                 fe.log(f"  notes {t:<6s} fundamentals="
                        f"{'ok' if funds.get(t, {}).get('ok') else '-'} "
                        f"earnings={len(earns.get(t, {}).get('past', []))}q "
-                       f"headlines={len(news.get(t, []))} "
+                       f"headlines={len(news.get(t, ([], {}))[0])}"
+                       f"/{news.get(t, ([], {}))[1].get('seen', 0)} "
                        f"shape={'ok' if shapes.get(t, {}).get('last') else '-'}")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
