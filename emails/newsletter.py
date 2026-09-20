@@ -191,12 +191,13 @@ def headlines(t, ticker: str, company: str, limit: int = MAX_HEADLINES,
     Schema-tolerant: yfinance has moved these keys between releases, and a
     headline block is not worth failing an email over.
     """
-    kept, stats = [], {"seen": 0, "off_window": 0, "not_specific": 0}
+    specific, roundup = [], []
+    stats = {"seen": 0, "off_window": 0, "unrelated": 0, "roundup": 0}
     try:
         items = t.news or []
     except Exception as e:
         fe.log(f"WARNING: news fetch failed: {type(e).__name__}: {e}")
-        return kept, stats
+        return [], stats
 
     for it in items:
         c = it.get("content", it) if isinstance(it, dict) else {}
@@ -223,13 +224,21 @@ def headlines(t, ticker: str, company: str, limit: int = MAX_HEADLINES,
         if when and ((since and when < since) or (until and when > until)):
             stats["off_window"] += 1
             continue
-        if not is_about(title, ticker, company, _tagged_tickers(c, it)):
-            stats["not_specific"] += 1
+        tier = classify(title, ticker, company, _tagged_tickers(c, it))
+        if tier == "unrelated":
+            stats["unrelated"] += 1
             continue
-
-        kept.append((when, title))
-        if len(kept) >= limit:
+        if tier == "roundup":
+            stats["roundup"] += 1
+            roundup.append((when, title, True))
+            continue
+        specific.append((when, title, False))
+        if len(specific) >= limit:
             break
+
+    # Round-ups only fill slots the company's own news did not take, so a busy
+    # day never shows them and a quiet one is not left blank.
+    kept = specific + roundup[:max(0, limit - len(specific))]
     return kept, stats
 
 
@@ -268,35 +277,39 @@ def _name_tokens(ticker: str, company: str) -> list:
     return out
 
 
-def is_about(title: str, ticker: str, company: str, tagged: list) -> bool:
-    """True when the headline is about this company rather than merely tagged.
+def classify(title: str, ticker: str, company: str, tagged: list) -> str:
+    """"specific" | "roundup" | "unrelated".
 
-    Two independent failure modes: a round-up that happens to list the symbol,
-    and a headline about a peer that Yahoo filed under it. Requiring the name
-    in the title handles the second; the round-up pattern and a generous tag
-    ceiling handle the first without discarding peer-tagged real news.
+    Three tiers rather than a yes/no, because excluding round-ups outright
+    risked losing the only coverage a symbol had that day. "unrelated" is the
+    only tier ever thrown away: those are peer stories Yahoo filed under this
+    symbol, and they are about a different company. A round-up at least
+    mentions this one, so it is held back and used only if nothing better
+    turns up.
     """
-    if tagged and len(tagged) > MAX_TAGGED_TICKERS:
-        return False
-    if ROUNDUP_RE.search(title):
-        return False
+    named = False
     for tok in _name_tokens(ticker, company):
         # A short all-caps token is matched case-sensitively, so a two-letter
         # symbol like DD cannot match the "dd" inside "Suddenly".
         flags = 0 if tok.isupper() and len(tok) <= 5 else re.IGNORECASE
         if re.search(rf"(?<![A-Za-z0-9]){re.escape(tok)}(?![A-Za-z0-9])",
                      title, flags):
-            return True
-    return False
+            named = True
+            break
+    if not named:
+        return "unrelated"
+    if ROUNDUP_RE.search(title) or (tagged and len(tagged) > MAX_TAGGED_TICKERS):
+        return "roundup"
+    return "specific"
 
 
 def news_bullet(items: list, label: str, stats: dict | None = None) -> str:
     if not items:
         st = stats or {}
-        if st.get("not_specific"):
-            n = st["not_specific"]
-            why = (f"{n} headline{'s' if n != 1 else ''} in the window mentioned "
-                   f"this symbol but were round-ups or about other companies.")
+        if st.get("unrelated"):
+            n = st["unrelated"]
+            why = (f"{n} headline{'s' if n != 1 else ''} in the window were filed "
+                   f"under this symbol but are about other companies.")
         elif st.get("off_window"):
             why = "headlines were returned, but none from around the trigger."
         else:
@@ -304,8 +317,12 @@ def news_bullet(items: list, label: str, stats: dict | None = None) -> str:
         return f'<b>{label}:</b> <span style="color:{SLOT};">{why}</span>'
     lis = "".join(
         f'<div style="color:{fe.INK};margin:0 0 6px 0;">'
-        f'{f"{when:%b %d} — " if when else ""}{title}</div>'
-        for when, title in items)
+        f'{f"{when:%b %d} — " if when else ""}{title}'
+        # Marked, not hidden: a round-up mentions the symbol without being
+        # about it, and that is worth knowing before quoting it anywhere.
+        + (f'<span style="color:{SLOT};"> · round-up</span>' if is_roundup else "")
+        + '</div>'
+        for when, title, is_roundup in items)
     return f'<b>{label}:</b><div style="margin:6px 0 0 0;">{lis}</div>'
 
 
