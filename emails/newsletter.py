@@ -45,7 +45,9 @@ ROUNDUP_RE = re.compile(
     r"pre-?market|after-?hours|top (gainers|losers|picks)|biggest (gainers|"
     r"losers|movers)|trending ticker|what to watch|things to know|"
     r"\b\d+\s+(stocks|things|names|picks)\b|market (open|close|today)|"
-    r"wall street (today|lunch)|stocks making the biggest",
+    r"wall street (today|lunch)|stocks making the biggest|stocks on the move|"
+    r"what'?s moving|winners and losers|most active|unusual options|"
+    r"movers (and|&) shakers|biggest movers|session highlights",
     re.IGNORECASE,
 )
 
@@ -191,7 +193,7 @@ def headlines(t, ticker: str, company: str, limit: int = MAX_HEADLINES,
     Schema-tolerant: yfinance has moved these keys between releases, and a
     headline block is not worth failing an email over.
     """
-    specific, roundup = [], []
+    specific = []
     stats = {"seen": 0, "off_window": 0, "unrelated": 0, "roundup": 0}
     try:
         items = t.news or []
@@ -230,16 +232,15 @@ def headlines(t, ticker: str, company: str, limit: int = MAX_HEADLINES,
             continue
         if tier == "roundup":
             stats["roundup"] += 1
-            roundup.append((when, title, True))
             continue
-        specific.append((when, title, False))
+        specific.append((when, title))
         if len(specific) >= limit:
             break
 
-    # Round-ups only fill slots the company's own news did not take, so a busy
-    # day never shows them and a quiet one is not left blank.
-    kept = specific + roundup[:max(0, limit - len(specific))]
-    return kept, stats
+    # Round-ups are dropped, not held in reserve. A movers list tells you the
+    # stock moved, which the table above already said; padding a quiet day
+    # with it would trade an honest blank for filler.
+    return specific, stats
 
 
 def _tagged_tickers(c: dict, it: dict) -> list:
@@ -280,12 +281,10 @@ def _name_tokens(ticker: str, company: str) -> list:
 def classify(title: str, ticker: str, company: str, tagged: list) -> str:
     """"specific" | "roundup" | "unrelated".
 
-    Three tiers rather than a yes/no, because excluding round-ups outright
-    risked losing the only coverage a symbol had that day. "unrelated" is the
-    only tier ever thrown away: those are peer stories Yahoo filed under this
-    symbol, and they are about a different company. A round-up at least
-    mentions this one, so it is held back and used only if nothing better
-    turns up.
+    Only "specific" is published. The other two are kept apart rather than
+    merged because they are different problems and the empty-case message
+    should say which one happened: a movers list that mentions the symbol is
+    not the same as a peer story Yahoo filed under it.
     """
     named = False
     for tok in _name_tokens(ticker, company):
@@ -306,10 +305,18 @@ def classify(title: str, ticker: str, company: str, tagged: list) -> str:
 def news_bullet(items: list, label: str, stats: dict | None = None) -> str:
     if not items:
         st = stats or {}
-        if st.get("unrelated"):
+        if st.get("roundup"):
+            n = st["roundup"]
+            why = (f"{n} headline in the window was a market round-up rather "
+                   f"than news about the company." if n == 1 else
+                   f"{n} headlines in the window were market round-ups rather "
+                   f"than news about the company.")
+        elif st.get("unrelated"):
             n = st["unrelated"]
-            why = (f"{n} headline{'s' if n != 1 else ''} in the window were filed "
-                   f"under this symbol but are about other companies.")
+            why = (f"{n} headline in the window was filed under this symbol but "
+                   f"is about another company." if n == 1 else
+                   f"{n} headlines in the window were filed under this symbol "
+                   f"but are about other companies.")
         elif st.get("off_window"):
             why = "headlines were returned, but none from around the trigger."
         else:
@@ -317,12 +324,8 @@ def news_bullet(items: list, label: str, stats: dict | None = None) -> str:
         return f'<b>{label}:</b> <span style="color:{SLOT};">{why}</span>'
     lis = "".join(
         f'<div style="color:{fe.INK};margin:0 0 6px 0;">'
-        f'{f"{when:%b %d} — " if when else ""}{title}'
-        # Marked, not hidden: a round-up mentions the symbol without being
-        # about it, and that is worth knowing before quoting it anywhere.
-        + (f'<span style="color:{SLOT};"> · round-up</span>' if is_roundup else "")
-        + '</div>'
-        for when, title, is_roundup in items)
+        f'{f"{when:%b %d} — " if when else ""}{title}</div>'
+        for when, title in items)
     return f'<b>{label}:</b><div style="margin:6px 0 0 0;">{lis}</div>'
 
 
