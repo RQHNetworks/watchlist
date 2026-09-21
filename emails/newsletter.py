@@ -464,7 +464,35 @@ def earnings_bullets(e, ret, fund, earn) -> list:
     return b
 
 
+def trend_bullet(r3, r6, r12) -> str:
+    """The three trailing windows, one per line, then which one dominates.
+
+    Stacked rather than run into a sentence: three signed percentages in prose
+    read as a wall, and the point of the bullet is to let the eye compare them.
+    """
+    windows = [(abs(v), n) for v, n in ((r3, "3-month"), (r6, "6-month"),
+                                        (r12, "12-month")) if v is not None]
+    if not windows:
+        return ('<b>Trend into it:</b> <span style="color:%s;">trailing returns '
+                'unavailable for this symbol.</span>' % SLOT)
+
+    rows = "".join(
+        f'<div style="margin:0 0 2px 0;">'
+        f'<span style="color:{fe.GREEN if v >= 0 else fe.RED};">{v:+.2%}</span>'
+        f' {label}</div>'
+        for v, label in ((r3, "over 3 months"), (r6, "over 6"), (r12, "over 12"))
+        if v is not None)
+
+    _, biggest = max(windows)
+    return (f'<b>Trend into it:</b>'
+            f'<div style="margin:4px 0 0 0;">{rows}</div>'
+            f'<div style="margin:8px 0 0 0;">The {biggest} window holds the '
+            f'largest move of the three, so that is the leg doing most of the '
+            f'work on the averages.</div>')
+
+
 def sma_bullets(e, ret, shape) -> list:
+    r3, r6, r12 = ret.get(3), ret.get(6), ret.get(12)
     b = []
     m = SMA_RE.search(e.get("detail", ""))
     golden = e.get("detail", "").startswith("golden")
@@ -479,6 +507,9 @@ def sma_bullets(e, ret, shape) -> list:
     else:
         b.append(f"<b>{word} cross</b> confirmed on the trigger date.")
 
+    # Trend first: it explains how the averages got here. Price action
+    # then says where the stock sits now.
+    b.append(trend_bullet(r3, r6, r12))
     b.append(shape_bullet(shape))
     return b
 
