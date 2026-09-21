@@ -98,3 +98,10 @@
 {"ticker": "MSTR", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +16.4% (close 132.25 -> 153.92)", "company": "Strategy Inc"}
 {"ticker": "SNDK", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +11.0% (close 1614.39 -> 1791.82)", "company": "Sandisk Corporation"}
 {"ticker": "XEL", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=77.04, 200-day=77.11", "company": "Xcel Energy Inc."}
+{"ticker": "COIN", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +11.7% (close 173.97 -> 194.25)", "company": "Coinbase Global, Inc."}
+{"ticker": "CDNS", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=324.77, 200-day=326.08", "company": "Cadence Design Systems, Inc."}
+{"ticker": "DD", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=136.10, 200-day=136.17", "company": "DuPont de Nemours, Inc."}
+{"ticker": "DTE", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=139.92, 200-day=140.15", "company": "DTE Energy Company"}
+{"ticker": "MSTR", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +16.4% (close 132.25 -> 153.92)", "company": "Strategy Inc"}
+{"ticker": "SNDK", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +11.0% (close 1614.39 -> 1791.82)", "company": "Sandisk Corporation"}
+{"ticker": "XEL", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=77.04, 200-day=77.11", "company": "Xcel Energy Inc."}
