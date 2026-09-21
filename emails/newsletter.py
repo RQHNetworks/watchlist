@@ -302,25 +302,48 @@ def classify(title: str, ticker: str, company: str, tagged: list) -> str:
     return "specific"
 
 
+def _news_stats(entry) -> str:
+    """kept/seen plus why the rest went, for the run log.
+
+    kept/seen alone could not tell an over-eager filter from a window that
+    simply did not overlap the headlines Yahoo had - which is exactly the
+    question a zero raises.
+    """
+    if not entry:
+        return "0/0"
+    kept, st = entry
+    parts = [f"{len(kept)}/{st.get('seen', 0)}"]
+    for key in ("off_window", "roundup", "unrelated"):
+        if st.get(key):
+            parts.append(f"{key}={st[key]}")
+    return " ".join(parts)
+
+
 def news_bullet(items: list, label: str, stats: dict | None = None) -> str:
     if not items:
         st = stats or {}
-        if st.get("roundup"):
-            n = st["roundup"]
+        # Report whichever bucket actually dominated. Checking them in a fixed
+        # order meant a single unrelated item masked eight out-of-window ones,
+        # naming the wrong cause and hiding the real one.
+        buckets = [(st.get("off_window", 0), "off_window"),
+                   (st.get("roundup", 0), "roundup"),
+                   (st.get("unrelated", 0), "unrelated")]
+        n, kind = max(buckets)
+        if n == 0:
+            why = "no headlines returned for this symbol."
+        elif kind == "off_window":
+            why = (f"{n} headline{'s' if n != 1 else ''} returned, but "
+                   f"{'none' if n > 1 else 'not'} from around the trigger date.")
+        elif kind == "roundup":
             why = (f"{n} headline in the window was a market round-up rather "
                    f"than news about the company." if n == 1 else
                    f"{n} headlines in the window were market round-ups rather "
                    f"than news about the company.")
-        elif st.get("unrelated"):
-            n = st["unrelated"]
+        else:
             why = (f"{n} headline in the window was filed under this symbol but "
                    f"is about another company." if n == 1 else
                    f"{n} headlines in the window were filed under this symbol "
                    f"but are about other companies.")
-        elif st.get("off_window"):
-            why = "headlines were returned, but none from around the trigger."
-        else:
-            why = "no headlines returned for this symbol."
         return f'<b>{label}:</b> <span style="color:{SLOT};">{why}</span>'
     lis = "".join(
         f'<div style="color:{fe.INK};margin:0 0 6px 0;">'
@@ -645,8 +668,7 @@ def main() -> None:
                 fe.log(f"  notes {t:<6s} fundamentals="
                        f"{'ok' if funds.get(t, {}).get('ok') else '-'} "
                        f"earnings={len(earns.get(t, {}).get('past', []))}q "
-                       f"headlines={len(news.get(t, ([], {}))[0])}"
-                       f"/{news.get(t, ([], {}))[1].get('seen', 0)} "
+                       f"headlines={_news_stats(news.get(t))} "
                        f"shape={'ok' if shapes.get(t, {}).get('last') else '-'}")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
