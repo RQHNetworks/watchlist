@@ -10,7 +10,8 @@ cost. That constrains the prose: every sentence states arithmetic or names a
 source. It deliberately does not say what a number means, because inferring
 "this news will move the stock" is exactly the judgement a deterministic
 script cannot make, and a template that pretends to would be worse than
-silence. Headlines are listed with their dates and left to the reader.
+silence. Headlines are quoted as published, filtered to those about the
+company itself, and left to the reader.
 
 Tables, colours, return maths and name shortening are imported from
 flag_email rather than copied, so the two emails cannot drift apart.
@@ -32,6 +33,27 @@ MAX_HEADLINES = 3
 # report. Without a window the provider's ordering is the only filter,
 # and stale items surface on quiet symbols.
 EARNINGS_NEWS_DAYS = 30
+
+# Yahoo tags peers onto ordinary company news for context - "Costco raises
+# membership fees" arrives tagged with WMT, TGT, BJ and PG - so a low count
+# throws away real headlines. Set high enough to catch only a genuine sector
+# wrap, and let the name requirement and the round-up pattern do the real work.
+MAX_TAGGED_TICKERS = 6
+
+ROUNDUP_RE = re.compile(
+    r"stocks? to watch|to watch today|movers|market wrap|mid-?day|premarket|"
+    r"pre-?market|after-?hours|top (gainers|losers|picks)|biggest (gainers|"
+    r"losers|movers)|trending ticker|what to watch|things to know|"
+    r"\b\d+\s+(stocks|things|names|picks)\b|market (open|close|today)|"
+    r"wall street (today|lunch)|stocks making the biggest|stocks on the move|"
+    r"what'?s moving|winners and losers|most active|unusual options|"
+    r"movers (and|&) shakers|biggest movers|session highlights",
+    re.IGNORECASE,
+)
+
+# Words too generic to identify a company on their own.
+_STOPWORDS = {"the", "and", "for", "inc", "corp", "group", "global", "holdings",
+              "international", "technologies", "systems", "industries", "company"}
 
 SMA_RE = re.compile(r"50-day=([\d.]+), 200-day=([\d.]+)")
 SWING_RE = re.compile(r"close ([\d.]+) -> ([\d.]+)")
@@ -151,28 +173,40 @@ def earnings_record(t, as_of: date) -> dict:
     return out
 
 
-def headlines(t, limit: int = MAX_HEADLINES, since: date | None = None) -> list:
-    """(date, title, url) triples. Schema-tolerant: yfinance has moved these
-    keys between releases, and a headline block is not worth crashing over."""
-    out = []
+def headlines(t, ticker: str, company: str, limit: int = MAX_HEADLINES,
+              since: date | None = None, until: date | None = None) -> tuple:
+    """(kept, stats): kept is a list of (date, title), newest first.
+
+    Headlines only - no blurb, no link. A headline states a fact; the blurb was
+    the news provider's own prose, and reproducing that is a different act.
+
+    Filtered to headlines actually about this company. Yahoo's stream tags a
+    symbol onto round-ups and sector pieces, so "5 stocks to watch" arrives
+    looking like news about whichever of the five you asked for. `stats` counts
+    what was dropped and why, so an empty block can say which it was instead of
+    looking identical to an outage.
+
+    `until` bounds the window at the top, so a re-run days later still shows
+    the news that sat around the trigger rather than whatever is newest at run
+    time - the same as-of discipline the charts and returns follow.
+
+    Schema-tolerant: yfinance has moved these keys between releases, and a
+    headline block is not worth failing an email over.
+    """
+    specific = []
+    stats = {"seen": 0, "off_window": 0, "unrelated": 0, "roundup": 0}
     try:
         items = t.news or []
     except Exception as e:
         fe.log(f"WARNING: news fetch failed: {type(e).__name__}: {e}")
-        return out
+        return [], stats
 
     for it in items:
         c = it.get("content", it) if isinstance(it, dict) else {}
-        title = c.get("title") or it.get("title")
+        title = (c.get("title") or it.get("title") or "").strip()
         if not title:
             continue
-        url = ""
-        for key in ("canonicalUrl", "clickThroughUrl"):
-            v = c.get(key)
-            if isinstance(v, dict) and v.get("url"):
-                url = v["url"]
-                break
-        url = url or c.get("link") or it.get("link") or ""
+        stats["seen"] += 1
 
         when = None
         raw = c.get("pubDate") or c.get("displayTime")
@@ -188,25 +222,180 @@ def headlines(t, limit: int = MAX_HEADLINES, since: date | None = None) -> list:
                     when = datetime.utcfromtimestamp(int(ts)).date()
                 except (ValueError, OSError):
                     when = None
-        if since and when and when < since:
+
+        if when and ((since and when < since) or (until and when > until)):
+            stats["off_window"] += 1
             continue
-        out.append((when, title, url))
-        if len(out) >= limit:
+        tier = classify(title, ticker, company, _tagged_tickers(c, it))
+        if tier == "unrelated":
+            stats["unrelated"] += 1
+            continue
+        if tier == "roundup":
+            stats["roundup"] += 1
+            continue
+        specific.append((when, title))
+        if len(specific) >= limit:
             break
+
+    # Round-ups are dropped, not held in reserve. A movers list tells you the
+    # stock moved, which the table above already said; padding a quiet day
+    # with it would trade an honest blank for filler.
+    return specific, stats
+
+
+def _tagged_tickers(c: dict, it: dict) -> list:
+    """Symbols Yahoo attached to the article, wherever it put them."""
+    for path in (c.get("finance", {}), c, it):
+        if not isinstance(path, dict):
+            continue
+        for key in ("stockTickers", "tickers", "relatedTickers"):
+            v = path.get(key)
+            if isinstance(v, list) and v:
+                out = []
+                for x in v:
+                    if isinstance(x, dict):
+                        sym = x.get("symbol") or x.get("ticker")
+                        if sym:
+                            out.append(str(sym).upper())
+                    elif isinstance(x, str):
+                        out.append(x.upper())
+                if out:
+                    return out
+    return []
+
+
+def _name_tokens(ticker: str, company: str) -> list:
+    """Strings whose presence in a headline means it is about this company."""
+    out = [ticker.upper()]
+    short = fe.short_company(company or "")
+    if short and short.upper() != ticker.upper():
+        out.append(short)
+        first = re.split(r"[\s,]+", short)[0]
+        # 3 is deliberate: "NXP" and "DTE" are the distinctive part of their
+        # names, and requiring 4 would silently drop every headline about them.
+        if len(first) >= 3 and first.lower() not in _STOPWORDS:
+            out.append(first)
     return out
 
 
-def news_bullet(items: list, label: str) -> str:
+def classify(title: str, ticker: str, company: str, tagged: list) -> str:
+    """"specific" | "roundup" | "unrelated".
+
+    Only "specific" is published. The other two are kept apart rather than
+    merged because they are different problems and the empty-case message
+    should say which one happened: a movers list that mentions the symbol is
+    not the same as a peer story Yahoo filed under it.
+    """
+    named = False
+    for tok in _name_tokens(ticker, company):
+        # A short all-caps token is matched case-sensitively, so a two-letter
+        # symbol like DD cannot match the "dd" inside "Suddenly".
+        flags = 0 if tok.isupper() and len(tok) <= 5 else re.IGNORECASE
+        if re.search(rf"(?<![A-Za-z0-9]){re.escape(tok)}(?![A-Za-z0-9])",
+                     title, flags):
+            named = True
+            break
+    if not named:
+        return "unrelated"
+    if ROUNDUP_RE.search(title) or (tagged and len(tagged) > MAX_TAGGED_TICKERS):
+        return "roundup"
+    return "specific"
+
+
+def news_bullet(items: list, label: str, stats: dict | None = None) -> str:
     if not items:
-        return (f'<b>{label}:</b> <span style="color:{SLOT};">no recent '
-                f'headlines returned for this symbol.</span>')
-    parts = []
-    for when, title, url in items:
-        d = f"{when:%b %d} — " if when else ""
-        parts.append(f'<a href="{url}" style="color:{fe.BLUE};">{title}</a>'
-                     if url else title)
-        parts[-1] = d + parts[-1]
-    return f"<b>{label}:</b><br>" + "<br>".join(parts)
+        st = stats or {}
+        if st.get("roundup"):
+            n = st["roundup"]
+            why = (f"{n} headline in the window was a market round-up rather "
+                   f"than news about the company." if n == 1 else
+                   f"{n} headlines in the window were market round-ups rather "
+                   f"than news about the company.")
+        elif st.get("unrelated"):
+            n = st["unrelated"]
+            why = (f"{n} headline in the window was filed under this symbol but "
+                   f"is about another company." if n == 1 else
+                   f"{n} headlines in the window were filed under this symbol "
+                   f"but are about other companies.")
+        elif st.get("off_window"):
+            why = "headlines were returned, but none from around the trigger."
+        else:
+            why = "no headlines returned for this symbol."
+        return f'<b>{label}:</b> <span style="color:{SLOT};">{why}</span>'
+    lis = "".join(
+        f'<div style="color:{fe.INK};margin:0 0 6px 0;">'
+        f'{f"{when:%b %d} — " if when else ""}{title}</div>'
+        for when, title in items)
+    return f'<b>{label}:</b><div style="margin:6px 0 0 0;">{lis}</div>'
+
+
+def price_shape(t, as_of: date) -> dict:
+    """Where the price sits in its own year, and how it got there.
+
+    Summarising "how the stock has been moving" from three return figures is
+    thin, so this reads the daily closes directly. Truncated to the trigger
+    date for the same reason everything else is: a re-run must not silently
+    describe a different week.
+    """
+    out = {}
+    try:
+        import pandas as pd
+        hist = t.history(period="1y", auto_adjust=True)
+        if hist.empty:
+            return out
+        close = hist["Close"].copy()
+        close.index = pd.to_datetime(close.index).tz_localize(None).normalize()
+        close = close[~close.index.duplicated(keep="last")].sort_index()
+        close = close[close.index <= pd.Timestamp(as_of)]
+        if len(close) < 2:
+            return out
+
+        last = float(close.iloc[-1])
+        hi_i, lo_i = close.idxmax(), close.idxmin()
+        out["last"] = last
+        out["high"], out["high_on"] = float(close.loc[hi_i]), hi_i.date()
+        out["low"], out["low_on"] = float(close.loc[lo_i]), lo_i.date()
+        out["off_high"] = last / out["high"] - 1 if out["high"] else None
+        out["off_low"] = last / out["low"] - 1 if out["low"] else None
+
+        weekly = close.resample("W").last().dropna()
+        recent = weekly.iloc[-9:]
+        if len(recent) >= 3:
+            diffs = recent.diff().dropna()
+            out["weeks"] = len(diffs)
+            out["weeks_down"] = int((diffs < 0).sum())
+    except Exception as e:
+        fe.log(f"WARNING: price shape failed: {type(e).__name__}: {e}")
+    return out
+
+
+def shape_bullet(shape: dict) -> str:
+    if not shape.get("last"):
+        return ('<b>Price action:</b> <span style="color:%s;">daily history '
+                'unavailable for this symbol.</span>' % SLOT)
+    bits = [f"last close <b>{shape['last']:,.2f}</b>"]
+    oh = shape.get("off_high")
+    if oh is not None:
+        # The last close IS the high often enough to matter, and "0.0% above
+        # its 52-week high" reads as a rounding artifact rather than a fact.
+        if abs(oh) < 0.0005:
+            bits.append(f"sitting at its 52-week high of {shape['high']:,.2f}")
+        else:
+            bits.append(f"{abs(oh):.1%} {'below' if oh < 0 else 'above'} its "
+                        f"52-week high of {shape['high']:,.2f} "
+                        f"({shape['high_on']:%b %d})")
+    ol = shape.get("off_low")
+    if ol is not None:
+        if abs(ol) < 0.0005:
+            bits.append(f"sitting at its 52-week low of {shape['low']:,.2f}")
+        else:
+            bits.append(f"{ol:.1%} above the low of {shape['low']:,.2f} "
+                        f"({shape['low_on']:%b %d})")
+    tail = ""
+    if shape.get("weeks"):
+        tail = (f" It closed lower in {shape['weeks_down']} of the last "
+                f"{shape['weeks']} weeks.")
+    return f"<b>Price action:</b> {', '.join(bits)}.{tail}"
 
 
 def trend_clause(r3, r6, r12, lead: str = "the stock ") -> str:
@@ -275,8 +464,7 @@ def earnings_bullets(e, ret, fund, earn) -> list:
     return b
 
 
-def sma_bullets(e, ret) -> list:
-    r3, r6, r12 = (ret.get(3), ret.get(6), ret.get(12))
+def sma_bullets(e, ret, shape) -> list:
     b = []
     m = SMA_RE.search(e.get("detail", ""))
     golden = e.get("detail", "").startswith("golden")
@@ -291,31 +479,7 @@ def sma_bullets(e, ret) -> list:
     else:
         b.append(f"<b>{word} cross</b> confirmed on the trigger date.")
 
-    windows = [(abs(v), n) for v, n in ((r3, "3-month"), (r6, "6-month"),
-                                        (r12, "12-month")) if v is not None]
-    if not windows:
-        b.append('<b>Trend into it:</b> <span style="color:%s;">trailing returns '
-                 'unavailable for this symbol.</span>' % SLOT)
-    elif windows:
-        _, biggest = max(windows)
-        b.append(f"<b>Trend into it:</b> {pct(r3)} over 3 months, {pct(r6)} over 6 "
-                 f"and {pct(r12)} over 12. The {biggest} window holds the largest "
-                 f"move of the three, so that is the leg doing most of the work on "
-                 f"the averages.")
-    return b
-
-
-def price_bullets(e, ret) -> list:
-    r3, r6, r12 = (ret.get(3), ret.get(6), ret.get(12))
-    b = []
-    m = SWING_RE.search(e.get("detail", ""))
-    move = e.get("col2", "")
-    if m:
-        b.append(f"<b>Move:</b> {move} in one session, {float(m.group(1)):,.2f} → "
-                 f"{float(m.group(2)):,.2f}. Against {pct(r3)} over 3 months and "
-                 f"{pct(r12)} over 12{trend_clause(r3, r6, r12)}.")
-    else:
-        b.append(f"<b>Move:</b> {move} in one session; {pct(r12)} over 12 months.")
+    b.append(shape_bullet(shape))
     return b
 
 
@@ -327,7 +491,7 @@ def writeup(title: str, bullets: list) -> str:
             f'<ul style="margin:4px 0 0 0;padding-left:20px;">{lis}</ul>')
 
 
-def render(buckets, returns, funds, earns, news, report_date: date) -> str:
+def render(buckets, returns, funds, earns, news, shapes, report_date: date) -> str:
     body = [
         f'<div style="color:{fe.INK};font:bold 13px {fe.FONT};margin:0 0 10px 0;">'
         f'Watchlist Triggers Notes: {report_date.strftime("%m/%d/%Y")}</div>',
@@ -359,12 +523,15 @@ def render(buckets, returns, funds, earns, news, report_date: date) -> str:
             title = fe.stock_label(e).replace(f"{t} (", f"{t} — ").rstrip(")")
             if key == "earnings":
                 bl = earnings_bullets(e, ret, funds.get(t, {}), earns.get(t, {}))
-                bl.append(news_bullet(news.get(t, []), "News"))
+                kept, nstats = news.get(t, ([], {}))
+                bl.append(news_bullet(kept, "News", nstats))
             elif key == "sma":
-                bl = sma_bullets(e, ret)
+                bl = sma_bullets(e, ret, shapes.get(t, {}))
             else:
-                bl = price_bullets(e, ret)
-                bl.append(news_bullet(news.get(t, []), "Around the move"))
+                # The move itself is already the table's own column, so the
+                # note is the news around it and nothing else.
+                kept, nstats = news.get(t, ([], {}))
+                bl = [news_bullet(kept, "On the day", nstats)]
             body.append(writeup(title, bl))
 
     body.append(
@@ -373,8 +540,10 @@ def render(buckets, returns, funds, earns, news, report_date: date) -> str:
         f'Every figure above is computed from daily closes and the company\'s own '
         f'quarterly statements, or quoted from a dated headline. Free cash flow is '
         f'operating cash flow minus capital expenditure, which is not always a '
-        f'company\'s own headline definition. Headlines are listed with their dates '
-        f'and are not interpreted. Not investment advice.</div>')
+        f'company\'s own headline definition. Headlines are quoted as '
+        f'published, filtered to those about the company itself rather than '
+        f'round-ups that merely tag it, and are not interpreted. '
+        f'Not investment advice.</div>')
 
     return (
         f'<html><body style="margin:0;padding:0;background-color:{fe.BG};">'
@@ -399,7 +568,11 @@ def main() -> None:
     buckets, tickers, as_of = fe.collect()
     returns = fe.fetch_returns(as_of, offline=args.offline)
 
-    funds, earns, news = {}, {}, {}
+    funds, earns, news, shapes = {}, {}, {}, {}
+    # Needed to tell a headline about this company from one that merely
+    # tags it, keyed off the same name the tables show.
+    e_company = {e['ticker']: e.get('company', '')
+                 for group in buckets.values() for e in group}
     if not args.offline:
         try:
             import yfinance as yf
@@ -410,9 +583,10 @@ def main() -> None:
         if yf is not None:
             earn_tickers = {e["ticker"] for e in buckets["earnings"]}
             px_tickers = {e["ticker"] for e in buckets["price"]}
+            sma_tickers = {e["ticker"] for e in buckets["sma"]}
             # Fundamentals are fetched only for earnings tickers, and headlines
             # only where a write-up quotes them - never for the whole watchlist.
-            for t in sorted(earn_tickers | px_tickers):
+            for t in sorted(earn_tickers | px_tickers | sma_tickers):
                 try:
                     obj = yf.Ticker(t)
                 except Exception as e:
@@ -423,19 +597,30 @@ def main() -> None:
                     funds[t] = fundamentals(obj)
                     earns[t] = earnings_record(obj, trig)
                     news[t] = headlines(
-                        obj, since=trig - timedelta(days=EARNINGS_NEWS_DAYS))
-                else:
+                        obj, t, e_company.get(t, ""),
+                        since=trig - timedelta(days=EARNINGS_NEWS_DAYS),
+                        until=trig)
+                if t in px_tickers:
                     trig = datetime.strptime(as_of[t], "%Y-%m-%d").date()
-                    # A swing is explained by what was published around it, so
-                    # the window opens the day before the trigger.
-                    news[t] = headlines(obj, since=trig - timedelta(days=1))
+                    # The day of the move, plus the evening before it: news
+                    # published after one close is what moves the next one.
+                    # `until` keeps a re-run from showing later news instead.
+                    news[t] = headlines(obj, t, e_company.get(t, ""),
+                                        since=trig - timedelta(days=1),
+                                        until=trig)
+                if t in sma_tickers:
+                    shapes[t] = price_shape(
+                        obj, datetime.strptime(as_of[t], "%Y-%m-%d").date())
                 fe.log(f"  notes {t:<6s} fundamentals="
                        f"{'ok' if funds.get(t, {}).get('ok') else '-'} "
                        f"earnings={len(earns.get(t, {}).get('past', []))}q "
-                       f"headlines={len(news.get(t, []))}")
+                       f"headlines={len(news.get(t, ([], {}))[0])}"
+                       f"/{news.get(t, ([], {}))[1].get('seen', 0)} "
+                       f"shape={'ok' if shapes.get(t, {}).get('last') else '-'}")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(render(buckets, returns, funds, earns, news, report_date))
+    args.out.write_text(
+        render(buckets, returns, funds, earns, news, shapes, report_date))
 
     print(json.dumps({
         "date": report_date.strftime("%Y-%m-%d"),
