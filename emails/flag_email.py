@@ -48,7 +48,7 @@ FONT = "-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 # Fixed column widths, so a long company name wraps inside its own column
 # instead of stretching it. Every table is the same shape regardless of what
 # fired. Sums to 100%.
-WIDTHS = ("26%", "20%", "18%", "18%", "18%")
+WIDTHS = ("30%", "19%", "17%", "17%", "17%")
 
 HORIZONS = (3, 6, 12)
 # Fetched history. Must exceed the longest horizon by enough that the 12-month
@@ -262,23 +262,46 @@ def stock_label(entry: dict) -> str:
 
 
 def cell(content: str, colour: str = INK, bold: bool = False,
-         width: str | None = None, colspan: int = 1) -> str:
+         width: str | None = None, colspan: int = 1, size: int = 13) -> str:
+    """One cell. Its own background, and no border of its own.
+
+    The grid is drawn by the table's bgcolor showing through 1px cellspacing
+    (see table()), not by a CSS border here. Gmail re-serialises HTML when you
+    forward a message and drops per-cell border styles, which is why forwarded
+    copies arrived with no table lines at all. bgcolor is an HTML attribute and
+    survives that round trip.
+    """
     attrs = f' width="{width}"' if width else ""
     if colspan > 1:
         attrs += f' colspan="{colspan}"'
     weight = "bold " if bold else ""
-    style = (f"padding:7px 8px;border:1px solid {BORDER};"
-             f"color:{colour};font:{weight}13px {FONT};text-align:center;"
-             f"word-wrap:break-word;")
+    style = (f"padding:7px 6px;color:{colour};font:{weight}{size}px {FONT};"
+             f"text-align:center;word-wrap:break-word;")
     if width:
         style += f"width:{width};"
-    return f'<td{attrs} style="{style}">{content}</td>'
+    return f'<td{attrs} bgcolor="{BG}" style="{style}">{content}</td>'
 
 
 def pct_cell(value) -> str:
+    # A point smaller than the rest: "-11.05%" has to survive a ~60px column
+    # on a phone, and this is the difference between fitting and wrapping.
     if value is None:
-        return cell("n/a", MUTED)
-    return cell(f"{value:+.2%}", GREEN if value >= 0 else RED)
+        return cell("n/a", MUTED, size=12)
+    return cell(f"{value:+.2%}", GREEN if value >= 0 else RED, size=12)
+
+
+def stock_cell(entry: dict) -> str:
+    """Ticker on its own line, company beneath it, smaller and muted.
+
+    One line of "SWKS (Skyworks Solutions)" in a 100px column wraps wherever
+    the words happen to fall, so every row ends up a different height. Splitting
+    it puts the break where it belongs and keeps the ticker scannable.
+    """
+    company = short_company(entry["company"]) if entry["company"] else ""
+    name = (f'<div style="color:{MUTED};font:11px {FONT};margin:2px 0 0 0;">'
+            f'{company}</div>') if company and company != entry["ticker"] else ""
+    return (f'<div style="color:{INK};font:bold 13px {FONT};">'
+            f'{entry["ticker"]}</div>{name}')
 
 
 def table(col2_header: str, entries: list, returns: dict) -> str:
@@ -292,16 +315,21 @@ def table(col2_header: str, entries: list, returns: dict) -> str:
     else:
         for e in entries:
             r = returns.get(e["ticker"], {})
-            body = (cell(stock_label(e))
+            body = (cell(stock_cell(e))
                     + cell(e["col2"], e.get("col2_colour", INK))
                     + "".join(pct_cell(r.get(h)) for h in HORIZONS))
             rows.append(f"<tr>{body}</tr>")
 
+    # The grid lines ARE this table's background, showing through the 1px
+    # cellspacing between opaque cells. No CSS borders anywhere, so nothing is
+    # left to strip when the message is forwarded. border-collapse must stay
+    # off or the spacing that draws the lines collapses with it.
+    #
     # table-layout:fixed is what makes the widths authoritative - without it
     # the browser reflows columns to fit the content.
     return (
-        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
-        f'border="0" style="width:100%;table-layout:fixed;border-collapse:collapse;'
+        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="1" '
+        f'border="0" bgcolor="{BORDER}" style="width:100%;table-layout:fixed;'
         f'margin:4px 0 0 0;">{"".join(rows)}</table>'
     )
 

@@ -548,7 +548,7 @@ def render(buckets, returns, funds, earns, news, report_date: date,
         f'<html><body style="margin:0;padding:0;background-color:{fe.BG};">'
         f'<table width="100%" cellpadding="0" cellspacing="0" border="0" '
         f'bgcolor="{fe.BG}" style="background-color:{fe.BG};">'
-        f'<tr><td style="padding:22px 24px;">{"".join(body)}</td></tr>'
+        f'<tr><td style="padding:20px 16px;">{"".join(body)}</td></tr>'
         f'</table></body></html>'
     )
 
