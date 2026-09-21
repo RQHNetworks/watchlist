@@ -105,9 +105,9 @@ jobs:
         run: |
           # Panels used to live in their own workflow, chained off this one via
           # workflow_run, because they were emailed separately. Now that they
-          # ride along on the flag email they have to be built BEFORE it is
-          # sent, so they moved in here. A workflow_run job is sent after the
-          # email has already gone out and could never attach to it.
+          # attach to the daily report they have to be built BEFORE it is sent,
+          # so they moved in here. A workflow_run job starts after the email has
+          # already gone out and could never attach to it.
           mkdir -p panels
           attachments=""
 
@@ -144,31 +144,28 @@ jobs:
           echo "Attaching: ${attachments:-<none>}"
         continue-on-error: true
 
-      - name: Build flag email summary
+      - name: Build the daily report
         if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
-        id: flagmail
+        id: report
         run: |
-          # The report needs green for a gain and red for a loss, which plain
-          # text cannot carry, so the body is generated as HTML by a script
-          # rather than assembled here. It also handles the ordering rules and
-          # the table layout, which were awkward to express in bash.
+          # One email: the trigger tables, the per-ticker write-ups beneath
+          # them, and the SMA panels attached. This used to be two messages
+          # covering the same triggers.
           #
-          # This step reaches the network: it fetches 15 months of history for
-          # each ticker that fired, to fill the 3/6/12-month return columns.
-          # Only fired tickers, so typically under a dozen against the 536 the
-          # monitor scanned. A fetch failure degrades that ticker's returns to
-          # n/a rather than failing the step - the rest of the row comes from
-          # the already-committed trigger log and is still correct.
-          summary=$(python3 emails/flag_email.py --out flag_email.html)
-          echo "Flag email summary: $summary"
+          # Reaches the network - trailing returns for every fired ticker,
+          # plus fundamentals and headlines for the ones whose notes quote
+          # them. Never the whole watchlist. Any individual fetch that fails
+          # degrades its own line to a stated absence rather than the email.
+          summary=$(python3 emails/report.py --out report.html)
+          echo "Report summary: $summary"
 
-          # Guard the stdout contract. Diagnostics from the script go to
-          # stderr; stdout carries only the JSON summary. When that slipped,
-          # jq failed, both outputs came back empty, and the mail went out
-          # titled "[] Watchlist Triggers:" - a silent defect, because every
-          # step still reported success. Fail the step instead.
+          # Guard the stdout contract. Diagnostics go to stderr; stdout carries
+          # only the JSON summary. When that slipped, jq failed, both outputs
+          # came back empty, and the mail went out titled "[] Watchlist
+          # Triggers:" - a silent defect, because every step still reported
+          # success. Fail the step instead.
           echo "$summary" | jq -e . > /dev/null || {
-            echo "::error::flag_email.py wrote non-JSON to stdout; refusing to send an untitled email."
+            echo "::error::report.py wrote non-JSON to stdout; refusing to send an untitled email."
             exit 1
           }
 
@@ -183,7 +180,7 @@ jobs:
           path: panels
           retention-days: 90
 
-      - name: Email trigger flags
+      - name: Email the daily report
         if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
         uses: dawidd6/action-send-mail@v3
         with:
@@ -194,47 +191,9 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           from: Watchlist Monitor <${{ secrets.SMTP_USERNAME }}>
           to: RQHNetworks@outlook.com
-          subject: "[${{ steps.flagmail.outputs.date }}] Watchlist Triggers: ${{ steps.flagmail.outputs.tickers }}"
-          # file:// keeps the markup out of a step output - the report is a few
-          # KB of HTML and outputs are neither meant for nor reliable at that
-          # size, while the action reads the file directly.
-          html_body: file://flag_email.html
+          subject: "[${{ steps.report.outputs.date }}] Watchlist Triggers: ${{ steps.report.outputs.tickers }}"
+          # file:// keeps the markup out of a step output - the report is tens
+          # of KB of HTML and outputs are neither meant for nor reliable at
+          # that size, while the action reads the file directly.
+          html_body: file://report.html
           attachments: ${{ steps.panels.outputs.attachments }}
-
-      - name: Build triggers notes newsletter
-        if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]'
-        id: notes
-        run: |
-          # Second email. Deliberately built AFTER the report has been sent, so
-          # nothing in here can delay or block it - continue-on-error means a
-          # failure here costs the newsletter only, never the report.
-          #
-          # No model and no API cost: every sentence states arithmetic or
-          # quotes a dated headline. Fundamentals are fetched only for tickers
-          # with an earnings trigger, headlines only where a write-up quotes
-          # them, so a quiet day costs nothing extra.
-          summary=$(python3 emails/newsletter.py --out newsletter.html)
-          echo "Newsletter summary: $summary"
-          echo "$summary" | jq -e . > /dev/null || {
-            echo "::error::newsletter.py wrote non-JSON to stdout."
-            exit 1
-          }
-          echo "date=$(echo "$summary" | jq -r .date)" >> "$GITHUB_OUTPUT"
-        continue-on-error: true
-
-      - name: Email triggers notes
-        # outcome, not conclusion: continue-on-error forces conclusion to
-        # success, so only outcome distinguishes a real build from a failed one.
-        # Without this an unbuilt newsletter would be mailed as an empty body.
-        if: steps.check_time.outputs.should_run == 'true' && steps.dispatch.outputs.files != '[]' && steps.notes.outcome == 'success'
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          from: Watchlist Monitor <${{ secrets.SMTP_USERNAME }}>
-          to: RQHNetworks@outlook.com
-          subject: "[${{ steps.notes.outputs.date }}] Watchlist Triggers Notes"
-          html_body: file://newsletter.html
