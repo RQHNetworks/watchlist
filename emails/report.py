@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Build the "Watchlist Triggers Notes" newsletter as HTML.
+"""Build the daily Market Movers Report as HTML - the one email.
 
-A second email that reproduces the Market Movers Report's tables and adds a
-short write-up per ticker beneath them. It is generated AFTER the report is
-sent, so nothing here can delay or break that email.
+Tables first, then a short write-up per ticker beneath them. The SMA crossover
+PNGs ride along as attachments, so a day's triggers arrive as a single message
+rather than two overlapping ones.
+
+This absorbed the separate notes email, which duplicated the tables to carry
+the write-ups. flag_email.py still owns collecting the triggers, computing the
+returns and rendering the tables; this file adds the notes and assembles the
+whole thing.
 
 Everything is computed or quoted - there is no model in this path and no API
 cost. That constrains the prose: every sentence states arithmetic or names a
@@ -474,10 +479,11 @@ def writeup(title: str, bullets: list) -> str:
             f'<ul style="margin:4px 0 0 0;padding-left:20px;">{lis}</ul>')
 
 
-def render(buckets, returns, funds, earns, news, report_date: date) -> str:
+def render(buckets, returns, funds, earns, news, report_date: date,
+           ids: list | None = None) -> str:
     body = [
         f'<div style="color:{fe.INK};font:bold 13px {fe.FONT};margin:0 0 10px 0;">'
-        f'Watchlist Triggers Notes: {report_date.strftime("%m/%d/%Y")}</div>',
+        f'Market Movers Report: {report_date.strftime("%m/%d/%Y")}</div>',
 
         fe.section("EARNINGS COUNTDOWN"),
         fe.table("Earnings Date", buckets["earnings"], returns),
@@ -516,6 +522,16 @@ def render(buckets, returns, funds, earns, news, report_date: date) -> str:
                 kept, nstats = news.get(t, ([], {}))
                 bl = [news_bullet(kept, "On the day", nstats)]
             body.append(writeup(title, bl))
+
+    # The reply-to-dashboard bridge lives on these IDs, so they move across
+    # with the notes rather than being lost with the email that carried them.
+    if ids:
+        listed = "<br>".join(ids)
+        body.append(
+            f'<div style="color:{fe.MUTED};font:12px {fe.FONT};margin:26px 0 0 0;'
+            f'border-top:1px solid #3d3d3d;padding-top:12px;">'
+            f'Reply quoting one of these IDs for a full AI-built dashboard:<br>'
+            f'{listed}</div>')
 
     body.append(
         f'<div style="color:{fe.MUTED};font:12px {fe.FONT};margin:28px 0 0 0;'
@@ -597,9 +613,28 @@ def main() -> None:
                        f"earnings={len(earns.get(t, {}).get('past', []))}q "
                        f"headlines={_news_stats(news.get(t))}")
 
+    # Carried over from flag_email.main(), which the workflow no longer runs.
+    # A failed fetch already warns, but a horizon that lands on n/a does not -
+    # that is the legitimate short-history case. Without this an email where
+    # every return silently rendered n/a would look healthy in the log.
+    for t in sorted(returns):
+        cells = " ".join(
+            f"{h}m=" + ("n/a" if returns[t][h] is None else f"{returns[t][h]:+.2%}")
+            for h in fe.HORIZONS)
+        fe.log(f"  returns {t:<6s} {cells}")
+    missing = sum(1 for t in returns for h in fe.HORIZONS if returns[t][h] is None)
+    total = len(returns) * len(fe.HORIZONS)
+    if total and missing == total:
+        fe.log(f"WARNING: all {total} return values are n/a - the fetch is "
+               f"producing nothing, even though no individual ticker errored.")
+    elif missing:
+        fe.log(f"NOTE: {missing}/{total} return values are n/a.")
+
+    ids = sorted(e["id"] for group in buckets.values() for e in group)
+
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(
-        render(buckets, returns, funds, earns, news, report_date))
+        render(buckets, returns, funds, earns, news, report_date, ids))
 
     print(json.dumps({
         "date": report_date.strftime("%Y-%m-%d"),

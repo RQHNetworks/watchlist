@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""Build the daily Market Movers Report as HTML.
+"""Collect the day's triggers and render them as the report's tables.
 
-Reads the triggers/ directory and trigger_log.jsonl and emits an HTML email
-laid out as one table per section.
+Imported by report.py, which assembles the email around these tables and adds
+the per-ticker write-ups. This module owns reading triggers/ and
+trigger_log.jsonl, computing the trailing returns, and the table markup.
+
+Keeps a CLI so the tables can be rendered on their own while working on them;
+the workflow runs report.py, not this.
 
 Also fetches price history for the handful of tickers that actually fired, to
 fill the 3 / 6 / 12-month trailing-return columns. That fetch lives here rather
@@ -209,8 +213,8 @@ def collect() -> tuple:
         company = match.get("company") or ""
         tickers.append(ticker)
         as_of[ticker] = day
-        # detail is carried for newsletter.py, which parses the SMA values
-        # and swing closes back out of it. The report itself ignores it.
+        # detail is carried for the write-ups, which parse the SMA values and
+        # swing closes back out of it. The tables themselves ignore it.
         entry = {"ticker": ticker, "company": company, "id": path.stem,
                  "detail": detail}
 
