@@ -352,75 +352,6 @@ def news_bullet(items: list, label: str, stats: dict | None = None) -> str:
     return f'<b>{label}:</b><div style="margin:6px 0 0 0;">{lis}</div>'
 
 
-def price_shape(t, as_of: date) -> dict:
-    """Where the price sits in its own year, and how it got there.
-
-    Summarising "how the stock has been moving" from three return figures is
-    thin, so this reads the daily closes directly. Truncated to the trigger
-    date for the same reason everything else is: a re-run must not silently
-    describe a different week.
-    """
-    out = {}
-    try:
-        import pandas as pd
-        hist = t.history(period="1y", auto_adjust=True)
-        if hist.empty:
-            return out
-        close = hist["Close"].copy()
-        close.index = pd.to_datetime(close.index).tz_localize(None).normalize()
-        close = close[~close.index.duplicated(keep="last")].sort_index()
-        close = close[close.index <= pd.Timestamp(as_of)]
-        if len(close) < 2:
-            return out
-
-        last = float(close.iloc[-1])
-        hi_i, lo_i = close.idxmax(), close.idxmin()
-        out["last"] = last
-        out["high"], out["high_on"] = float(close.loc[hi_i]), hi_i.date()
-        out["low"], out["low_on"] = float(close.loc[lo_i]), lo_i.date()
-        out["off_high"] = last / out["high"] - 1 if out["high"] else None
-        out["off_low"] = last / out["low"] - 1 if out["low"] else None
-
-        weekly = close.resample("W").last().dropna()
-        recent = weekly.iloc[-9:]
-        if len(recent) >= 3:
-            diffs = recent.diff().dropna()
-            out["weeks"] = len(diffs)
-            out["weeks_down"] = int((diffs < 0).sum())
-    except Exception as e:
-        fe.log(f"WARNING: price shape failed: {type(e).__name__}: {e}")
-    return out
-
-
-def shape_bullet(shape: dict) -> str:
-    if not shape.get("last"):
-        return ('<b>Price action:</b> <span style="color:%s;">daily history '
-                'unavailable for this symbol.</span>' % SLOT)
-    bits = [f"last close <b>{shape['last']:,.2f}</b>"]
-    oh = shape.get("off_high")
-    if oh is not None:
-        # The last close IS the high often enough to matter, and "0.0% above
-        # its 52-week high" reads as a rounding artifact rather than a fact.
-        if abs(oh) < 0.0005:
-            bits.append(f"sitting at its 52-week high of {shape['high']:,.2f}")
-        else:
-            bits.append(f"{abs(oh):.1%} {'below' if oh < 0 else 'above'} its "
-                        f"52-week high of {shape['high']:,.2f} "
-                        f"({shape['high_on']:%b %d})")
-    ol = shape.get("off_low")
-    if ol is not None:
-        if abs(ol) < 0.0005:
-            bits.append(f"sitting at its 52-week low of {shape['low']:,.2f}")
-        else:
-            bits.append(f"{ol:.1%} above the low of {shape['low']:,.2f} "
-                        f"({shape['low_on']:%b %d})")
-    tail = ""
-    if shape.get("weeks"):
-        tail = (f" It closed lower in {shape['weeks_down']} of the last "
-                f"{shape['weeks']} weeks.")
-    return f"<b>Price action:</b> {', '.join(bits)}.{tail}"
-
-
 def trend_clause(r3, r6, r12, lead: str = "the stock ") -> str:
     """Full clause including its leading space, or empty.
 
@@ -503,7 +434,8 @@ def trend_bullet(r3, r6, r12) -> str:
         f'<div style="margin:0 0 2px 0;">'
         f'<span style="color:{fe.GREEN if v >= 0 else fe.RED};">{v:+.2%}</span>'
         f' {label}</div>'
-        for v, label in ((r3, "over 3 months"), (r6, "over 6"), (r12, "over 12"))
+        for v, label in ((r3, "over 3 months"), (r6, "over 6 months"),
+                         (r12, "over 12 months"))
         if v is not None)
 
     _, biggest = max(windows)
@@ -514,7 +446,7 @@ def trend_bullet(r3, r6, r12) -> str:
             f'work on the averages.</div>')
 
 
-def sma_bullets(e, ret, shape) -> list:
+def sma_bullets(e, ret) -> list:
     r3, r6, r12 = ret.get(3), ret.get(6), ret.get(12)
     b = []
     m = SMA_RE.search(e.get("detail", ""))
@@ -530,10 +462,7 @@ def sma_bullets(e, ret, shape) -> list:
     else:
         b.append(f"<b>{word} cross</b> confirmed on the trigger date.")
 
-    # Trend first: it explains how the averages got here. Price action
-    # then says where the stock sits now.
     b.append(trend_bullet(r3, r6, r12))
-    b.append(shape_bullet(shape))
     return b
 
 
@@ -545,7 +474,7 @@ def writeup(title: str, bullets: list) -> str:
             f'<ul style="margin:4px 0 0 0;padding-left:20px;">{lis}</ul>')
 
 
-def render(buckets, returns, funds, earns, news, shapes, report_date: date) -> str:
+def render(buckets, returns, funds, earns, news, report_date: date) -> str:
     body = [
         f'<div style="color:{fe.INK};font:bold 13px {fe.FONT};margin:0 0 10px 0;">'
         f'Watchlist Triggers Notes: {report_date.strftime("%m/%d/%Y")}</div>',
@@ -580,7 +509,7 @@ def render(buckets, returns, funds, earns, news, shapes, report_date: date) -> s
                 kept, nstats = news.get(t, ([], {}))
                 bl.append(news_bullet(kept, "News", nstats))
             elif key == "sma":
-                bl = sma_bullets(e, ret, shapes.get(t, {}))
+                bl = sma_bullets(e, ret)
             else:
                 # The move itself is already the table's own column, so the
                 # note is the news around it and nothing else.
@@ -622,7 +551,7 @@ def main() -> None:
     buckets, tickers, as_of = fe.collect()
     returns = fe.fetch_returns(as_of, offline=args.offline)
 
-    funds, earns, news, shapes = {}, {}, {}, {}
+    funds, earns, news = {}, {}, {}
     # Needed to tell a headline about this company from one that merely
     # tags it, keyed off the same name the tables show.
     e_company = {e['ticker']: e.get('company', '')
@@ -637,10 +566,11 @@ def main() -> None:
         if yf is not None:
             earn_tickers = {e["ticker"] for e in buckets["earnings"]}
             px_tickers = {e["ticker"] for e in buckets["price"]}
-            sma_tickers = {e["ticker"] for e in buckets["sma"]}
             # Fundamentals are fetched only for earnings tickers, and headlines
             # only where a write-up quotes them - never for the whole watchlist.
-            for t in sorted(earn_tickers | px_tickers | sma_tickers):
+            # SMA tickers need no fetch now: the cross values come from the
+            # trigger detail and the returns are already computed.
+            for t in sorted(earn_tickers | px_tickers):
                 try:
                     obj = yf.Ticker(t)
                 except Exception as e:
@@ -662,18 +592,14 @@ def main() -> None:
                     news[t] = headlines(obj, t, e_company.get(t, ""),
                                         since=trig - timedelta(days=1),
                                         until=trig)
-                if t in sma_tickers:
-                    shapes[t] = price_shape(
-                        obj, datetime.strptime(as_of[t], "%Y-%m-%d").date())
                 fe.log(f"  notes {t:<6s} fundamentals="
                        f"{'ok' if funds.get(t, {}).get('ok') else '-'} "
                        f"earnings={len(earns.get(t, {}).get('past', []))}q "
-                       f"headlines={_news_stats(news.get(t))} "
-                       f"shape={'ok' if shapes.get(t, {}).get('last') else '-'}")
+                       f"headlines={_news_stats(news.get(t))}")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(
-        render(buckets, returns, funds, earns, news, shapes, report_date))
+        render(buckets, returns, funds, earns, news, report_date))
 
     print(json.dumps({
         "date": report_date.strftime("%Y-%m-%d"),
