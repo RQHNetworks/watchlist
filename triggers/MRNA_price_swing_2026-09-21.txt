@@ -1,4 +1,4 @@
-I want to analyze SNDK (Sandisk Corporation). Build a single combined PNG image with four stacked panels, in this exact order:
+I want to analyze MRNA (Moderna, Inc.). Build a single combined PNG image with four stacked panels, in this exact order:
 
 Panel #1 - 5 Year Stock Chart
 Continuous monthly close line, calendar timeline (Jan of 5-years-ago -> today), in blue. Mark and annotate the 52-week high in green and 52-week low in red, each with a small dot marker directly on the chart.
@@ -34,8 +34,8 @@ Style (whole image): Dark mode throughout (#131519-ish background), off-white he
 
 Technical notes: Python/matplotlib, one tall portrait PNG (~1200x2500-2600px). Escape literal dollar signs in any text string containing two or more of them (\$ instead of $). Panels use their own appropriate scales and legends.
 
-Trigger context for this run: Large daily price move detected today (Daily move up +11.0% (close 1614.39 -> 1791.82)).
-Trigger date: 2026-09-18. Use this as the as-of cutoff anywhere a date boundary is needed -- Panel #3 in particular, where computing as of now instead silently disagrees with the figures quoted above.
+Trigger context for this run: Large daily price move detected today (Daily move up +12.3% (close 154.04 -> 172.94)).
+Trigger date: 2026-09-21. Use this as the as-of cutoff anywhere a date boundary is needed -- Panel #3 in particular, where computing as of now instead silently disagrees with the figures quoted above.
 
 After building the dashboard, also write a short analysis in Markdown, using exactly these bolded section headers so it renders cleanly as an HTML email. Keep every section to at most two short sentences - this is a quick-scan summary, not a report:
 
