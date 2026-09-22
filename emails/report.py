@@ -96,7 +96,7 @@ def yoy(cur, prior) -> str:
     if (cur < 0) != (prior < 0):
         return " (sign change YoY, so no meaningful growth rate)"
     colour = fe.GREEN if pct >= 0 else fe.RED
-    return f' (<span style="color:{colour};">{fe.whole_pct(pct)}</span> YoY)'
+    return f' (<span style="color:{colour};">{pct:+.1%}</span> YoY)'
 
 
 def _row(df, *names):
@@ -382,11 +382,12 @@ def trend_phrase(r3, r6, r12) -> str:
 def pct(v) -> str:
     """fetch_returns yields decimals, so format with % - not :+.2f plus a
     literal sign. Getting that wrong prints -0.11% where the table above says
-    -11%, i.e. two numbers for the same thing in the same email.
+    -11.05%, i.e. two numbers for the same thing in the same email.
 
-    Whole percent, matching pct_cell(). The two have to round identically or
-    the note and the table disagree on the same figure."""
-    return "n/a" if v is None else fe.whole_pct(v)
+    Full precision. Only the tables round to whole percent, and only because
+    their columns are too narrow on a phone to hold the decimals - prose has
+    the width, so nothing is given up here."""
+    return "n/a" if v is None else f"{v:+.2%}"
 
 
 def earnings_bullets(e, ret, fund, earn) -> list:
@@ -440,7 +441,7 @@ def trend_bullet(r3, r6, r12) -> str:
 
     rows = "".join(
         f'<div style="margin:0 0 2px 0;">'
-        f'<span style="color:{fe.GREEN if v >= 0 else fe.RED};">{fe.whole_pct(v)}</span>'
+        f'<span style="color:{fe.GREEN if v >= 0 else fe.RED};">{v:+.2%}</span>'
         f' {label}</div>'
         for v, label in ((r3, "over 3 months"), (r6, "over 6 months"),
                          (r12, "over 12 months"))
@@ -464,10 +465,6 @@ def sma_bullets(e, ret) -> list:
     if m:
         s50, s200 = float(m.group(1)), float(m.group(2))
         gap = abs(s50 - s200) / s200 if s200 else 0.0
-        # Two decimals here, against whole percent everywhere else. The gap
-        # at a fresh cross is a fraction of a percent by definition, so
-        # rounding it to the nearest whole number prints "0% apart" for every
-        # cross in the email and destroys the only number in the sentence.
         b.append(f"<b>{word} cross:</b> the 50-day sits at <b>{s50:,.2f}</b> against "
                  f"a 200-day of <b>{s200:,.2f}</b> — <b>{gap:.2%}</b> apart"
                  + (", inside half a percent." if gap < 0.005 else "."))

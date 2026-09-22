@@ -246,9 +246,11 @@ def collect() -> tuple:
             pct = PCT_RE.search(detail)
             value = float(pct.group(1)) if pct else 0.0
             entry["sort"] = value
-            # Rounded to a whole number like every other percentage in the
-            # email. The trigger itself still fires on the unrounded value -
-            # this is display only, so a 10.04% move still shows as +10%.
+            # Whole number, like the return columns beside it: this is a
+            # table cell, and the decimals cost width the column does not
+            # have on a phone. Display only - the trigger still fires on the
+            # unrounded value, so a 10.04% move shows as +10%. The write-ups
+            # below the tables keep full precision; they have the room.
             entry["col2"] = f"{value:+.0f}%"
             entry["col2_colour"] = GREEN if value >= 0 else RED
             buckets["price"].append(entry)
@@ -292,6 +294,10 @@ def cell(content: str, colour: str = INK, bold: bool = False,
 
 def whole_pct(value: float) -> str:
     """A decimal fraction as whole percent, with no signed zero.
+
+    For table cells only. The columns are too narrow on a phone to hold
+    "-11.05%" without wrapping, so the tables round; the write-ups beneath
+    them quote the same figures at full precision.
 
     ":+.0%" renders -0.0034 as "-0%", which reads as a formatting bug rather
     than a small decline. Anything that rounds to zero prints a plain "0%";
