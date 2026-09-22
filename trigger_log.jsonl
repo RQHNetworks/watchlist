@@ -124,3 +124,7 @@
 {"ticker": "MSTR", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +16.4% (close 132.25 -> 153.92)", "company": "Strategy Inc"}
 {"ticker": "SNDK", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +11.0% (close 1614.39 -> 1791.82)", "company": "Sandisk Corporation"}
 {"ticker": "XEL", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=77.04, 200-day=77.11", "company": "Xcel Energy Inc."}
+{"ticker": "CMG", "date": "2026-09-22", "trigger_type": "sma_cross", "detail": "death cross: 50-day=34.96, 200-day=34.97", "company": "Chipotle Mexican Grill, Inc."}
+{"ticker": "FOXA", "date": "2026-09-22", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=63.11, 200-day=63.09", "company": "Fox Corporation"}
+{"ticker": "MSCI", "date": "2026-09-22", "trigger_type": "sma_cross", "detail": "death cross: 50-day=568.48, 200-day=569.26", "company": "MSCI Inc."}
+{"ticker": "SO", "date": "2026-09-22", "trigger_type": "sma_cross", "detail": "death cross: 50-day=90.91, 200-day=91.01", "company": "The Southern Company"}
