@@ -105,8 +105,15 @@
 {"ticker": "MSTR", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +16.4% (close 132.25 -> 153.92)", "company": "Strategy Inc"}
 {"ticker": "SNDK", "date": "2026-09-18", "trigger_type": "price_swing", "detail": "Daily move up +11.0% (close 1614.39 -> 1791.82)", "company": "Sandisk Corporation"}
 {"ticker": "XEL", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=77.04, 200-day=77.11", "company": "Xcel Energy Inc."}
+{"ticker": "LUNR", "date": "2026-09-21", "trigger_type": "price_swing", "detail": "Daily move up +12.9% (close 13.92 -> 15.72)", "company": "Intuitive Machines, Inc."}
+{"ticker": "META", "date": "2026-09-21", "trigger_type": "price_swing", "detail": "Daily move up +11.3% (close 665.75 -> 741.24)", "company": "Meta Platforms, Inc."}
+{"ticker": "INTC", "date": "2026-09-21", "trigger_type": "price_swing", "detail": "Daily move up +12.1% (close 108.60 -> 121.78)", "company": "Intel Corporation"}
+{"ticker": "LMT", "date": "2026-09-21", "trigger_type": "sma_cross", "detail": "death cross: 50-day=554.27, 200-day=554.30", "company": "Lockheed Martin Corporation"}
+{"ticker": "AKAM", "date": "2026-09-21", "trigger_type": "price_swing", "detail": "Daily move up +12.3% (close 104.52 -> 117.41)", "company": "Akamai Technologies, Inc."}
+{"ticker": "ALAB", "date": "2026-09-21", "trigger_type": "price_swing", "detail": "Daily move up +12.4% (close 303.25 -> 340.74)", "company": "Astera Labs, Inc."}
+{"ticker": "ARM", "date": "2026-09-21", "trigger_type": "price_swing", "detail": "Daily move up +17.2% (close 275.61 -> 322.90)", "company": "Arm Holdings plc"}
+{"ticker": "CIEN", "date": "2026-09-21", "trigger_type": "sma_cross", "detail": "death cross: 50-day=382.06, 200-day=384.60", "company": "Ciena Corporation"}
+{"ticker": "MRNA", "date": "2026-09-21", "trigger_type": "price_swing", "detail": "Daily move up +12.3% (close 154.04 -> 172.94)", "company": "Moderna, Inc."}
+{"ticker": "ON", "date": "2026-09-21", "trigger_type": "sma_cross", "detail": "death cross: 50-day=79.06, 200-day=79.49", "company": "ON Semiconductor Corporation"}
+{"ticker": "WBD", "date": "2026-09-21", "trigger_type": "price_swing", "detail": "Daily move up +10.8% (close 27.80 -> 30.80)", "company": "Warner Bros. Discovery, Inc."}
 {"ticker": "CCL", "date": "2026-09-22", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-29 (5 business days away)", "company": "Carnival Corporation Ltd."}
-{"ticker": "CDNS", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=324.77, 200-day=326.08", "company": "Cadence Design Systems, Inc."}
-{"ticker": "DD", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=136.10, 200-day=136.17", "company": "DuPont de Nemours, Inc."}
-{"ticker": "DTE", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=139.92, 200-day=140.15", "company": "DTE Energy Company"}
-{"ticker": "XEL", "date": "2026-09-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=77.04, 200-day=77.11", "company": "Xcel Energy Inc."}
