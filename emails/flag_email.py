@@ -22,6 +22,7 @@ subject line without re-deriving any of it.
 
 import argparse
 import json
+import math
 import re
 import sys
 from datetime import date, datetime
@@ -67,6 +68,9 @@ TRIGGER_RE = re.compile(
     r"(\d{4}-\d{2}-\d{2})$"
 )
 PCT_RE = re.compile(r"([+-]\d+(?:\.\d+)?)%")
+# "Daily move down +nan% (close 336.13 -> nan)". A detail that cannot state a
+# number is a broken fetch wearing a trigger's clothes.
+NONFINITE_RE = re.compile(r"\b(?:nan|[+-]?inf(?:inity)?)\b", re.IGNORECASE)
 DAYS_RE = re.compile(r"\((\d+) business day")
 EARNINGS_DATE_RE = re.compile(r"Earnings on (\d{4}-\d{2}-\d{2})")
 
@@ -165,6 +169,12 @@ def fetch_returns(tickers: dict, offline: bool = False) -> dict:
             # any duplicate sessions before the asof lookups below.
             close.index = pd.to_datetime(close.index).tz_localize(None).normalize()
             close = close[~close.index.duplicated(keep="last")].sort_index()
+            # Drop sessions with no close before anchoring. Yahoo pads the
+            # frame with a placeholder row when the fetch reaches into a day
+            # that has not traded, and anchoring on it made every horizon NaN
+            # - which then rendered as "+nan%" in the table, because NaN is
+            # not None and so slipped past the n/a branch.
+            close = close[close.notna()]
             close = close[close.index <= pd.Timestamp(as_of)]
             if close.empty:
                 log(f"WARNING: no {ticker} history at or before {as_of}; n/a")
@@ -172,6 +182,9 @@ def fetch_returns(tickers: dict, offline: bool = False) -> dict:
 
             anchor_date = close.index[-1]
             anchor = float(close.iloc[-1])
+            if not math.isfinite(anchor) or anchor == 0.0:
+                log(f"WARNING: {ticker} anchor close is {anchor}; returns n/a")
+                continue
 
             for months in HORIZONS:
                 target = anchor_date - pd.DateOffset(months=months)
@@ -182,7 +195,11 @@ def fetch_returns(tickers: dict, offline: bool = False) -> dict:
                 past = close.asof(target)
                 if past is None or pd.isna(past) or float(past) == 0.0:
                     continue
-                out[ticker][months] = anchor / float(past) - 1
+                value = anchor / float(past) - 1
+                if not math.isfinite(value):
+                    log(f"WARNING: {ticker} {months}m return is {value}; n/a")
+                    continue
+                out[ticker][months] = value
         except Exception as e:
             log(f"WARNING: returns for {ticker} failed: {type(e).__name__}: {e}")
 
@@ -195,6 +212,7 @@ def collect() -> tuple:
     buckets = {"earnings": [], "sma": [], "price": []}
     tickers = []
     as_of = {}
+    skipped = []
 
     if not TRIGGERS_DIR.is_dir():
         return buckets, tickers, as_of
@@ -217,6 +235,11 @@ def collect() -> tuple:
             continue
 
         detail = match.get("detail", "")
+        if NONFINITE_RE.search(detail):
+            log(f"  SKIP {ticker} {kind}: detail carries a non-finite figure "
+                f"({detail!r}) - treating as a data fault, not a trigger")
+            skipped.append(f"{ticker}/{kind}")
+            continue
         company = match.get("company") or ""
         tickers.append(ticker)
         as_of[ticker] = day
@@ -258,6 +281,10 @@ def collect() -> tuple:
     buckets["earnings"].sort(key=lambda e: e["sort"])          # soonest first
     buckets["sma"].sort(key=lambda e: e["sort"])               # golden, then death
     buckets["price"].sort(key=lambda e: e["sort"], reverse=True)  # straight descending
+    if skipped:
+        log(f"WARNING: skipped {len(skipped)} trigger(s) with non-finite "
+            f"details: {', '.join(skipped[:12])}"
+            + (" ..." if len(skipped) > 12 else ""))
     return buckets, tickers, as_of
 
 
@@ -292,6 +319,16 @@ def cell(content: str, colour: str = INK, bold: bool = False,
     return f'<td{attrs} bgcolor="{BG}" style="{style}">{content}</td>'
 
 
+def _usable(v) -> bool:
+    """A return value that can be displayed and counted as present.
+
+    None is the honest "no data" case. A NaN is not None, so counting only
+    None reported "7/1605 n/a" for a run whose table was almost entirely
+    "+nan%" - the alarm that should have caught it stayed quiet.
+    """
+    return v is not None and math.isfinite(v)
+
+
 def whole_pct(value: float) -> str:
     """A decimal fraction as whole percent, with no signed zero.
 
@@ -311,7 +348,9 @@ def pct_cell(value) -> str:
     # A point smaller than the rest, and rounded to whole percent: "-11%" in
     # an 11px face clears a ~57px column with room to spare, where "-11.05%"
     # at 12px did not and wrapped onto a second line.
-    if value is None:
+    # `is None` alone was not enough: a NaN is not None, so it reached
+    # whole_pct() and rendered a red "+nan%" cell.
+    if value is None or not math.isfinite(value):
         return cell("n/a", MUTED, size=11)
     return cell(whole_pct(value), GREEN if value >= 0 else RED, size=11)
 
@@ -426,10 +465,10 @@ def main() -> None:
     # n/a would look identical in the log to a healthy one.
     for t in sorted(returns):
         cells = " ".join(
-            f"{h}m=" + ("n/a" if returns[t][h] is None else f"{returns[t][h]:+.2%}")
+            f"{h}m=" + ("n/a" if not _usable(returns[t][h]) else f"{returns[t][h]:+.2%}")
             for h in HORIZONS)
         log(f"  returns {t:<6s} {cells}")
-    missing = sum(1 for t in returns for h in HORIZONS if returns[t][h] is None)
+    missing = sum(1 for t in returns for h in HORIZONS if not _usable(returns[t][h]))
     total = len(returns) * len(HORIZONS)
     if total and missing == total:
         log(f"WARNING: all {total} return values are n/a - the fetch is "

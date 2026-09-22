@@ -158,8 +158,23 @@ def check_price_swing(hist: pd.DataFrame, threshold: float = PRICE_SWING_THRESHO
     """Detect a daily close-to-close move of at least +/- threshold."""
     if len(hist) < 2:
         return None
-    pct_change = (hist["Close"].iloc[-1] / hist["Close"].iloc[-2]) - 1
-    if abs(pct_change) < threshold:
+
+    last, prev = hist["Close"].iloc[-1], hist["Close"].iloc[-2]
+    # A missing close is not a price move. Every comparison against NaN is
+    # False, so the old "if abs(pct_change) < threshold: return None" did not
+    # return - it fell through and fired. Yahoo appended one placeholder row
+    # with no close and this manufactured a swing for 535 of 537 tickers,
+    # every one of them reading "Daily move down +nan%".
+    #
+    # Now the trigger requires a positive assertion, so anything that is not
+    # a real move of at least the threshold is declined rather than fired.
+    if pd.isna(last) or pd.isna(prev) or prev == 0:
+        print(f"    no usable close pair (prev={prev}, last={last}); "
+              f"declining to call a swing")
+        return None
+
+    pct_change = (last / prev) - 1
+    if not (abs(pct_change) >= threshold):
         return None
     direction = "up" if pct_change > 0 else "down"
     return TriggerEvent(
@@ -258,6 +273,18 @@ def run_once(watchlist: list = None) -> list:
             hist = t.history(period="1y", auto_adjust=True)
             if hist.empty:
                 print(f"[{ticker}] no price data returned, skipping")
+                continue
+
+            # Yahoo pads the frame with a row for a session that has not
+            # produced a close yet - reliably so when the run straddles
+            # midnight UTC, because period= then reaches into the next UTC
+            # day. Such a row is not data; drop it before anything reads it.
+            blank = int(hist["Close"].isna().sum())
+            if blank:
+                hist = hist[hist["Close"].notna()]
+                print(f"[{ticker}] dropped {blank} row(s) with no close")
+            if len(hist) < 2:
+                print(f"[{ticker}] fewer than 2 usable closes, skipping")
                 continue
             
             # DEBUG: Show the latest data date in the history
