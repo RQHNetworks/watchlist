@@ -557,6 +557,53 @@ def render(buckets, returns, funds, earns, news, report_date: date,
     )
 
 
+# A single trigger type firing across this share of the watchlist is not a
+# market event - it is a broken fetch. 10% of the S&P moving double digits in
+# one session happens; a third of it does not, and 535 of 537 certainly does
+# not. Set generously on purpose: the job here is to catch a fault, never to
+# trim a real day.
+IMPLAUSIBLE_SHARE = 0.33
+
+
+def watchlist_size() -> int | None:
+    """How many symbols are monitored, or None if that cannot be established."""
+    try:
+        data = json.loads(Path("watchlist.json").read_text())
+        return len(data["watchlist"]) or None
+    except Exception as e:
+        fe.log(f"NOTE: could not size the watchlist ({type(e).__name__}); "
+               f"plausibility guard disabled")
+        return None
+
+
+def guard_plausibility(buckets: dict) -> None:
+    """Refuse to build a report that is obviously a data fault.
+
+    Yahoo returned one placeholder row with no close and the monitor's swing
+    check, guarding with "if abs(pct_change) < threshold", fell through on the
+    resulting NaN - firing 535 of 537 tickers and sending an email whose
+    subject line listed the entire watchlist.
+
+    The NaN itself is fixed at both fetch sites and in the check, so this is
+    the backstop for the next fault of the same shape. It fails the step
+    rather than quietly trimming: a missing email gets noticed, a silently
+    shortened one does not, and nothing here ever drops a trigger that a real
+    market day produced.
+    """
+    size = watchlist_size()
+    if not size:
+        return
+    for key, entries in buckets.items():
+        if len(entries) > size * IMPLAUSIBLE_SHARE:
+            fe.log(
+                f"::error::{len(entries)} of {size} watchlist symbols fired "
+                f"'{key}' in one session ({len(entries) / size:.0%}). That is "
+                f"a data fault, not a market move - refusing to send. Inspect "
+                f"triggers/ and trigger_log.jsonl for this date."
+            )
+            sys.exit(1)
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out", required=True, type=Path)
@@ -569,6 +616,7 @@ def main() -> None:
                    if args.date else date.today())
 
     buckets, tickers, as_of = fe.collect()
+    guard_plausibility(buckets)
     returns = fe.fetch_returns(as_of, offline=args.offline)
 
     funds, earns, news = {}, {}, {}
@@ -623,10 +671,12 @@ def main() -> None:
     # every return silently rendered n/a would look healthy in the log.
     for t in sorted(returns):
         cells = " ".join(
-            f"{h}m=" + ("n/a" if returns[t][h] is None else f"{returns[t][h]:+.2%}")
+            f"{h}m=" + ("n/a" if not fe._usable(returns[t][h])
+                        else f"{returns[t][h]:+.2%}")
             for h in fe.HORIZONS)
         fe.log(f"  returns {t:<6s} {cells}")
-    missing = sum(1 for t in returns for h in fe.HORIZONS if returns[t][h] is None)
+    missing = sum(1 for t in returns for h in fe.HORIZONS
+                  if not fe._usable(returns[t][h]))
     total = len(returns) * len(fe.HORIZONS)
     if total and missing == total:
         fe.log(f"WARNING: all {total} return values are n/a - the fetch is "
