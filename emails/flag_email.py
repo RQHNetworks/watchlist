@@ -48,7 +48,14 @@ FONT = "-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 # Fixed column widths, so a long company name wraps inside its own column
 # instead of stretching it. Every table is the same shape regardless of what
 # fired. Sums to 100%.
-WIDTHS = ("30%", "19%", "17%", "17%", "17%")
+#
+# Rounding the returns to whole numbers took the widest value in those three
+# columns from "-11.05%" to "-11%", so they no longer need 17% apiece. The
+# reclaimed width goes to the second column, which was breaking "September"
+# mid-word at 19%. Measured at 390px: nothing breaks inside a word now, and
+# 16% is still wide enough that the "3 months" header stays on two lines
+# rather than three.
+WIDTHS = ("30%", "22%", "16%", "16%", "16%")
 
 HORIZONS = (3, 6, 12)
 # Fetched history. Must exceed the longest horizon by enough that the 12-month
@@ -239,9 +246,10 @@ def collect() -> tuple:
             pct = PCT_RE.search(detail)
             value = float(pct.group(1)) if pct else 0.0
             entry["sort"] = value
-            # One decimal here, matching the monitor; the return columns use
-            # two. The mockup distinguishes them, so it is kept.
-            entry["col2"] = f"{value:+.1f}%"
+            # Rounded to a whole number like every other percentage in the
+            # email. The trigger itself still fires on the unrounded value -
+            # this is display only, so a 10.04% move still shows as +10%.
+            entry["col2"] = f"{value:+.0f}%"
             entry["col2_colour"] = GREEN if value >= 0 else RED
             buckets["price"].append(entry)
 
@@ -262,7 +270,7 @@ def stock_label(entry: dict) -> str:
 
 
 def cell(content: str, colour: str = INK, bold: bool = False,
-         width: str | None = None, colspan: int = 1, size: int = 13) -> str:
+         width: str | None = None, colspan: int = 1, size: int = 12) -> str:
     """One cell. Its own background, and no border of its own.
 
     The grid is drawn by the table's bgcolor showing through 1px cellspacing
@@ -275,19 +283,31 @@ def cell(content: str, colour: str = INK, bold: bool = False,
     if colspan > 1:
         attrs += f' colspan="{colspan}"'
     weight = "bold " if bold else ""
-    style = (f"padding:7px 6px;color:{colour};font:{weight}{size}px {FONT};"
+    style = (f"padding:6px 5px;color:{colour};font:{weight}{size}px {FONT};"
              f"text-align:center;word-wrap:break-word;")
     if width:
         style += f"width:{width};"
     return f'<td{attrs} bgcolor="{BG}" style="{style}">{content}</td>'
 
 
+def whole_pct(value: float) -> str:
+    """A decimal fraction as whole percent, with no signed zero.
+
+    ":+.0%" renders -0.0034 as "-0%", which reads as a formatting bug rather
+    than a small decline. Anything that rounds to zero prints a plain "0%";
+    the cell colour still carries the direction.
+    """
+    text = f"{value:+.0%}"
+    return "0%" if text in ("+0%", "-0%") else text
+
+
 def pct_cell(value) -> str:
-    # A point smaller than the rest: "-11.05%" has to survive a ~60px column
-    # on a phone, and this is the difference between fitting and wrapping.
+    # A point smaller than the rest, and rounded to whole percent: "-11%" in
+    # an 11px face clears a ~57px column with room to spare, where "-11.05%"
+    # at 12px did not and wrapped onto a second line.
     if value is None:
-        return cell("n/a", MUTED, size=12)
-    return cell(f"{value:+.2%}", GREEN if value >= 0 else RED, size=12)
+        return cell("n/a", MUTED, size=11)
+    return cell(whole_pct(value), GREEN if value >= 0 else RED, size=11)
 
 
 def stock_cell(entry: dict) -> str:
@@ -298,15 +318,18 @@ def stock_cell(entry: dict) -> str:
     it puts the break where it belongs and keeps the ticker scannable.
     """
     company = short_company(entry["company"]) if entry["company"] else ""
-    name = (f'<div style="color:{MUTED};font:11px {FONT};margin:2px 0 0 0;">'
+    name = (f'<div style="color:{MUTED};font:10px {FONT};margin:2px 0 0 0;">'
             f'{company}</div>') if company and company != entry["ticker"] else ""
-    return (f'<div style="color:{INK};font:bold 13px {FONT};">'
+    return (f'<div style="color:{INK};font:bold 12px {FONT};">'
             f'{entry["ticker"]}</div>{name}')
 
 
 def table(col2_header: str, entries: list, returns: dict) -> str:
     headers = ("Stock", col2_header, "3 months", "6 months", "1 year")
-    head = "".join(cell(h, INK, bold=True, width=w)
+    # Headers a point under the body text. At 12px "months" is wider than the
+    # 16% return columns and breaks mid-word; at 11px it fits, and the header
+    # row stops being the tallest thing in the table.
+    head = "".join(cell(h, INK, bold=True, width=w, size=11)
                    for h, w in zip(headers, WIDTHS))
     rows = [f"<tr>{head}</tr>"]
 
@@ -335,14 +358,14 @@ def table(col2_header: str, entries: list, returns: dict) -> str:
 
 
 def section(title: str, note: str = "") -> str:
-    tail = (f'<span style="font:bold 12px {FONT};"> {note}</span>') if note else ""
-    return (f'<div style="color:{BLUE};font:bold 14px {FONT};'
+    tail = (f'<span style="font:bold 11px {FONT};"> {note}</span>') if note else ""
+    return (f'<div style="color:{BLUE};font:bold 13px {FONT};'
             f'margin:22px 0 0 0;">{title}{tail}</div>')
 
 
 def render(buckets: dict, returns: dict, report_date: date, ids: list) -> str:
     body = [
-        f'<div style="color:{INK};font:bold 13px {FONT};margin:0 0 10px 0;">'
+        f'<div style="color:{INK};font:bold 12px {FONT};margin:0 0 10px 0;">'
         f'Market Movers Report: {report_date.strftime("%m/%d/%Y")}</div>',
 
         section("EARNINGS COUNTDOWN"),
@@ -358,7 +381,7 @@ def render(buckets: dict, returns: dict, report_date: date, ids: list) -> str:
     if ids:
         listed = "<br>".join(ids)
         body.append(
-            f'<div style="color:{MUTED};font:12px {FONT};margin:26px 0 0 0;'
+            f'<div style="color:{MUTED};font:11px {FONT};margin:26px 0 0 0;'
             f'border-top:1px solid #3d3d3d;padding-top:12px;">'
             f'Reply quoting one of these IDs for a full AI-built dashboard:<br>'
             f'{listed}</div>'
