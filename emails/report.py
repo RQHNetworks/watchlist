@@ -382,7 +382,11 @@ def trend_phrase(r3, r6, r12) -> str:
 def pct(v) -> str:
     """fetch_returns yields decimals, so format with % - not :+.2f plus a
     literal sign. Getting that wrong prints -0.11% where the table above says
-    -11.05%, i.e. two numbers for the same thing in the same email."""
+    -11.05%, i.e. two numbers for the same thing in the same email.
+
+    Full precision. Only the tables round to whole percent, and only because
+    their columns are too narrow on a phone to hold the decimals - prose has
+    the width, so nothing is given up here."""
     return "n/a" if v is None else f"{v:+.2%}"
 
 
@@ -472,9 +476,9 @@ def sma_bullets(e, ret) -> list:
 
 
 def writeup(title: str, bullets: list) -> str:
-    lis = "".join(f'<li style="color:{fe.INK};font:13px {fe.FONT};'
+    lis = "".join(f'<li style="color:{fe.INK};font:12px {fe.FONT};'
                   f'margin:0 0 6px 0;line-height:1.5;">{x}</li>' for x in bullets)
-    return (f'<div style="color:{fe.INK};font:bold 13px {fe.FONT};'
+    return (f'<div style="color:{fe.INK};font:bold 12px {fe.FONT};'
             f'margin:18px 0 2px 0;">{title}</div>'
             f'<ul style="margin:4px 0 0 0;padding-left:20px;">{lis}</ul>')
 
@@ -482,7 +486,7 @@ def writeup(title: str, bullets: list) -> str:
 def render(buckets, returns, funds, earns, news, report_date: date,
            ids: list | None = None) -> str:
     body = [
-        f'<div style="color:{fe.INK};font:bold 13px {fe.FONT};margin:0 0 10px 0;">'
+        f'<div style="color:{fe.INK};font:bold 12px {fe.FONT};margin:0 0 10px 0;">'
         f'Market Movers Report: {report_date.strftime("%m/%d/%Y")}</div>',
 
         fe.section("EARNINGS COUNTDOWN"),
@@ -520,7 +524,7 @@ def render(buckets, returns, funds, earns, news, report_date: date,
                 # The move itself is already the table's own column, so the
                 # note is the news around it and nothing else.
                 kept, nstats = news.get(t, ([], {}))
-                bl = [news_bullet(kept, "On the day", nstats)]
+                bl = [news_bullet(kept, "Related headlines", nstats)]
             body.append(writeup(title, bl))
 
     # The reply-to-dashboard bridge lives on these IDs, so they move across
@@ -528,13 +532,13 @@ def render(buckets, returns, funds, earns, news, report_date: date,
     if ids:
         listed = "<br>".join(ids)
         body.append(
-            f'<div style="color:{fe.MUTED};font:12px {fe.FONT};margin:26px 0 0 0;'
+            f'<div style="color:{fe.MUTED};font:11px {fe.FONT};margin:26px 0 0 0;'
             f'border-top:1px solid #3d3d3d;padding-top:12px;">'
             f'Reply quoting one of these IDs for a full AI-built dashboard:<br>'
             f'{listed}</div>')
 
     body.append(
-        f'<div style="color:{fe.MUTED};font:12px {fe.FONT};margin:28px 0 0 0;'
+        f'<div style="color:{fe.MUTED};font:11px {fe.FONT};margin:28px 0 0 0;'
         f'border-top:1px solid #3d3d3d;padding-top:12px;">'
         f'Every figure above is computed from daily closes and the company\'s own '
         f'quarterly statements, or quoted from a dated headline. Free cash flow is '
