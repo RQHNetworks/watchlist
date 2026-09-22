@@ -483,8 +483,32 @@ def writeup(title: str, bullets: list) -> str:
             f'<ul style="margin:4px 0 0 0;padding-left:20px;">{lis}</ul>')
 
 
+# Temporary, for one side-by-side run: the same three tables again as a PNG,
+# so the HTML and the picture can be compared in the same message on the same
+# data. cid: works because action-send-mail gives every attachment a
+# Content-Id of its basename, and nodemailer puts any image carrying one into
+# a multipart/related part as Content-Disposition: inline.
+#
+# max-width is the image's own 340 CSS px, never more: it is rasterised at 3x
+# for exactly that width, and letting a client stretch it past that would
+# blur it, while a wide image squeezed into a phone would shrink the text
+# below what the HTML renders.
+def image_block(name: str) -> str:
+    return (
+        f'<div style="border-top:1px solid #3d3d3d;margin:30px 0 0 0;'
+        f'padding-top:14px;">'
+        f'<div style="color:{fe.MUTED};font:11px {fe.FONT};margin:0 0 8px 0;">'
+        f'The same three tables as an image, for comparison. Nothing '
+        f'downstream can resize or reflow this copy.</div>'
+        f'<img src="cid:{name}" width="340" alt="Trigger tables" '
+        f'style="width:100%;max-width:340px;height:auto;display:block;'
+        f'border:0;outline:none;text-decoration:none;">'
+        f'</div>'
+    )
+
+
 def render(buckets, returns, funds, earns, news, report_date: date,
-           ids: list | None = None) -> str:
+           ids: list | None = None, image_name: str | None = None) -> str:
     body = [
         f'<div style="color:{fe.INK};font:bold 12px {fe.FONT};margin:0 0 10px 0;">'
         f'Market Movers Report: {report_date.strftime("%m/%d/%Y")}</div>',
@@ -499,6 +523,9 @@ def render(buckets, returns, funds, earns, news, report_date: date,
         f'<div style="border-top:1px solid #3d3d3d;margin:30px 0 0 0;'
         f'padding-top:6px;"></div>',
     ]
+
+    if image_name:
+        body.insert(-1, image_block(image_name))
 
     blocks = (
         ("NOTES — EARNINGS COUNTDOWN", "earnings"),
@@ -607,6 +634,8 @@ def guard_plausibility(buckets: dict) -> None:
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out", required=True, type=Path)
+    p.add_argument("--image-out", type=Path,
+                   help="Also render the tables as a PNG and embed it inline.")
     p.add_argument("--date", help="Report date YYYY-MM-DD; defaults to today.")
     p.add_argument("--offline", action="store_true",
                    help="Skip every network fetch. For testing without egress.")
@@ -686,14 +715,31 @@ def main() -> None:
 
     ids = sorted(e["id"] for group in buckets.values() for e in group)
 
+    # The image copy of the tables. A failure here costs the comparison, not
+    # the email: the HTML tables carry the same data and go out regardless.
+    image_name = None
+    if args.image_out:
+        try:
+            sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "charts"))
+            import table_image
+            table_image.render(buckets, returns, args.image_out)
+            image_name = args.image_out.name
+            fe.log(f"  table image {args.image_out}")
+        except Exception as e:
+            fe.log(f"WARNING: table image failed ({type(e).__name__}: {e}); "
+                   f"sending the HTML tables only")
+
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(
-        render(buckets, returns, funds, earns, news, report_date, ids))
+        render(buckets, returns, funds, earns, news, report_date, ids,
+               image_name=image_name))
 
     print(json.dumps({
         "date": report_date.strftime("%Y-%m-%d"),
         "tickers": ",".join(sorted(set(tickers))),
         "count": len(tickers),
+        # The workflow attaches this so the cid: in the body resolves.
+        "image": str(args.image_out) if image_name else "",
     }))
 
 

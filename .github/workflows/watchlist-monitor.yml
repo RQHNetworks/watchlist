@@ -156,7 +156,12 @@ jobs:
           # plus fundamentals and headlines for the ones whose notes quote
           # them. Never the whole watchlist. Any individual fetch that fails
           # degrades its own line to a stated absence rather than the email.
-          summary=$(python3 emails/report.py --out report.html)
+          # --image-out also renders the three tables as a PNG, embedded in
+          # the body via cid: for a one-off side-by-side comparison against
+          # the HTML tables. If it fails the email still goes out with the
+          # HTML tables alone.
+          summary=$(python3 emails/report.py --out report.html \
+                      --image-out panels/tables.png)
           echo "Report summary: $summary"
 
           # Guard the stdout contract. Diagnostics go to stderr; stdout carries
@@ -171,6 +176,19 @@ jobs:
 
           echo "date=$(echo "$summary" | jq -r .date)" >> "$GITHUB_OUTPUT"
           echo "tickers=$(echo "$summary" | jq -r .tickers)" >> "$GITHUB_OUTPUT"
+
+          # The table image has to be attached for its cid: to resolve, so
+          # the attachment list is assembled here rather than in the panels
+          # step - that step runs before this one and cannot know about it.
+          # An absent image just leaves the panels, and no panels leaves an
+          # empty string, which the mail action treats as no attachments.
+          image=$(echo "$summary" | jq -r .image)
+          attachments="${{ steps.panels.outputs.attachments }}"
+          if [ -n "$image" ] && [ -f "$image" ]; then
+            attachments="${attachments:+$attachments,}${image}"
+          fi
+          echo "attachments=${attachments}" >> "$GITHUB_OUTPUT"
+          echo "Attaching: ${attachments:-<none>}"
 
       - name: Upload panels artifact
         if: steps.check_time.outputs.should_run == 'true' && steps.panels.outputs.attachments != ''
@@ -196,4 +214,4 @@ jobs:
           # of KB of HTML and outputs are neither meant for nor reliable at
           # that size, while the action reads the file directly.
           html_body: file://report.html
-          attachments: ${{ steps.panels.outputs.attachments }}
+          attachments: ${{ steps.report.outputs.attachments }}
