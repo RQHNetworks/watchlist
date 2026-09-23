@@ -128,3 +128,12 @@
 {"ticker": "FOXA", "date": "2026-09-22", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=63.11, 200-day=63.09", "company": "Fox Corporation"}
 {"ticker": "MSCI", "date": "2026-09-22", "trigger_type": "sma_cross", "detail": "death cross: 50-day=568.48, 200-day=569.26", "company": "MSCI Inc."}
 {"ticker": "SO", "date": "2026-09-22", "trigger_type": "sma_cross", "detail": "death cross: 50-day=90.91, 200-day=91.01", "company": "The Southern Company"}
+{"ticker": "ABNB", "date": "2026-09-23", "trigger_type": "price_swing", "detail": "Daily move down -10.3% (close 166.84 -> 149.58)", "company": "Airbnb, Inc."}
+{"ticker": "FDS", "date": "2026-09-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-30 (5 business days away)", "company": "FactSet Research Systems Inc."}
+{"ticker": "FOXA", "date": "2026-09-23", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=63.10, 200-day=63.09", "company": "Fox Corporation"}
+{"ticker": "GEN", "date": "2026-09-23", "trigger_type": "price_swing", "detail": "Daily move down -10.0% (close 29.15 -> 26.23)", "company": "Gen Digital Inc."}
+{"ticker": "JBL", "date": "2026-09-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-30 (5 business days away)", "company": "Jabil Inc."}
+{"ticker": "LUV", "date": "2026-09-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=43.01, 200-day=43.02", "company": "Southwest Airlines Co."}
+{"ticker": "MSCI", "date": "2026-09-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=568.61, 200-day=569.29", "company": "MSCI Inc."}
+{"ticker": "MU", "date": "2026-09-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-30 (5 business days away)", "company": "Micron Technology, Inc."}
+{"ticker": "SO", "date": "2026-09-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=90.88, 200-day=91.00", "company": "The Southern Company"}
