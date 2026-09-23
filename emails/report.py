@@ -489,10 +489,16 @@ def writeup(title: str, bullets: list) -> str:
 # Content-Id of its basename, and nodemailer puts any image carrying one into
 # a multipart/related part as Content-Disposition: inline.
 #
-# max-width is the image's own 340 CSS px, never more: it is rasterised at 3x
-# for exactly that width, and letting a client stretch it past that would
-# blur it, while a wide image squeezed into a phone would shrink the text
-# below what the HTML renders.
+# width:100% with a max-width, so one image serves both screens:
+#   phone   - 100% of the ~358px body, i.e. about its 340px design size
+#   desktop - capped at IMAGE_MAX_W, scaling the text up with it
+# The cap stays well under the 1020px raster so the upscale never runs out of
+# pixels; at 560 there are still 1.8 device px per CSS px. Raising the cap
+# makes the desktop copy bigger and softer, and does not touch the phone,
+# which never reaches it.
+IMAGE_MAX_W = 560
+
+
 def image_block(name: str) -> str:
     return (
         f'<div style="border-top:1px solid #3d3d3d;margin:30px 0 0 0;'
@@ -500,8 +506,8 @@ def image_block(name: str) -> str:
         f'<div style="color:{fe.MUTED};font:11px {fe.FONT};margin:0 0 8px 0;">'
         f'The same three tables as an image, for comparison. Nothing '
         f'downstream can resize or reflow this copy.</div>'
-        f'<img src="cid:{name}" width="340" alt="Trigger tables" '
-        f'style="width:100%;max-width:340px;height:auto;display:block;'
+        f'<img src="cid:{name}" width="{IMAGE_MAX_W}" alt="Trigger tables" '
+        f'style="width:100%;max-width:{IMAGE_MAX_W}px;height:auto;display:block;'
         f'border:0;outline:none;text-decoration:none;">'
         f'</div>'
     )

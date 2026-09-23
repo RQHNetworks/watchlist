@@ -50,45 +50,13 @@ FONT = "-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 # instead of stretching it. Every table is the same shape regardless of what
 # fired. Sums to 100%.
 #
-# Solved from the measured width of the widest unbreakable token in each
-# column, not guessed. A cell only breaks mid-word when a single word is
-# wider than its column, so the longest WORD is what sets the minimum:
-# "months" for the return headers, "+1712%" for their values, "September"
-# for the earnings date, and the company name for the Stock column.
-#
-# Every column is sized to hold its longest word with at least ~30% spare,
-# because mobile mail clients render small type larger than the stated px -
-# Outlook on a phone was drawing 11px text wide enough to split "months"
-# into "month" + "s" even though it measured as fitting at 390px. Sizing to
-# "just fits" is what put those breaks back; the headroom is the fix.
-WIDTHS = ("26%", "23%", "17%", "17%", "17%")
-
-# Type scale. Headers are the smallest because their words are the longest
-# relative to their columns; the company name is a reference under the
-# ticker, not a label to read at a glance.
-HEADER_SIZE = 9
-DATA_SIZE = 10
-TICKER_SIZE = 12
-# Half the ticker, deliberately: the name is a reference for the symbol above
-# it, not something to read at a glance. Being this small is also what lets
-# the longest real name ("DuPont de Nemours") sit on one line with room to
-# spare if a client enlarges it.
-COMPANY_SIZE = TICKER_SIZE // 2
-# Characters of company name that fit on one line in the Stock column at
-# COMPANY_SIZE, with the same allowance for a client enlarging the type.
-COMPANY_BUDGET = 19
-# Measured headroom at 390px, i.e. how much larger a client may draw the type
-# before a cell breaks. The binding cases:
-#   "+1712%"            17% column,  9px  1.44x
-#   "September"         23% column, 10px  1.36x
-#   "months"            17% column,  9px  1.48x
-#   "DuPont de Nemours" 26% column,  6px  1.97x
-# The earnings column went 21% -> 23% so the full month name keeps its
-# headroom; "September" at 21% had 1.23x and split into "Septembe" + "r".
-# That width came from the Stock column, which the 6px name no longer needs.
-# The return columns went 15% -> 17% because "+1712%" - a real 12-month
-# return, from SNDK - had only 1.16x and was splitting into "+1712" + "%".
-# The width came from the Stock column, which the 7px company name freed up.
+# Rounding the returns to whole numbers took the widest value in those three
+# columns from "-11.05%" to "-11%", so they no longer need 17% apiece. The
+# reclaimed width goes to the second column, which was breaking "September"
+# mid-word at 19%. Measured at 390px: nothing breaks inside a word now, and
+# 16% is still wide enough that the "3 months" header stays on two lines
+# rather than three.
+WIDTHS = ("30%", "22%", "16%", "16%", "16%")
 
 HORIZONS = (3, 6, 12)
 # Fetched history. Must exceed the longest horizon by enough that the 12-month
@@ -331,8 +299,7 @@ def stock_label(entry: dict) -> str:
 
 
 def cell(content: str, colour: str = INK, bold: bool = False,
-         width: str | None = None, colspan: int = 1, size: int = DATA_SIZE,
-         nowrap: bool = False) -> str:
+         width: str | None = None, colspan: int = 1, size: int = 12) -> str:
     """One cell. Its own background, and no border of its own.
 
     The grid is drawn by the table's bgcolor showing through 1px cellspacing
@@ -345,15 +312,8 @@ def cell(content: str, colour: str = INK, bold: bool = False,
     if colspan > 1:
         attrs += f' colspan="{colspan}"'
     weight = "bold " if bold else ""
-    # word-wrap:break-word used to be here. It is what split "months" into
-    # "month" + "s" and "+1712%" into "+1712" + "%": when a word does not
-    # fit, it breaks it mid-word rather than letting it hang. Removing it
-    # means a too-long word overflows instead, which is visible and fixable,
-    # rather than silently mangling the header of every table.
     style = (f"padding:6px 5px;color:{colour};font:{weight}{size}px {FONT};"
-             f"text-align:center;")
-    if nowrap:
-        style += "white-space:nowrap;"
+             f"text-align:center;word-wrap:break-word;")
     if width:
         style += f"width:{width};"
     return f'<td{attrs} bgcolor="{BG}" style="{style}">{content}</td>'
@@ -390,37 +350,9 @@ def pct_cell(value) -> str:
     # at 12px did not and wrapped onto a second line.
     # `is None` alone was not enough: a NaN is not None, so it reached
     # whole_pct() and rendered a red "+nan%" cell.
-    # HEADER_SIZE, not DATA_SIZE: "+1712%" is a real 12-month return and at
-    # 10px it had only 1.30x headroom, splitting into "+1712" + "%" once a
-    # client enlarged the type. A point smaller buys 1.44x.
     if value is None or not math.isfinite(value):
-        return cell("n/a", MUTED, size=HEADER_SIZE, nowrap=True)
-    return cell(whole_pct(value), GREEN if value >= 0 else RED,
-                size=HEADER_SIZE, nowrap=True)
-
-
-def fit_company(name: str) -> str:
-    """Shorten a company name to one line in the Stock column.
-
-    "Cadence Design Systems" was wrapping onto three lines, which made every
-    row a different height. Cutting it here rather than in CSS keeps the
-    result identical in every client: text-overflow needs overflow:hidden and
-    a definite width, and mail clients honour that unevenly.
-
-    Prefers a word boundary, so "Cadence Design Systems" reads "Cadence
-    Design" rather than "Cadence Desig...". Falls back to a hard cut when the
-    first word is most of the budget, so "NXP Semiconductors" keeps enough to
-    be recognisable instead of collapsing to "NXP".
-    """
-    name = name.strip()
-    if len(name) <= COMPANY_BUDGET:
-        return name
-    cut = name.rfind(" ", 0, COMPANY_BUDGET + 1)
-    # A word boundary that throws away most of the budget is worse than an
-    # ellipsis: "NXP" tells you less than "NXP Semiconduct...".
-    if cut >= COMPANY_BUDGET - 6:
-        return name[:cut]
-    return name[:COMPANY_BUDGET - 1].rstrip() + "\u2026"
+        return cell("n/a", MUTED, size=11)
+    return cell(whole_pct(value), GREEN if value >= 0 else RED, size=11)
 
 
 def stock_cell(entry: dict) -> str:
@@ -430,22 +362,19 @@ def stock_cell(entry: dict) -> str:
     the words happen to fall, so every row ends up a different height. Splitting
     it puts the break where it belongs and keeps the ticker scannable.
     """
-    company = fit_company(short_company(entry["company"])) if entry["company"] else ""
-    name = (f'<div style="color:{MUTED};font:{COMPANY_SIZE}px {FONT};'
-            f'margin:2px 0 0 0;white-space:nowrap;">'
+    company = short_company(entry["company"]) if entry["company"] else ""
+    name = (f'<div style="color:{MUTED};font:10px {FONT};margin:2px 0 0 0;">'
             f'{company}</div>') if company and company != entry["ticker"] else ""
-    return (f'<div style="color:{INK};font:bold {TICKER_SIZE}px {FONT};'
-            f'white-space:nowrap;">'
+    return (f'<div style="color:{INK};font:bold 12px {FONT};">'
             f'{entry["ticker"]}</div>{name}')
 
 
 def table(col2_header: str, entries: list, returns: dict) -> str:
     headers = ("Stock", col2_header, "3 months", "6 months", "1 year")
-    # The smallest type in the table, because "months" and "Change" are the
-    # longest words relative to the space they get. They still break at the
-    # space onto two lines, which is uniform across all three return columns;
-    # what must never happen is a break inside the word itself.
-    head = "".join(cell(h, INK, bold=True, width=w, size=HEADER_SIZE)
+    # Headers a point under the body text. At 12px "months" is wider than the
+    # 16% return columns and breaks mid-word; at 11px it fits, and the header
+    # row stops being the tallest thing in the table.
+    head = "".join(cell(h, INK, bold=True, width=w, size=11)
                    for h, w in zip(headers, WIDTHS))
     rows = [f"<tr>{head}</tr>"]
 

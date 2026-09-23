@@ -7,13 +7,19 @@ splits words mid-word - "months" arriving as "month" + "s". Sizing the HTML
 with headroom makes that unlikely; rendering a picture makes it impossible,
 because nothing downstream gets a say.
 
-Designed phone-first. The image is 340 CSS px wide and rasterised at 3x, so
-on a phone it displays at 1:1 and stays crisp, rather than being a wide
-desktop table scaled down until its text is smaller than the HTML it
-replaced. On a desktop it simply shows narrow.
+Designed phone-first and scaled up, never down. The layout is 340 CSS px wide
+and rasterised at 3x (1020px). A phone displays it at roughly its design size,
+and a desktop stretches it to the cap in report.py - upward, into pixels that
+already exist, so it stays sharp and the text gets bigger.
 
-Colours, column proportions and the company-name shortening are imported from
-flag_email so the picture and the HTML cannot drift apart.
+The tempting alternative is to design wide and let width:100% shrink it on a
+phone. That inverts the problem: a 600px table squeezed into 358px renders
+its text at 0.6x, smaller than the HTML it was meant to improve on.
+
+Colours, the company-name shortening and the percent formatting come from
+flag_email, so the picture and the HTML can never disagree about a number.
+The type scale and column proportions are this module's own, because the two
+now serve different screens.
 
 Fonts are matplotlib's bundled DejaVu Sans rather than the HTML's system
 stack, so the two will not look glyph-for-glyph identical - that is the point
@@ -52,6 +58,17 @@ SECTION_GAP = 12
 
 FAMILY = "DejaVu Sans"
 MIN_SIZE = 5         # below this, truncate rather than shrink further
+
+# The image keeps its own type scale and column proportions, separate from the
+# HTML's. The two now serve different screens - the HTML table is sized to
+# read on a desktop, this is sized to read on a phone - so tying them together
+# would mean one of them is always wrong. Colours, the company shortening and
+# the percent formatting are still shared, so the numbers can never disagree.
+WIDTHS = ("26%", "23%", "17%", "17%", "17%")
+HEADER_SIZE = 9
+DATA_SIZE = 10
+TICKER_SIZE = 12
+COMPANY_SIZE = 6
 
 
 _TAG_RE = re.compile(r"<[^>]+>")
@@ -98,7 +115,7 @@ def fit(s: str, avail: float, css_size: float, bold: bool = False):
 
 def col_widths() -> list:
     """WIDTHS as CSS px, absorbing rounding into the last column."""
-    fracs = [int(w.rstrip("%")) / 100 for w in fe.WIDTHS]
+    fracs = [int(w.rstrip("%")) / 100 for w in WIDTHS]
     inner = CSS_W - GAP * (len(fracs) + 1)
     px = [round(inner * f) for f in fracs]
     px[-1] += inner - sum(px)
@@ -158,10 +175,10 @@ def draw_table(c: Canvas, y: float, col2_header: str, entries: list,
             if isinstance(content, tuple):        # ticker + company
                 ticker_company = content
                 ticker, company = plain(ticker_company[0]), plain(ticker_company[1])
-                t, ts = fit(ticker, avail, fe.TICKER_SIZE, True)
+                t, ts = fit(ticker, avail, TICKER_SIZE, True)
                 c.label(x + w / 2, y0 + h / 2 - 6, t, ts, fe.INK, True)
                 if company:
-                    n, ns = fit(company, avail, fe.COMPANY_SIZE)
+                    n, ns = fit(company, avail, COMPANY_SIZE)
                     c.label(x + w / 2, y0 + h / 2 + 7, n, ns, fe.MUTED)
             else:
                 s, sz = fit(plain(content), avail, size, bold)
@@ -169,29 +186,29 @@ def draw_table(c: Canvas, y: float, col2_header: str, entries: list,
             x += w + GAP
 
     row(y + GAP, HEADER_H,
-        [(h, fe.INK, fe.HEADER_SIZE, True) for h in headers])
+        [(h, fe.INK, HEADER_SIZE, True) for h in headers])
 
     y0 = y + GAP + HEADER_H + GAP
     if not entries:
         # One cell across the full width, as the HTML's colspan=5 does.
         c.rect(GAP, y0, CSS_W - GAP * 2, ROW_H, fe.BG)
-        c.label(CSS_W / 2, y0 + ROW_H / 2, "None", fe.DATA_SIZE, fe.INK)
+        c.label(CSS_W / 2, y0 + ROW_H / 2, "None", DATA_SIZE, fe.INK)
     else:
         for e in entries:
             r = returns.get(e["ticker"], {})
             company = fe.short_company(e["company"]) if e.get("company") else ""
             if company == e["ticker"]:
                 company = ""
-            cells = [((e["ticker"], company), fe.INK, fe.TICKER_SIZE, True),
-                     (e["col2"], e.get("col2_colour", fe.INK), fe.DATA_SIZE, False)]
+            cells = [((e["ticker"], company), fe.INK, TICKER_SIZE, True),
+                     (e["col2"], e.get("col2_colour", fe.INK), DATA_SIZE, False)]
             for h in fe.HORIZONS:
                 v = r.get(h)
                 if not fe._usable(v):
-                    cells.append(("n/a", fe.MUTED, fe.HEADER_SIZE, False))
+                    cells.append(("n/a", fe.MUTED, HEADER_SIZE, False))
                 else:
                     cells.append((fe.whole_pct(v),
                                   fe.GREEN if v >= 0 else fe.RED,
-                                  fe.HEADER_SIZE, False))
+                                  HEADER_SIZE, False))
             row(y0, ROW_H, cells)
             y0 += ROW_H + GAP
 
