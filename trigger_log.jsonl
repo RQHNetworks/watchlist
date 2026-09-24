@@ -137,3 +137,18 @@
 {"ticker": "MSCI", "date": "2026-09-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=568.61, 200-day=569.29", "company": "MSCI Inc."}
 {"ticker": "MU", "date": "2026-09-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-09-30 (5 business days away)", "company": "Micron Technology, Inc."}
 {"ticker": "SO", "date": "2026-09-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=90.88, 200-day=91.00", "company": "The Southern Company"}
+{"ticker": "NKE", "date": "2026-09-24", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-01 (5 business days away)", "company": "NIKE, Inc."}
+{"ticker": "ACN", "date": "2026-09-24", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-01 (5 business days away)", "company": "Accenture plc"}
+{"ticker": "AEP", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=125.36, 200-day=125.44", "company": "American Electric Power Company, Inc."}
+{"ticker": "AVY", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=171.33, 200-day=171.17", "company": "Avery Dennison Corporation"}
+{"ticker": "CMI", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=598.17, 200-day=599.54", "company": "Cummins Inc."}
+{"ticker": "DUK", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=122.09, 200-day=122.30", "company": "Duke Energy Corporation"}
+{"ticker": "EL", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=91.88, 200-day=91.86", "company": "The Est\u00e9e Lauder Companies Inc."}
+{"ticker": "FSLR", "date": "2026-09-24", "trigger_type": "price_swing", "detail": "Daily move down -10.3% (close 191.97 -> 172.16)", "company": "First Solar, Inc."}
+{"ticker": "GEN", "date": "2026-09-24", "trigger_type": "price_swing", "detail": "Daily move down -12.0% (close 26.23 -> 23.07)", "company": "Gen Digital Inc."}
+{"ticker": "IT", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=175.37, 200-day=174.73", "company": "Gartner, Inc."}
+{"ticker": "LNT", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=69.45, 200-day=69.56", "company": "Alliant Energy Corporation"}
+{"ticker": "MGM", "date": "2026-09-24", "trigger_type": "price_swing", "detail": "Daily move down -11.0% (close 37.85 -> 33.69)", "company": "MGM Resorts International"}
+{"ticker": "MKC", "date": "2026-09-24", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-01 (5 business days away)", "company": "McCormick & Company, Incorporated"}
+{"ticker": "PG", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=145.92, 200-day=145.92", "company": "The Procter & Gamble Company"}
+{"ticker": "RCL", "date": "2026-09-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=283.87, 200-day=284.07", "company": "Royal Caribbean Cruises Ltd."}
