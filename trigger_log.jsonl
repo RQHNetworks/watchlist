@@ -156,3 +156,7 @@
 {"ticker": "EIX", "date": "2026-09-25", "trigger_type": "sma_cross", "detail": "death cross: 50-day=66.90, 200-day=67.34", "company": "Edison International"}
 {"ticker": "KKR", "date": "2026-09-25", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=103.81, 200-day=103.80", "company": "KKR & Co. Inc."}
 {"ticker": "MAA", "date": "2026-09-25", "trigger_type": "sma_cross", "detail": "death cross: 50-day=129.32, 200-day=129.44", "company": "Mid-America Apartment Communities, Inc."}
+{"ticker": "BG", "date": "2026-09-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=114.66, 200-day=114.72", "company": "Bunge Global SA"}
+{"ticker": "FE", "date": "2026-09-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=46.66, 200-day=46.74", "company": "FirstEnergy Corp."}
+{"ticker": "JKHY", "date": "2026-09-28", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=157.40, 200-day=157.37", "company": "Jack Henry & Associates, Inc."}
+{"ticker": "T", "date": "2026-09-28", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=24.82, 200-day=24.77", "company": "AT&T Inc."}
