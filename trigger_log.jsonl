@@ -160,3 +160,11 @@
 {"ticker": "FE", "date": "2026-09-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=46.66, 200-day=46.74", "company": "FirstEnergy Corp."}
 {"ticker": "JKHY", "date": "2026-09-28", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=157.40, 200-day=157.37", "company": "Jack Henry & Associates, Inc."}
 {"ticker": "T", "date": "2026-09-28", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=24.82, 200-day=24.77", "company": "AT&T Inc."}
+{"ticker": "RDW", "date": "2026-09-29", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=11.01, 200-day=11.00", "company": "Redwire Corporation"}
+{"ticker": "AEE", "date": "2026-09-29", "trigger_type": "sma_cross", "detail": "death cross: 50-day=106.25, 200-day=106.46", "company": "Ameren Corporation"}
+{"ticker": "CCL", "date": "2026-09-29", "trigger_type": "price_swing", "detail": "Daily move up +13.4% (close 22.14 -> 25.11)", "company": "Carnival Corporation Ltd."}
+{"ticker": "FICO", "date": "2026-09-29", "trigger_type": "price_swing", "detail": "Daily move down -26.5% (close 840.89 -> 617.87)", "company": "Fair Isaac Corporation"}
+{"ticker": "ICE", "date": "2026-09-29", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=154.32, 200-day=154.14", "company": "Intercontinental Exchange, Inc."}
+{"ticker": "LIN", "date": "2026-09-29", "trigger_type": "sma_cross", "detail": "death cross: 50-day=481.45, 200-day=482.49", "company": "Linde plc"}
+{"ticker": "RL", "date": "2026-09-29", "trigger_type": "sma_cross", "detail": "death cross: 50-day=363.25, 200-day=363.37", "company": "Ralph Lauren Corporation"}
+{"ticker": "STZ", "date": "2026-09-29", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-06 (5 business days away)", "company": "Constellation Brands, Inc."}
