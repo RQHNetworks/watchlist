@@ -168,3 +168,7 @@
 {"ticker": "LIN", "date": "2026-09-29", "trigger_type": "sma_cross", "detail": "death cross: 50-day=481.45, 200-day=482.49", "company": "Linde plc"}
 {"ticker": "RL", "date": "2026-09-29", "trigger_type": "sma_cross", "detail": "death cross: 50-day=363.25, 200-day=363.37", "company": "Ralph Lauren Corporation"}
 {"ticker": "STZ", "date": "2026-09-29", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-06 (5 business days away)", "company": "Constellation Brands, Inc."}
+{"ticker": "JBL", "date": "2026-09-30", "trigger_type": "price_swing", "detail": "Daily move down -10.0% (close 318.84 -> 286.86)", "company": "Jabil Inc."}
+{"ticker": "ODFL", "date": "2026-09-30", "trigger_type": "sma_cross", "detail": "death cross: 50-day=198.48, 200-day=199.10", "company": "Old Dominion Freight Line, Inc."}
+{"ticker": "UPS", "date": "2026-09-30", "trigger_type": "sma_cross", "detail": "death cross: 50-day=102.20, 200-day=102.46", "company": "United Parcel Service, Inc."}
+{"ticker": "VRT", "date": "2026-09-30", "trigger_type": "sma_cross", "detail": "death cross: 50-day=262.86, 200-day=263.63", "company": "Vertiv Holdings Co"}
