@@ -172,3 +172,13 @@
 {"ticker": "ODFL", "date": "2026-09-30", "trigger_type": "sma_cross", "detail": "death cross: 50-day=198.48, 200-day=199.10", "company": "Old Dominion Freight Line, Inc."}
 {"ticker": "UPS", "date": "2026-09-30", "trigger_type": "sma_cross", "detail": "death cross: 50-day=102.20, 200-day=102.46", "company": "United Parcel Service, Inc."}
 {"ticker": "VRT", "date": "2026-09-30", "trigger_type": "sma_cross", "detail": "death cross: 50-day=262.86, 200-day=263.63", "company": "Vertiv Holdings Co"}
+{"ticker": "PEP", "date": "2026-10-01", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-08 (5 business days away)", "company": "PepsiCo, Inc."}
+{"ticker": "ACN", "date": "2026-10-01", "trigger_type": "price_swing", "detail": "Daily move up +15.8% (close 183.37 -> 212.30)", "company": "Accenture plc"}
+{"ticker": "AON", "date": "2026-10-01", "trigger_type": "sma_cross", "detail": "death cross: 50-day=330.73, 200-day=331.23", "company": "Aon plc"}
+{"ticker": "COHR", "date": "2026-10-01", "trigger_type": "price_swing", "detail": "Daily move up +10.9% (close 287.81 -> 319.19)", "company": "Coherent Corp."}
+{"ticker": "COR", "date": "2026-10-01", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=317.42, 200-day=317.36", "company": "Cencora, Inc."}
+{"ticker": "CTVA", "date": "2026-10-01", "trigger_type": "price_swing", "detail": "Daily move down -83.8% (close 77.65 -> 12.57)", "company": "Corteva, Inc."}
+{"ticker": "FICO", "date": "2026-10-01", "trigger_type": "price_swing", "detail": "Daily move up +11.7% (close 592.47 -> 661.75)", "company": "Fair Isaac Corporation"}
+{"ticker": "HRL", "date": "2026-10-01", "trigger_type": "sma_cross", "detail": "death cross: 50-day=22.77, 200-day=22.83", "company": "Hormel Foods Corporation"}
+{"ticker": "O", "date": "2026-10-01", "trigger_type": "sma_cross", "detail": "death cross: 50-day=60.35, 200-day=60.44", "company": "Realty Income Corporation"}
+{"ticker": "SNPS", "date": "2026-10-01", "trigger_type": "price_swing", "detail": "Daily move up +12.8% (close 434.94 -> 490.54)", "company": "Synopsys, Inc."}
