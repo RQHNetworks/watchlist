@@ -182,3 +182,10 @@
 {"ticker": "HRL", "date": "2026-10-01", "trigger_type": "sma_cross", "detail": "death cross: 50-day=22.77, 200-day=22.83", "company": "Hormel Foods Corporation"}
 {"ticker": "O", "date": "2026-10-01", "trigger_type": "sma_cross", "detail": "death cross: 50-day=60.35, 200-day=60.44", "company": "Realty Income Corporation"}
 {"ticker": "SNPS", "date": "2026-10-01", "trigger_type": "price_swing", "detail": "Daily move up +12.8% (close 434.94 -> 490.54)", "company": "Synopsys, Inc."}
+{"ticker": "CPT", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=104.72, 200-day=104.73", "company": "Camden Property Trust"}
+{"ticker": "DAL", "date": "2026-10-02", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-09 (5 business days away)", "company": "Delta Air Lines, Inc."}
+{"ticker": "EME", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=771.92, 200-day=772.24", "company": "EMCOR Group, Inc."}
+{"ticker": "PNW", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=97.81, 200-day=97.83", "company": "Pinnacle West Capital Corporation"}
+{"ticker": "STX", "date": "2026-10-02", "trigger_type": "price_swing", "detail": "Daily move down -10.2% (close 945.57 -> 848.99)", "company": "Seagate Technology Holdings plc"}
+{"ticker": "UDR", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=36.35, 200-day=36.42", "company": "UDR, Inc."}
+{"ticker": "WDC", "date": "2026-10-02", "trigger_type": "price_swing", "detail": "Daily move down -10.2% (close 462.56 -> 415.29)", "company": "Western Digital Corporation"}
