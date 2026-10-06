@@ -189,3 +189,17 @@
 {"ticker": "STX", "date": "2026-10-02", "trigger_type": "price_swing", "detail": "Daily move down -10.2% (close 945.57 -> 848.99)", "company": "Seagate Technology Holdings plc"}
 {"ticker": "UDR", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=36.35, 200-day=36.42", "company": "UDR, Inc."}
 {"ticker": "WDC", "date": "2026-10-02", "trigger_type": "price_swing", "detail": "Daily move down -10.2% (close 462.56 -> 415.29)", "company": "Western Digital Corporation"}
+{"ticker": "UNH", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-13 (5 business days away)", "company": "UnitedHealth Group Incorporated"}
+{"ticker": "JNJ", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-13 (5 business days away)", "company": "Johnson & Johnson"}
+{"ticker": "JPM", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-13 (5 business days away)", "company": "JPMorgan Chase & Co."}
+{"ticker": "GS", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-13 (5 business days away)", "company": "The Goldman Sachs Group, Inc."}
+{"ticker": "C", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-13 (5 business days away)", "company": "Citigroup Inc."}
+{"ticker": "CPT", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=104.72, 200-day=104.73", "company": "Camden Property Trust"}
+{"ticker": "DPZ", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-13 (5 business days away)", "company": "Domino's Pizza, Inc."}
+{"ticker": "EME", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=771.92, 200-day=772.24", "company": "EMCOR Group, Inc."}
+{"ticker": "FDX", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-12 (4 business days away)", "company": "FedEx Corporation"}
+{"ticker": "PNW", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=97.81, 200-day=97.83", "company": "Pinnacle West Capital Corporation"}
+{"ticker": "STX", "date": "2026-10-02", "trigger_type": "price_swing", "detail": "Daily move down -10.2% (close 945.57 -> 848.99)", "company": "Seagate Technology Holdings plc"}
+{"ticker": "UDR", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=36.35, 200-day=36.42", "company": "UDR, Inc."}
+{"ticker": "WDC", "date": "2026-10-02", "trigger_type": "price_swing", "detail": "Daily move down -10.2% (close 462.56 -> 415.29)", "company": "Western Digital Corporation"}
+{"ticker": "WFC", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-13 (5 business days away)", "company": "Wells Fargo & Company"}
