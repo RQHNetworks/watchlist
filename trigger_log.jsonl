@@ -203,3 +203,12 @@
 {"ticker": "UDR", "date": "2026-10-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=36.35, 200-day=36.42", "company": "UDR, Inc."}
 {"ticker": "WDC", "date": "2026-10-02", "trigger_type": "price_swing", "detail": "Daily move down -10.2% (close 462.56 -> 415.29)", "company": "Western Digital Corporation"}
 {"ticker": "WFC", "date": "2026-10-06", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-13 (5 business days away)", "company": "Wells Fargo & Company"}
+{"ticker": "AIG", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=76.14, 200-day=76.14", "company": "American International Group, Inc."}
+{"ticker": "AKAM", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=111.72, 200-day=111.78", "company": "Akamai Technologies, Inc."}
+{"ticker": "CHRW", "date": "2026-10-05", "trigger_type": "price_swing", "detail": "Daily move down -10.8% (close 157.72 -> 140.61)", "company": "C.H. Robinson Worldwide, Inc."}
+{"ticker": "CTVA", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=77.23, 200-day=77.60", "company": "Corteva, Inc."}
+{"ticker": "ED", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=106.57, 200-day=106.58", "company": "Consolidated Edison, Inc."}
+{"ticker": "ETR", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=105.11, 200-day=105.41", "company": "Entergy Corporation"}
+{"ticker": "HBAN", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=16.58, 200-day=16.61", "company": "Huntington Bancshares Incorporated"}
+{"ticker": "PPG", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=110.76, 200-day=110.94", "company": "PPG Industries, Inc."}
+{"ticker": "PTC", "date": "2026-10-05", "trigger_type": "price_swing", "detail": "Daily move up +33.5% (close 144.03 -> 192.26)", "company": "PTC Inc."}
