@@ -212,3 +212,28 @@
 {"ticker": "HBAN", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=16.58, 200-day=16.61", "company": "Huntington Bancshares Incorporated"}
 {"ticker": "PPG", "date": "2026-10-05", "trigger_type": "sma_cross", "detail": "death cross: 50-day=110.76, 200-day=110.94", "company": "PPG Industries, Inc."}
 {"ticker": "PTC", "date": "2026-10-05", "trigger_type": "price_swing", "detail": "Daily move up +33.5% (close 144.03 -> 192.26)", "company": "PTC Inc."}
+{"ticker": "META", "date": "2026-10-06", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=630.52, 200-day=628.27", "company": "Meta Platforms, Inc."}
+{"ticker": "ADBE", "date": "2026-10-06", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=258.77, 200-day=258.74", "company": "Adobe Inc."}
+{"ticker": "ASML", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-14 (4 business days away)", "company": "ASML Holding N.V."}
+{"ticker": "BAC", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-14 (4 business days away)", "company": "Bank of America Corporation"}
+{"ticker": "BLK", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-14 (4 business days away)", "company": "BlackRock, Inc."}
+{"ticker": "BNY", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "The Bank of New York Mellon Corporation"}
+{"ticker": "CEG", "date": "2026-10-06", "trigger_type": "price_swing", "detail": "Daily move up +12.2% (close 267.62 -> 300.40)", "company": "Constellation Energy Corporation"}
+{"ticker": "CIEN", "date": "2026-10-06", "trigger_type": "price_swing", "detail": "Daily move up +13.8% (close 389.69 -> 443.65)", "company": "Ciena Corporation"}
+{"ticker": "CTVA", "date": "2026-10-06", "trigger_type": "price_swing", "detail": "Daily move up +12.3% (close 12.39 -> 13.91)", "company": "Corteva, Inc."}
+{"ticker": "EME", "date": "2026-10-06", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=774.24, 200-day=774.17", "company": "EMCOR Group, Inc."}
+{"ticker": "FAST", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-14 (4 business days away)", "company": "Fastenal Company"}
+{"ticker": "FTV", "date": "2026-10-06", "trigger_type": "sma_cross", "detail": "death cross: 50-day=58.17, 200-day=58.19", "company": "Fortive Corporation"}
+{"ticker": "IBKR", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "Interactive Brokers Group, Inc."}
+{"ticker": "JBHT", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "J.B. Hunt Transport Services, Inc."}
+{"ticker": "MRSH", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "Marsh & McLennan Companies, Inc."}
+{"ticker": "MS", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-14 (4 business days away)", "company": "Morgan Stanley"}
+{"ticker": "PGR", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-14 (4 business days away)", "company": "The Progressive Corporation"}
+{"ticker": "PLD", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "Prologis, Inc."}
+{"ticker": "PNC", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "The PNC Financial Services Group, Inc."}
+{"ticker": "REG", "date": "2026-10-06", "trigger_type": "sma_cross", "detail": "death cross: 50-day=75.01, 200-day=75.04", "company": "Regency Centers Corporation"}
+{"ticker": "SCHW", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "The Charles Schwab Corporation"}
+{"ticker": "SNA", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "Snap-on Incorporated"}
+{"ticker": "STT", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-14 (4 business days away)", "company": "State Street Corporation"}
+{"ticker": "USB", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "U.S. Bancorp"}
+{"ticker": "VST", "date": "2026-10-06", "trigger_type": "price_swing", "detail": "Daily move up +10.8% (close 144.89 -> 160.50)", "company": "Vistra Corp."}
