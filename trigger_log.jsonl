@@ -237,3 +237,14 @@
 {"ticker": "STT", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-14 (4 business days away)", "company": "State Street Corporation"}
 {"ticker": "USB", "date": "2026-10-08", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-15 (5 business days away)", "company": "U.S. Bancorp"}
 {"ticker": "VST", "date": "2026-10-06", "trigger_type": "price_swing", "detail": "Daily move up +10.8% (close 144.89 -> 160.50)", "company": "Vistra Corp."}
+{"ticker": "BR", "date": "2026-10-07", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=168.27, 200-day=168.16", "company": "Broadridge Financial Solutions, Inc."}
+{"ticker": "CASY", "date": "2026-10-07", "trigger_type": "sma_cross", "detail": "death cross: 50-day=731.44, 200-day=732.72", "company": "Casey's General Stores, Inc."}
+{"ticker": "CFG", "date": "2026-10-09", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-16 (5 business days away)", "company": "Citizens Financial Group, Inc."}
+{"ticker": "CI", "date": "2026-10-07", "trigger_type": "sma_cross", "detail": "death cross: 50-day=276.95, 200-day=277.30", "company": "The Cigna Group"}
+{"ticker": "MTB", "date": "2026-10-09", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-16 (5 business days away)", "company": "M&T Bank Corporation"}
+{"ticker": "PHM", "date": "2026-10-07", "trigger_type": "sma_cross", "detail": "death cross: 50-day=123.77, 200-day=124.06", "company": "PulteGroup, Inc."}
+{"ticker": "PTC", "date": "2026-10-07", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=146.42, 200-day=145.38", "company": "PTC Inc."}
+{"ticker": "RF", "date": "2026-10-09", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-16 (5 business days away)", "company": "Regions Financial Corporation"}
+{"ticker": "TFC", "date": "2026-10-09", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-16 (5 business days away)", "company": "Truist Financial Corporation"}
+{"ticker": "TRV", "date": "2026-10-09", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-16 (5 business days away)", "company": "The Travelers Companies, Inc."}
+{"ticker": "TTWO", "date": "2026-10-07", "trigger_type": "sma_cross", "detail": "death cross: 50-day=223.94, 200-day=223.96", "company": "Take-Two Interactive Software, Inc."}
