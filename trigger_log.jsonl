@@ -248,3 +248,6 @@
 {"ticker": "TFC", "date": "2026-10-09", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-16 (5 business days away)", "company": "Truist Financial Corporation"}
 {"ticker": "TRV", "date": "2026-10-09", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-16 (5 business days away)", "company": "The Travelers Companies, Inc."}
 {"ticker": "TTWO", "date": "2026-10-07", "trigger_type": "sma_cross", "detail": "death cross: 50-day=223.94, 200-day=223.96", "company": "Take-Two Interactive Software, Inc."}
+{"ticker": "CBOE", "date": "2026-10-08", "trigger_type": "sma_cross", "detail": "death cross: 50-day=286.37, 200-day=286.60", "company": "Cboe Global Markets, Inc."}
+{"ticker": "ES", "date": "2026-10-08", "trigger_type": "sma_cross", "detail": "death cross: 50-day=68.59, 200-day=68.75", "company": "Eversource Energy"}
+{"ticker": "RMD", "date": "2026-10-08", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=224.57, 200-day=224.30", "company": "ResMed Inc."}
