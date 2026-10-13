@@ -278,3 +278,6 @@
 {"ticker": "SYF", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Synchrony Financial"}
 {"ticker": "UAL", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "United Airlines Holdings, Inc."}
 {"ticker": "WRB", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-19 (4 business days away)", "company": "W. R. Berkley Corporation"}
+{"ticker": "EXR", "date": "2026-10-13", "trigger_type": "sma_cross", "detail": "death cross: 50-day=139.05, 200-day=139.07", "company": "Extra Space Storage Inc."}
+{"ticker": "MAR", "date": "2026-10-13", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=350.21, 200-day=350.16", "company": "Marriott International, Inc."}
+{"ticker": "Q", "date": "2026-10-13", "trigger_type": "sma_cross", "detail": "death cross: 50-day=127.15, 200-day=127.24", "company": "Qnity Electronics, Inc."}
