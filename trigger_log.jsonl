@@ -251,3 +251,30 @@
 {"ticker": "CBOE", "date": "2026-10-08", "trigger_type": "sma_cross", "detail": "death cross: 50-day=286.37, 200-day=286.60", "company": "Cboe Global Markets, Inc."}
 {"ticker": "ES", "date": "2026-10-08", "trigger_type": "sma_cross", "detail": "death cross: 50-day=68.59, 200-day=68.75", "company": "Eversource Energy"}
 {"ticker": "RMD", "date": "2026-10-08", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=224.57, 200-day=224.30", "company": "ResMed Inc."}
+{"ticker": "NFLX", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Netflix, Inc."}
+{"ticker": "CB", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Chubb Limited"}
+{"ticker": "COF", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Capital One Financial Corporation"}
+{"ticker": "CTSH", "date": "2026-10-12", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=59.67, 200-day=59.61", "company": "Cognizant Technology Solutions Corporation"}
+{"ticker": "EFX", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Equifax Inc."}
+{"ticker": "EME", "date": "2026-10-12", "trigger_type": "sma_cross", "detail": "death cross: 50-day=777.31, 200-day=777.48", "company": "EMCOR Group, Inc."}
+{"ticker": "FICO", "date": "2026-10-12", "trigger_type": "price_swing", "detail": "Daily move up +10.8% (close 667.58 -> 740.00)", "company": "Fair Isaac Corporation"}
+{"ticker": "FITB", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-19 (4 business days away)", "company": "Fifth Third Bancorp"}
+{"ticker": "GE", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "GE Aerospace"}
+{"ticker": "GM", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "General Motors Company"}
+{"ticker": "GPC", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Genuine Parts Company"}
+{"ticker": "HAL", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Halliburton Company"}
+{"ticker": "HAS", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Hasbro, Inc."}
+{"ticker": "ISRG", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Intuitive Surgical, Inc."}
+{"ticker": "KEY", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "KeyCorp"}
+{"ticker": "MAR", "date": "2026-10-12", "trigger_type": "sma_cross", "detail": "death cross: 50-day=349.70, 200-day=349.87", "company": "Marriott International, Inc."}
+{"ticker": "MMM", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "3M Company"}
+{"ticker": "MSCI", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "MSCI Inc."}
+{"ticker": "NOC", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Northrop Grumman Corporation"}
+{"ticker": "OMC", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Omnicom Group Inc."}
+{"ticker": "PLD", "date": "2026-10-12", "trigger_type": "sma_cross", "detail": "death cross: 50-day=135.95, 200-day=136.11", "company": "Prologis, Inc."}
+{"ticker": "PNR", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Pentair plc"}
+{"ticker": "RTX", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "RTX Corporation"}
+{"ticker": "STLD", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-19 (4 business days away)", "company": "Steel Dynamics, Inc."}
+{"ticker": "SYF", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "Synchrony Financial"}
+{"ticker": "UAL", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (5 business days away)", "company": "United Airlines Holdings, Inc."}
+{"ticker": "WRB", "date": "2026-10-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-19 (4 business days away)", "company": "W. R. Berkley Corporation"}
