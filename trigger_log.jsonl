@@ -345,3 +345,14 @@
 {"ticker": "VLO", "date": "2026-10-15", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-22 (5 business days away)", "company": "Valero Energy Corporation"}
 {"ticker": "VRSN", "date": "2026-10-15", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-22 (5 business days away)", "company": "VeriSign, Inc."}
 {"ticker": "WDC", "date": "2026-10-15", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-22 (5 business days away)", "company": "Western Digital Corporation"}
+{"ticker": "RDW", "date": "2026-10-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=11.12, 200-day=11.16", "company": "Redwire Corporation"}
+{"ticker": "SPCX", "date": "2026-10-16", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-20 (2 business days away)", "company": "Space Exploration Technologies Corp."}
+{"ticker": "NBIS", "date": "2026-10-16", "trigger_type": "price_swing", "detail": "Daily move down -12.2% (close 188.41 -> 165.47)", "company": "NBIS"}
+{"ticker": "CRWV", "date": "2026-10-16", "trigger_type": "price_swing", "detail": "Daily move down -11.9% (close 69.69 -> 61.39)", "company": "CoreWeave, Inc."}
+{"ticker": "AXP", "date": "2026-10-16", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-23 (5 business days away)", "company": "American Express Company"}
+{"ticker": "CI", "date": "2026-10-16", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=278.27, 200-day=277.93", "company": "The Cigna Group"}
+{"ticker": "KEY", "date": "2026-10-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=21.21, 200-day=21.24", "company": "KeyCorp"}
+{"ticker": "KKR", "date": "2026-10-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=100.52, 200-day=100.60", "company": "KKR & Co. Inc."}
+{"ticker": "L", "date": "2026-10-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=108.89, 200-day=108.96", "company": "Loews Corporation"}
+{"ticker": "PG", "date": "2026-10-16", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=146.87, 200-day=146.75", "company": "The Procter & Gamble Company"}
+{"ticker": "SLB", "date": "2026-10-16", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-23 (5 business days away)", "company": "SLB N.V."}
