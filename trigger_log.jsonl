@@ -368,3 +368,56 @@
 {"ticker": "PSA", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Public Storage"}
 {"ticker": "VZ", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Verizon Communications Inc."}
 {"ticker": "WELL", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Welltower Inc."}
+{"ticker": "HOOD", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Robinhood Markets, Inc."}
+{"ticker": "KO", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "The Coca-Cola Company"}
+{"ticker": "V", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Visa Inc."}
+{"ticker": "SOFI", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "SoFi Technologies, Inc."}
+{"ticker": "PYPL", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "PayPal Holdings, Inc."}
+{"ticker": "BA", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "The Boeing Company"}
+{"ticker": "ACGL", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Arch Capital Group Ltd."}
+{"ticker": "ACN", "date": "2026-10-20", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=190.31, 200-day=189.01", "company": "Accenture plc"}
+{"ticker": "AMT", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "American Tower Corporation"}
+{"ticker": "ARE", "date": "2026-10-20", "trigger_type": "sma_cross", "detail": "death cross: 50-day=48.67, 200-day=48.69", "company": "Alexandria Real Estate Equities, Inc."}
+{"ticker": "BKR", "date": "2026-10-20", "trigger_type": "sma_cross", "detail": "death cross: 50-day=59.51, 200-day=59.72", "company": "Baker Hughes Company"}
+{"ticker": "BKR", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Baker Hughes Company"}
+{"ticker": "BXP", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "BXP, Inc."}
+{"ticker": "CMS", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "CMS Energy Corporation"}
+{"ticker": "CNC", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Centene Corporation"}
+{"ticker": "CNP", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "CenterPoint Energy, Inc."}
+{"ticker": "CSGP", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "CoStar Group, Inc."}
+{"ticker": "ECL", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Ecolab Inc."}
+{"ticker": "EFX", "date": "2026-10-20", "trigger_type": "price_swing", "detail": "Daily move up +11.3% (close 158.57 -> 176.54)", "company": "Equifax Inc."}
+{"ticker": "EQT", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "EQT Corporation"}
+{"ticker": "ESS", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Essex Property Trust, Inc."}
+{"ticker": "EXE", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Expand Energy Corporation"}
+{"ticker": "EXR", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Extra Space Storage Inc."}
+{"ticker": "FCX", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Freeport-McMoRan Inc."}
+{"ticker": "FE", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "FirstEnergy Corp."}
+{"ticker": "FER", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Ferrovial N.V."}
+{"ticker": "FFIV", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "F5, Inc."}
+{"ticker": "GLW", "date": "2026-10-20", "trigger_type": "sma_cross", "detail": "death cross: 50-day=153.18, 200-day=153.69", "company": "Corning Incorporated"}
+{"ticker": "GLW", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Corning Incorporated"}
+{"ticker": "HAS", "date": "2026-10-20", "trigger_type": "price_swing", "detail": "Daily move up +11.2% (close 98.49 -> 109.52)", "company": "Hasbro, Inc."}
+{"ticker": "HCA", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "HCA Healthcare, Inc."}
+{"ticker": "HLT", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Hilton Worldwide Holdings Inc."}
+{"ticker": "HUBB", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Hubbell Incorporated"}
+{"ticker": "IQV", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "IQVIA Holdings Inc."}
+{"ticker": "ITW", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Illinois Tool Works Inc."}
+{"ticker": "IVZ", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Invesco Ltd."}
+{"ticker": "JCI", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Johnson Controls International plc"}
+{"ticker": "MPWR", "date": "2026-10-20", "trigger_type": "sma_cross", "detail": "death cross: 50-day=1300.56, 200-day=1303.52", "company": "Monolithic Power Systems, Inc."}
+{"ticker": "NXPI", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "NXP Semiconductors N.V."}
+{"ticker": "OKE", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "ONEOK, Inc."}
+{"ticker": "PCAR", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "PACCAR Inc"}
+{"ticker": "PNR", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Pentair plc"}
+{"ticker": "PPG", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "PPG Industries, Inc."}
+{"ticker": "RCL", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Royal Caribbean Cruises Ltd."}
+{"ticker": "SHW", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "The Sherwin-Williams Company"}
+{"ticker": "SPGI", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "S&P Global Inc."}
+{"ticker": "STX", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Seagate Technology Holdings plc"}
+{"ticker": "TER", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Teradyne, Inc."}
+{"ticker": "UHS", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Universal Health Services, Inc."}
+{"ticker": "UPS", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "United Parcel Service, Inc."}
+{"ticker": "VTR", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Ventas, Inc."}
+{"ticker": "WM", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Waste Management, Inc."}
+{"ticker": "XYL", "date": "2026-10-20", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-27 (5 business days away)", "company": "Xylem Inc."}
