@@ -356,3 +356,15 @@
 {"ticker": "L", "date": "2026-10-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=108.89, 200-day=108.96", "company": "Loews Corporation"}
 {"ticker": "PG", "date": "2026-10-16", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=146.87, 200-day=146.75", "company": "The Procter & Gamble Company"}
 {"ticker": "SLB", "date": "2026-10-16", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-23 (5 business days away)", "company": "SLB N.V."}
+{"ticker": "ARE", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Alexandria Real Estate Equities, Inc."}
+{"ticker": "BRO", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Brown & Brown, Inc."}
+{"ticker": "CDNS", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Cadence Design Systems, Inc."}
+{"ticker": "CINF", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Cincinnati Financial Corporation"}
+{"ticker": "HIG", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "The Hartford Insurance Group, Inc."}
+{"ticker": "MSTR", "date": "2026-10-19", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=135.64, 200-day=135.53", "company": "Strategy Inc"}
+{"ticker": "NUE", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Nucor Corporation"}
+{"ticker": "OMC", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-22 (3 business days away)", "company": "Omnicom Group Inc."}
+{"ticker": "PFG", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Principal Financial Group, Inc."}
+{"ticker": "PSA", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Public Storage"}
+{"ticker": "VZ", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Verizon Communications Inc."}
+{"ticker": "WELL", "date": "2026-10-19", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-26 (5 business days away)", "company": "Welltower Inc."}
