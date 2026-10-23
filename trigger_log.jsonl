@@ -556,3 +556,21 @@
 {"ticker": "WTW", "date": "2026-10-22", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-29 (5 business days away)", "company": "Willis Towers Watson Public Limited Company"}
 {"ticker": "WY", "date": "2026-10-22", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-29 (5 business days away)", "company": "Weyerhaeuser Company"}
 {"ticker": "XEL", "date": "2026-10-22", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-29 (5 business days away)", "company": "Xcel Energy Inc."}
+{"ticker": "ABBV", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "AbbVie Inc."}
+{"ticker": "AXON", "date": "2026-10-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=482.59, 200-day=483.87", "company": "Axon Enterprise, Inc."}
+{"ticker": "BKNG", "date": "2026-10-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=177.04, 200-day=177.77", "company": "Booking Holdings Inc."}
+{"ticker": "CBOE", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Cboe Global Markets, Inc."}
+{"ticker": "CHD", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Church & Dwight Co., Inc."}
+{"ticker": "CL", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Colgate-Palmolive Company"}
+{"ticker": "CVX", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Chevron Corporation"}
+{"ticker": "D", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Dominion Energy, Inc."}
+{"ticker": "DG", "date": "2026-10-23", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=125.19, 200-day=125.07", "company": "Dollar General Corporation"}
+{"ticker": "EXC", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Exelon Corporation"}
+{"ticker": "FRT", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Federal Realty Investment Trust"}
+{"ticker": "GD", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "General Dynamics Corporation"}
+{"ticker": "JBL", "date": "2026-10-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=305.57, 200-day=306.42", "company": "Jabil Inc."}
+{"ticker": "KVUE", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Kenvue Inc."}
+{"ticker": "LYB", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "LyondellBasell Industries N.V."}
+{"ticker": "REGN", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "Regeneron Pharmaceuticals, Inc."}
+{"ticker": "VMRK", "date": "2026-10-23", "trigger_type": "sma_cross", "detail": "death cross: 50-day=62.65, 200-day=62.71", "company": "AvalonBay Communities, Inc."}
+{"ticker": "XOM", "date": "2026-10-23", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-10-30 (5 business days away)", "company": "ExxonMobil Holdings Corporation"}
