@@ -638,3 +638,15 @@
 {"ticker": "XYZ", "date": "2026-10-27", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-03 (5 business days away)", "company": "Block, Inc."}
 {"ticker": "YUM", "date": "2026-10-27", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-03 (5 business days away)", "company": "Yum! Brands, Inc."}
 {"ticker": "ZBRA", "date": "2026-10-27", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-03 (5 business days away)", "company": "Zebra Technologies Corporation"}
+{"ticker": "LUNR", "date": "2026-10-27", "trigger_type": "price_swing", "detail": "Daily move up +10.3% (close 10.48 -> 11.56)", "company": "Intuitive Machines, Inc."}
+{"ticker": "NBIS", "date": "2026-10-27", "trigger_type": "price_swing", "detail": "Daily move up +11.2% (close 153.27 -> 170.47)", "company": "NBIS"}
+{"ticker": "SOFI", "date": "2026-10-27", "trigger_type": "price_swing", "detail": "Daily move up +13.4% (close 14.46 -> 16.40)", "company": "SoFi Technologies, Inc."}
+{"ticker": "COIN", "date": "2026-10-27", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=179.99, 200-day=179.67", "company": "Coinbase Global, Inc."}
+{"ticker": "BA", "date": "2026-10-27", "trigger_type": "price_swing", "detail": "Daily move down -10.7% (close 188.31 -> 168.18)", "company": "The Boeing Company"}
+{"ticker": "ALAB", "date": "2026-10-27", "trigger_type": "price_swing", "detail": "Daily move up +10.5% (close 259.51 -> 286.69)", "company": "Astera Labs, Inc."}
+{"ticker": "D", "date": "2026-10-27", "trigger_type": "sma_cross", "detail": "death cross: 50-day=63.75, 200-day=63.78", "company": "Dominion Energy, Inc."}
+{"ticker": "GD", "date": "2026-10-27", "trigger_type": "sma_cross", "detail": "death cross: 50-day=351.61, 200-day=351.80", "company": "General Dynamics Corporation"}
+{"ticker": "JBHT", "date": "2026-10-27", "trigger_type": "sma_cross", "detail": "death cross: 50-day=245.00, 200-day=245.40", "company": "J.B. Hunt Transport Services, Inc."}
+{"ticker": "T", "date": "2026-10-26", "trigger_type": "sma_cross", "detail": "death cross: 50-day=24.45, 200-day=24.48", "company": "AT&T Inc."}
+{"ticker": "TT", "date": "2026-10-26", "trigger_type": "sma_cross", "detail": "death cross: 50-day=452.11, 200-day=452.26", "company": "Trane Technologies plc"}
+{"ticker": "ULTA", "date": "2026-10-26", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=555.21, 200-day=553.50", "company": "Ulta Beauty, Inc."}
