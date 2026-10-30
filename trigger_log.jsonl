@@ -758,3 +758,24 @@
 {"ticker": "XYL", "date": "2026-10-27", "trigger_type": "price_swing", "detail": "Daily move down -14.2% (close 108.24 -> 92.86)", "company": "Xylem Inc."}
 {"ticker": "ZBH", "date": "2026-10-29", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-04 (4 business days away)", "company": "Zimmer Biomet Holdings, Inc."}
 {"ticker": "ZTS", "date": "2026-10-29", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-05 (5 business days away)", "company": "Zoetis Inc."}
+{"ticker": "ORCL", "date": "2026-10-28", "trigger_type": "price_swing", "detail": "Daily move up +10.7% (close 130.53 -> 144.54)", "company": "Oracle Corporation"}
+{"ticker": "GS", "date": "2026-10-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=950.80, 200-day=951.71", "company": "The Goldman Sachs Group, Inc."}
+{"ticker": "AMT", "date": "2026-10-28", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=174.32, 200-day=174.18", "company": "American Tower Corporation"}
+{"ticker": "APO", "date": "2026-10-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=122.83, 200-day=122.99", "company": "Apollo Global Management, Inc."}
+{"ticker": "BEN", "date": "2026-10-30", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-06 (5 business days away)", "company": "Franklin Templeton Inc."}
+{"ticker": "CHRW", "date": "2026-10-28", "trigger_type": "price_swing", "detail": "Daily move down -11.1% (close 143.59 -> 127.60)", "company": "C.H. Robinson Worldwide, Inc."}
+{"ticker": "CHTR", "date": "2026-10-30", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-06 (5 business days away)", "company": "Charter Communications, Inc."}
+{"ticker": "CSGP", "date": "2026-10-28", "trigger_type": "price_swing", "detail": "Daily move down -14.0% (close 32.01 -> 27.54)", "company": "CoStar Group, Inc."}
+{"ticker": "FFIV", "date": "2026-10-28", "trigger_type": "price_swing", "detail": "Daily move down -20.4% (close 459.36 -> 365.53)", "company": "F5, Inc."}
+{"ticker": "FLEX", "date": "2026-10-28", "trigger_type": "price_swing", "detail": "Daily move up +11.6% (close 83.35 -> 93.03)", "company": "Flex Ltd."}
+{"ticker": "GEV", "date": "2026-10-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=938.63, 200-day=941.50", "company": "GE Vernova Inc."}
+{"ticker": "HUM", "date": "2026-10-30", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-06 (5 business days away)", "company": "Humana Inc."}
+{"ticker": "LII", "date": "2026-10-28", "trigger_type": "price_swing", "detail": "Daily move down -10.6% (close 372.05 -> 332.64)", "company": "Lennox International Inc."}
+{"ticker": "LYB", "date": "2026-10-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=62.70, 200-day=62.75", "company": "LyondellBasell Industries N.V."}
+{"ticker": "MRNA", "date": "2026-10-30", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-06 (5 business days away)", "company": "Moderna, Inc."}
+{"ticker": "OKLO", "date": "2026-10-30", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-06 (5 business days away)", "company": "Oklo Inc."}
+{"ticker": "PPL", "date": "2026-10-30", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-06 (5 business days away)", "company": "PPL Corporation"}
+{"ticker": "PSA", "date": "2026-10-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=297.78, 200-day=297.87", "company": "Public Storage"}
+{"ticker": "UAL", "date": "2026-10-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=108.01, 200-day=108.13", "company": "United Airlines Holdings, Inc."}
+{"ticker": "VRT", "date": "2026-10-28", "trigger_type": "price_swing", "detail": "Daily move up +16.5% (close 208.56 -> 242.94)", "company": "Vertiv Holdings Co"}
+{"ticker": "VST", "date": "2026-10-30", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-06 (5 business days away)", "company": "Vistra Corp."}
