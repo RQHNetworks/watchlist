@@ -779,3 +779,21 @@
 {"ticker": "UAL", "date": "2026-10-28", "trigger_type": "sma_cross", "detail": "death cross: 50-day=108.01, 200-day=108.13", "company": "United Airlines Holdings, Inc."}
 {"ticker": "VRT", "date": "2026-10-28", "trigger_type": "price_swing", "detail": "Daily move up +16.5% (close 208.56 -> 242.94)", "company": "Vertiv Holdings Co"}
 {"ticker": "VST", "date": "2026-10-30", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-06 (5 business days away)", "company": "Vistra Corp."}
+{"ticker": "APP", "date": "2026-10-30", "trigger_type": "price_swing", "detail": "Daily move down -10.4% (close 254.91 -> 228.50)", "company": "AppLovin Corporation"}
+{"ticker": "QCOM", "date": "2026-10-30", "trigger_type": "price_swing", "detail": "Daily move down -11.1% (close 185.41 -> 164.79)", "company": "QUALCOMM Incorporated"}
+{"ticker": "INTC", "date": "2026-10-30", "trigger_type": "price_swing", "detail": "Daily move down -28.6% (close 92.07 -> 65.76)", "company": "Intel Corporation"}
+{"ticker": "DELL", "date": "2026-10-30", "trigger_type": "price_swing", "detail": "Daily move down -10.8% (close 475.51 -> 424.30)", "company": "Dell Technologies Inc."}
+{"ticker": "AMD", "date": "2026-10-30", "trigger_type": "price_swing", "detail": "Daily move down -10.9% (close 566.42 -> 504.80)", "company": "Advanced Micro Devices, Inc."}
+{"ticker": "NBIS", "date": "2026-10-30", "trigger_type": "price_swing", "detail": "Daily move down -10.4% (close 171.99 -> 154.14)", "company": "NBIS"}
+{"ticker": "COIN", "date": "2026-10-30", "trigger_type": "price_swing", "detail": "Daily move down -10.6% (close 160.59 -> 143.54)", "company": "Coinbase Global, Inc."}
+{"ticker": "ALAB", "date": "2026-10-30", "trigger_type": "price_swing", "detail": "Daily move down -10.9% (close 290.43 -> 258.70)", "company": "Astera Labs, Inc."}
+{"ticker": "BLDR", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move up +12.8% (close 55.88 -> 63.06)", "company": "Builders FirstSource, Inc."}
+{"ticker": "CVNA", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move up +15.7% (close 59.05 -> 68.31)", "company": "Carvana Co."}
+{"ticker": "DLR", "date": "2026-10-29", "trigger_type": "sma_cross", "detail": "death cross: 50-day=181.29, 200-day=181.31", "company": "Digital Realty Trust, Inc."}
+{"ticker": "FTNT", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move down -20.1% (close 174.08 -> 139.10)", "company": "Fortinet, Inc."}
+{"ticker": "GEN", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move up +15.8% (close 24.35 -> 28.20)", "company": "Gen Digital Inc."}
+{"ticker": "GOOG", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move down -12.3% (close 321.89 -> 282.32)", "company": "Alphabet Inc."}
+{"ticker": "HII", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move up +13.2% (close 279.26 -> 316.21)", "company": "Huntington Ingalls Industries, Inc."}
+{"ticker": "MRVL", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move down -13.2% (close 251.65 -> 218.34)", "company": "Marvell Technology, Inc."}
+{"ticker": "NCLH", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move up +13.4% (close 16.06 -> 18.22)", "company": "Norwegian Cruise Line Holdings Ltd."}
+{"ticker": "TXT", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move up +11.7% (close 78.32 -> 87.46)", "company": "Textron Inc."}
