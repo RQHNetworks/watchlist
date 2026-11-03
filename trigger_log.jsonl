@@ -797,3 +797,22 @@
 {"ticker": "MRVL", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move down -13.2% (close 251.65 -> 218.34)", "company": "Marvell Technology, Inc."}
 {"ticker": "NCLH", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move up +13.4% (close 16.06 -> 18.22)", "company": "Norwegian Cruise Line Holdings Ltd."}
 {"ticker": "TXT", "date": "2026-10-29", "trigger_type": "price_swing", "detail": "Daily move up +11.7% (close 78.32 -> 87.46)", "company": "Textron Inc."}
+{"ticker": "RKLB", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "Rocket Lab Corporation"}
+{"ticker": "CRWV", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-10 (5 business days away)", "company": "CoreWeave, Inc."}
+{"ticker": "HIMS", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "Hims & Hers Health, Inc."}
+{"ticker": "TTD", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "The Trade Desk, Inc."}
+{"ticker": "ALAB", "date": "2026-11-02", "trigger_type": "price_swing", "detail": "Daily move down -11.2% (close 258.70 -> 229.67)", "company": "Astera Labs, Inc."}
+{"ticker": "CEG", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "Constellation Energy Corporation"}
+{"ticker": "CIEN", "date": "2026-11-02", "trigger_type": "price_swing", "detail": "Daily move down -11.3% (close 320.72 -> 284.34)", "company": "Ciena Corporation"}
+{"ticker": "FERG", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "Ferguson Enterprises Inc."}
+{"ticker": "IDXX", "date": "2026-11-02", "trigger_type": "price_swing", "detail": "Daily move up +21.8% (close 551.21 -> 671.64)", "company": "IDEXX Laboratories, Inc."}
+{"ticker": "KKR", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "KKR & Co. Inc."}
+{"ticker": "LITE", "date": "2026-11-02", "trigger_type": "price_swing", "detail": "Daily move down -18.6% (close 840.70 -> 684.40)", "company": "Lumentum Holdings Inc."}
+{"ticker": "MRVL", "date": "2026-11-02", "trigger_type": "price_swing", "detail": "Daily move down -12.7% (close 196.40 -> 171.41)", "company": "Marvell Technology, Inc."}
+{"ticker": "NRG", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "NRG Energy, Inc."}
+{"ticker": "OXY", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "Occidental Petroleum Corporation"}
+{"ticker": "PSKY", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "Paramount Skydance Corp"}
+{"ticker": "TDG", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-10 (5 business days away)", "company": "TransDigm Group Incorporated"}
+{"ticker": "TECH", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "Bio-Techne Corporation"}
+{"ticker": "TTWO", "date": "2026-11-03", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-09 (4 business days away)", "company": "Take-Two Interactive Software, Inc."}
+{"ticker": "WDC", "date": "2026-11-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=419.01, 200-day=419.39", "company": "Western Digital Corporation"}
