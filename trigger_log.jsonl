@@ -823,3 +823,14 @@
 {"ticker": "LITE", "date": "2026-11-02", "trigger_type": "price_swing", "detail": "Daily move down -18.6% (close 840.70 -> 684.40)", "company": "Lumentum Holdings Inc."}
 {"ticker": "MRVL", "date": "2026-11-02", "trigger_type": "price_swing", "detail": "Daily move down -12.7% (close 196.40 -> 171.41)", "company": "Marvell Technology, Inc."}
 {"ticker": "WDC", "date": "2026-11-02", "trigger_type": "sma_cross", "detail": "death cross: 50-day=419.01, 200-day=419.39", "company": "Western Digital Corporation"}
+{"ticker": "LUNR", "date": "2026-11-05", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-12 (5 business days away)", "company": "Intuitive Machines, Inc."}
+{"ticker": "NBIS", "date": "2026-11-05", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-12 (5 business days away)", "company": "NBIS"}
+{"ticker": "SBUX", "date": "2026-11-03", "trigger_type": "sma_cross", "detail": "death cross: 50-day=99.15, 200-day=99.27", "company": "Starbucks Corporation"}
+{"ticker": "AMAT", "date": "2026-11-05", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-12 (5 business days away)", "company": "Applied Materials, Inc."}
+{"ticker": "CSCO", "date": "2026-11-05", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-12 (5 business days away)", "company": "Cisco Systems, Inc."}
+{"ticker": "ED", "date": "2026-11-03", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=108.13, 200-day=108.08", "company": "Consolidated Edison, Inc."}
+{"ticker": "FDX", "date": "2026-11-03", "trigger_type": "sma_cross", "detail": "death cross: 50-day=303.51, 200-day=303.67", "company": "FedEx Corporation"}
+{"ticker": "FISV", "date": "2026-11-03", "trigger_type": "price_swing", "detail": "Daily move up +12.5% (close 51.93 -> 58.40)", "company": "Fiserv, Inc."}
+{"ticker": "IRM", "date": "2026-11-03", "trigger_type": "sma_cross", "detail": "death cross: 50-day=114.19, 200-day=114.19", "company": "Iron Mountain Incorporated"}
+{"ticker": "IT", "date": "2026-11-03", "trigger_type": "price_swing", "detail": "Daily move down -13.2% (close 235.26 -> 204.22)", "company": "Gartner, Inc."}
+{"ticker": "TEL", "date": "2026-11-03", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=211.67, 200-day=211.53", "company": "TE Connectivity plc"}
