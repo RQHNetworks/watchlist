@@ -834,3 +834,29 @@
 {"ticker": "IRM", "date": "2026-11-03", "trigger_type": "sma_cross", "detail": "death cross: 50-day=114.19, 200-day=114.19", "company": "Iron Mountain Incorporated"}
 {"ticker": "IT", "date": "2026-11-03", "trigger_type": "price_swing", "detail": "Daily move down -13.2% (close 235.26 -> 204.22)", "company": "Gartner, Inc."}
 {"ticker": "TEL", "date": "2026-11-03", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=211.67, 200-day=211.53", "company": "TE Connectivity plc"}
+{"ticker": "APP", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +10.7% (close 245.51 -> 271.75)", "company": "AppLovin Corporation"}
+{"ticker": "EXPE", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +10.5% (close 285.77 -> 315.88)", "company": "Expedia Group, Inc."}
+{"ticker": "DUOL", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +26.0% (close 128.00 -> 161.27)", "company": "Duolingo, Inc."}
+{"ticker": "CDW", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +12.7% (close 149.77 -> 168.75)", "company": "CDW Corporation"}
+{"ticker": "CNC", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +12.6% (close 67.48 -> 76.01)", "company": "Centene Corporation"}
+{"ticker": "CVS", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -12.5% (close 91.41 -> 79.96)", "company": "CVS Health Corporation"}
+{"ticker": "DDOG", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -14.4% (close 220.52 -> 188.72)", "company": "Datadog, Inc."}
+{"ticker": "FIS", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -23.7% (close 38.99 -> 29.76)", "company": "Fidelity National Information Services, Inc."}
+{"ticker": "FIX", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -15.1% (close 1285.13 -> 1091.31)", "company": "Comfort Systems USA, Inc."}
+{"ticker": "FLEX", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -12.3% (close 88.10 -> 77.24)", "company": "Flex Ltd."}
+{"ticker": "HCA", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +10.3% (close 462.86 -> 510.70)", "company": "HCA Healthcare, Inc."}
+{"ticker": "JKHY", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +10.8% (close 161.66 -> 179.16)", "company": "Jack Henry & Associates, Inc."}
+{"ticker": "MOS", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +17.4% (close 18.42 -> 21.62)", "company": "The Mosaic Company"}
+{"ticker": "MRNA", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +13.1% (close 228.44 -> 258.38)", "company": "Moderna, Inc."}
+{"ticker": "MSCI", "date": "2026-11-04", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=572.10, 200-day=571.85", "company": "MSCI Inc."}
+{"ticker": "NRG", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -13.5% (close 96.26 -> 83.25)", "company": "NRG Energy, Inc."}
+{"ticker": "PWR", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -11.7% (close 657.00 -> 580.44)", "company": "Quanta Services, Inc."}
+{"ticker": "RTX", "date": "2026-11-04", "trigger_type": "sma_cross", "detail": "death cross: 50-day=194.31, 200-day=194.47", "company": "RTX Corporation"}
+{"ticker": "SWK", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +13.1% (close 104.62 -> 118.33)", "company": "Stanley Black & Decker, Inc."}
+{"ticker": "TPL", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -13.4% (close 332.00 -> 287.65)", "company": "Texas Pacific Land Corporation"}
+{"ticker": "TRMB", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -17.3% (close 65.61 -> 54.25)", "company": "Trimble Inc."}
+{"ticker": "UHS", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +10.9% (close 177.13 -> 196.46)", "company": "Universal Health Services, Inc."}
+{"ticker": "VRT", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -12.9% (close 235.97 -> 205.55)", "company": "Vertiv Holdings Co"}
+{"ticker": "VST", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move down -13.8% (close 139.59 -> 120.29)", "company": "Vistra Corp."}
+{"ticker": "XYZ", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +15.3% (close 76.00 -> 87.63)", "company": "Block, Inc."}
+{"ticker": "ZBH", "date": "2026-11-04", "trigger_type": "price_swing", "detail": "Daily move up +13.5% (close 97.06 -> 110.15)", "company": "Zimmer Biomet Holdings, Inc."}
