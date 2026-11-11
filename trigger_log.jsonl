@@ -940,3 +940,34 @@
 {"ticker": "TER", "date": "2026-11-09", "trigger_type": "sma_cross", "detail": "death cross: 50-day=349.42, 200-day=349.80", "company": "Teradyne, Inc."}
 {"ticker": "TER", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +12.7% (close 218.22 -> 246.00)", "company": "Teradyne, Inc."}
 {"ticker": "TSN", "date": "2026-11-10", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-16 (4 business days away)", "company": "Tyson Foods, Inc."}
+{"ticker": "RDW", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +13.0% (close 7.21 -> 8.15)", "company": "Redwire Corporation"}
+{"ticker": "PL", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +14.5% (close 12.55 -> 14.37)", "company": "Planet Labs PBC"}
+{"ticker": "LUNR", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +15.0% (close 10.47 -> 12.04)", "company": "Intuitive Machines, Inc."}
+{"ticker": "PANW", "date": "2026-11-11", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-18 (5 business days away)", "company": "Palo Alto Networks, Inc."}
+{"ticker": "AMD", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +13.3% (close 449.04 -> 508.58)", "company": "Advanced Micro Devices, Inc."}
+{"ticker": "RKLB", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +10.9% (close 53.07 -> 58.86)", "company": "Rocket Lab Corporation"}
+{"ticker": "HIMS", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move down -11.8% (close 26.00 -> 22.94)", "company": "Hims & Hers Health, Inc."}
+{"ticker": "TGT", "date": "2026-11-11", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-18 (5 business days away)", "company": "Target Corporation"}
+{"ticker": "TTD", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +15.5% (close 12.93 -> 14.93)", "company": "The Trade Desk, Inc."}
+{"ticker": "ALAB", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +13.7% (close 190.71 -> 216.87)", "company": "Astera Labs, Inc."}
+{"ticker": "AMAT", "date": "2026-11-09", "trigger_type": "sma_cross", "detail": "death cross: 50-day=443.02, 200-day=445.03", "company": "Applied Materials, Inc."}
+{"ticker": "AMAT", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +11.4% (close 332.72 -> 370.55)", "company": "Applied Materials, Inc."}
+{"ticker": "CEG", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +10.5% (close 249.95 -> 276.09)", "company": "Constellation Energy Corporation"}
+{"ticker": "CIEN", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +10.7% (close 243.39 -> 269.33)", "company": "Ciena Corporation"}
+{"ticker": "COHR", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +16.8% (close 192.81 -> 225.19)", "company": "Coherent Corp."}
+{"ticker": "FERG", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +11.2% (close 233.70 -> 259.93)", "company": "Ferguson Enterprises Inc."}
+{"ticker": "FLEX", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +12.0% (close 69.78 -> 78.17)", "company": "Flex Ltd."}
+{"ticker": "HCA", "date": "2026-11-09", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=445.19, 200-day=443.78", "company": "HCA Healthcare, Inc."}
+{"ticker": "LITE", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +10.7% (close 538.59 -> 596.16)", "company": "Lumentum Holdings Inc."}
+{"ticker": "LOW", "date": "2026-11-11", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-18 (5 business days away)", "company": "Lowe's Companies, Inc."}
+{"ticker": "LRCX", "date": "2026-11-09", "trigger_type": "sma_cross", "detail": "death cross: 50-day=282.66, 200-day=283.65", "company": "Lam Research Corporation"}
+{"ticker": "LRCX", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +10.4% (close 200.44 -> 221.31)", "company": "Lam Research Corporation"}
+{"ticker": "MPWR", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +16.6% (close 1190.44 -> 1388.05)", "company": "Monolithic Power Systems, Inc."}
+{"ticker": "NRG", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +10.3% (close 88.29 -> 97.40)", "company": "NRG Energy, Inc."}
+{"ticker": "OKLO", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +14.0% (close 23.55 -> 26.84)", "company": "Oklo Inc."}
+{"ticker": "PDD", "date": "2026-11-11", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-18 (5 business days away)", "company": "PDD Holdings Inc."}
+{"ticker": "SNPS", "date": "2026-11-09", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=442.10, 200-day=441.88", "company": "Synopsys, Inc."}
+{"ticker": "TER", "date": "2026-11-09", "trigger_type": "sma_cross", "detail": "death cross: 50-day=349.42, 200-day=349.80", "company": "Teradyne, Inc."}
+{"ticker": "TER", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +12.7% (close 218.22 -> 246.00)", "company": "Teradyne, Inc."}
+{"ticker": "TJX", "date": "2026-11-11", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-18 (5 business days away)", "company": "The TJX Companies, Inc."}
+{"ticker": "WSM", "date": "2026-11-11", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-18 (5 business days away)", "company": "Williams-Sonoma, Inc."}
