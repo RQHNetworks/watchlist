@@ -971,3 +971,12 @@
 {"ticker": "TER", "date": "2026-11-09", "trigger_type": "price_swing", "detail": "Daily move up +12.7% (close 218.22 -> 246.00)", "company": "Teradyne, Inc."}
 {"ticker": "TJX", "date": "2026-11-11", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-18 (5 business days away)", "company": "The TJX Companies, Inc."}
 {"ticker": "WSM", "date": "2026-11-11", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-18 (5 business days away)", "company": "Williams-Sonoma, Inc."}
+{"ticker": "HIMS", "date": "2026-11-10", "trigger_type": "price_swing", "detail": "Daily move down -16.6% (close 22.94 -> 19.13)", "company": "Hims & Hers Health, Inc."}
+{"ticker": "WMT", "date": "2026-11-12", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (5 business days away)", "company": "Walmart Inc."}
+{"ticker": "CHTR", "date": "2026-11-10", "trigger_type": "price_swing", "detail": "Daily move up +10.6% (close 121.20 -> 134.06)", "company": "Charter Communications, Inc."}
+{"ticker": "CPRT", "date": "2026-11-12", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (5 business days away)", "company": "Copart, Inc."}
+{"ticker": "INTU", "date": "2026-11-12", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (5 business days away)", "company": "Intuit Inc."}
+{"ticker": "KEYS", "date": "2026-11-12", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (5 business days away)", "company": "Keysight Technologies, Inc."}
+{"ticker": "MELI", "date": "2026-11-10", "trigger_type": "sma_cross", "detail": "death cross: 50-day=1790.45, 200-day=1795.18", "company": "MercadoLibre, Inc."}
+{"ticker": "ROST", "date": "2026-11-12", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (5 business days away)", "company": "Ross Stores, Inc."}
+{"ticker": "SYY", "date": "2026-11-10", "trigger_type": "sma_cross", "detail": "death cross: 50-day=79.51, 200-day=79.57", "company": "Sysco Corporation"}
