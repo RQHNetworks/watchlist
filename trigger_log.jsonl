@@ -980,3 +980,15 @@
 {"ticker": "MELI", "date": "2026-11-10", "trigger_type": "sma_cross", "detail": "death cross: 50-day=1790.45, 200-day=1795.18", "company": "MercadoLibre, Inc."}
 {"ticker": "ROST", "date": "2026-11-12", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (5 business days away)", "company": "Ross Stores, Inc."}
 {"ticker": "SYY", "date": "2026-11-10", "trigger_type": "sma_cross", "detail": "death cross: 50-day=79.51, 200-day=79.57", "company": "Sysco Corporation"}
+{"ticker": "DELL", "date": "2026-11-11", "trigger_type": "price_swing", "detail": "Daily move up +11.8% (close 334.38 -> 373.68)", "company": "Dell Technologies Inc."}
+{"ticker": "NBIS", "date": "2026-11-11", "trigger_type": "price_swing", "detail": "Daily move up +15.4% (close 134.00 -> 154.69)", "company": "NBIS"}
+{"ticker": "CRWV", "date": "2026-11-11", "trigger_type": "price_swing", "detail": "Daily move up +24.7% (close 48.73 -> 60.77)", "company": "CoreWeave, Inc."}
+{"ticker": "ADBE", "date": "2026-11-11", "trigger_type": "sma_cross", "detail": "death cross: 50-day=248.07, 200-day=248.21", "company": "Adobe Inc."}
+{"ticker": "ARM", "date": "2026-11-11", "trigger_type": "price_swing", "detail": "Daily move up +12.1% (close 181.49 -> 203.36)", "company": "Arm Holdings plc"}
+{"ticker": "EXR", "date": "2026-11-11", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=140.72, 200-day=140.63", "company": "Extra Space Storage Inc."}
+{"ticker": "GEHC", "date": "2026-11-11", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=70.03, 200-day=69.83", "company": "GE HealthCare Technologies Inc."}
+{"ticker": "LITE", "date": "2026-11-11", "trigger_type": "price_swing", "detail": "Daily move up +10.7% (close 585.57 -> 648.06)", "company": "Lumentum Holdings Inc."}
+{"ticker": "MU", "date": "2026-11-11", "trigger_type": "price_swing", "detail": "Daily move up +11.9% (close 725.11 -> 811.30)", "company": "Micron Technology, Inc."}
+{"ticker": "PDD", "date": "2026-11-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (4 business days away)", "company": "PDD Holdings Inc."}
+{"ticker": "RL", "date": "2026-11-11", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=366.67, 200-day=366.62", "company": "Ralph Lauren Corporation"}
+{"ticker": "SNDK", "date": "2026-11-11", "trigger_type": "price_swing", "detail": "Daily move up +13.7% (close 859.99 -> 977.69)", "company": "Sandisk Corporation"}
