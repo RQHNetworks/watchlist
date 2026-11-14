@@ -992,3 +992,10 @@
 {"ticker": "PDD", "date": "2026-11-13", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (4 business days away)", "company": "PDD Holdings Inc."}
 {"ticker": "RL", "date": "2026-11-11", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=366.67, 200-day=366.62", "company": "Ralph Lauren Corporation"}
 {"ticker": "SNDK", "date": "2026-11-11", "trigger_type": "price_swing", "detail": "Daily move up +13.7% (close 859.99 -> 977.69)", "company": "Sandisk Corporation"}
+{"ticker": "NBIS", "date": "2026-11-12", "trigger_type": "price_swing", "detail": "Daily move down -16.8% (close 154.69 -> 128.64)", "company": "NBIS"}
+{"ticker": "ADSK", "date": "2026-11-13", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=234.20, 200-day=233.82", "company": "Autodesk, Inc."}
+{"ticker": "CTVA", "date": "2026-11-12", "trigger_type": "price_swing", "detail": "Daily move down -24.3% (close 12.14 -> 9.19)", "company": "Corteva, Inc."}
+{"ticker": "FTV", "date": "2026-11-12", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=59.21, 200-day=59.18", "company": "Fortive Corporation"}
+{"ticker": "VTR", "date": "2026-11-13", "trigger_type": "sma_cross", "detail": "death cross: 50-day=86.23, 200-day=86.34", "company": "Ventas, Inc."}
+{"ticker": "VZ", "date": "2026-11-13", "trigger_type": "sma_cross", "detail": "death cross: 50-day=45.88, 200-day=45.92", "company": "Verizon Communications Inc."}
+{"ticker": "WSM", "date": "2026-11-14", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (4 business days away)", "company": "Williams-Sonoma, Inc."}
