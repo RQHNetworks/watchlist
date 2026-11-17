@@ -999,3 +999,18 @@
 {"ticker": "VTR", "date": "2026-11-13", "trigger_type": "sma_cross", "detail": "death cross: 50-day=86.23, 200-day=86.34", "company": "Ventas, Inc."}
 {"ticker": "VZ", "date": "2026-11-13", "trigger_type": "sma_cross", "detail": "death cross: 50-day=45.88, 200-day=45.92", "company": "Verizon Communications Inc."}
 {"ticker": "WSM", "date": "2026-11-14", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-19 (4 business days away)", "company": "Williams-Sonoma, Inc."}
+{"ticker": "DELL", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "Dell Technologies Inc."}
+{"ticker": "BBY", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "Best Buy Co., Inc."}
+{"ticker": "A", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-23 (4 business days away)", "company": "Agilent Technologies, Inc."}
+{"ticker": "ADI", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "Analog Devices, Inc."}
+{"ticker": "ADSK", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "Autodesk, Inc."}
+{"ticker": "DLTR", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "Dollar Tree, Inc."}
+{"ticker": "HPE", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-23 (4 business days away)", "company": "Hewlett Packard Enterprise Company"}
+{"ticker": "HPQ", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "HP Inc."}
+{"ticker": "J", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-23 (4 business days away)", "company": "Jacobs Solutions Inc."}
+{"ticker": "MDT", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "Medtronic plc"}
+{"ticker": "SCHW", "date": "2026-11-16", "trigger_type": "sma_cross", "detail": "death cross: 50-day=96.17, 200-day=96.31", "company": "The Charles Schwab Corporation"}
+{"ticker": "SHW", "date": "2026-11-16", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=331.07, 200-day=331.05", "company": "The Sherwin-Williams Company"}
+{"ticker": "SJM", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "The J. M. Smucker Company"}
+{"ticker": "STE", "date": "2026-11-16", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=224.02, 200-day=223.30", "company": "STERIS plc"}
+{"ticker": "WDAY", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "Workday, Inc."}
