@@ -1014,3 +1014,10 @@
 {"ticker": "SJM", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "The J. M. Smucker Company"}
 {"ticker": "STE", "date": "2026-11-16", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=224.02, 200-day=223.30", "company": "STERIS plc"}
 {"ticker": "WDAY", "date": "2026-11-17", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-24 (5 business days away)", "company": "Workday, Inc."}
+{"ticker": "CFG", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "death cross: 50-day=64.78, 200-day=64.83", "company": "Citizens Financial Group, Inc."}
+{"ticker": "DE", "date": "2026-11-18", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-11-25 (5 business days away)", "company": "Deere & Company"}
+{"ticker": "EQIX", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "death cross: 50-day=1019.14, 200-day=1019.22", "company": "Equinix, Inc."}
+{"ticker": "PNC", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "death cross: 50-day=225.91, 200-day=226.19", "company": "The PNC Financial Services Group, Inc."}
+{"ticker": "PNW", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=99.55, 200-day=99.51", "company": "Pinnacle West Capital Corporation"}
+{"ticker": "SLB", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "death cross: 50-day=51.16, 200-day=51.28", "company": "SLB N.V."}
+{"ticker": "VRSK", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=185.34, 200-day=184.89", "company": "Verisk Analytics, Inc."}
