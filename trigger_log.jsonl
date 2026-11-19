@@ -1021,3 +1021,9 @@
 {"ticker": "PNW", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=99.55, 200-day=99.51", "company": "Pinnacle West Capital Corporation"}
 {"ticker": "SLB", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "death cross: 50-day=51.16, 200-day=51.28", "company": "SLB N.V."}
 {"ticker": "VRSK", "date": "2026-11-17", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=185.34, 200-day=184.89", "company": "Verisk Analytics, Inc."}
+{"ticker": "UNH", "date": "2026-11-18", "trigger_type": "price_swing", "detail": "Daily move down -10.2% (close 389.68 -> 349.91)", "company": "UnitedHealth Group Incorporated"}
+{"ticker": "COST", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=977.95, 200-day=975.18", "company": "Costco Wholesale Corporation"}
+{"ticker": "CTVA", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=12.04, 200-day=12.06", "company": "Corteva, Inc."}
+{"ticker": "HUM", "date": "2026-11-18", "trigger_type": "price_swing", "detail": "Daily move down -13.0% (close 443.34 -> 385.78)", "company": "Humana Inc."}
+{"ticker": "ROK", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=423.07, 200-day=423.13", "company": "Rockwell Automation, Inc."}
+{"ticker": "SW", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=42.61, 200-day=42.62", "company": "Smurfit Westrock Plc"}
