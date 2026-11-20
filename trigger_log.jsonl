@@ -1027,3 +1027,11 @@
 {"ticker": "HUM", "date": "2026-11-18", "trigger_type": "price_swing", "detail": "Daily move down -13.0% (close 443.34 -> 385.78)", "company": "Humana Inc."}
 {"ticker": "ROK", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=423.07, 200-day=423.13", "company": "Rockwell Automation, Inc."}
 {"ticker": "SW", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=42.61, 200-day=42.62", "company": "Smurfit Westrock Plc"}
+{"ticker": "CTVA", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=12.04, 200-day=12.06", "company": "Corteva, Inc."}
+{"ticker": "DVA", "date": "2026-11-19", "trigger_type": "sma_cross", "detail": "death cross: 50-day=181.39, 200-day=181.75", "company": "DaVita Inc."}
+{"ticker": "ETN", "date": "2026-11-19", "trigger_type": "sma_cross", "detail": "death cross: 50-day=394.00, 200-day=395.08", "company": "Eaton Corporation plc"}
+{"ticker": "IDXX", "date": "2026-11-19", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=576.44, 200-day=573.32", "company": "IDEXX Laboratories, Inc."}
+{"ticker": "KIM", "date": "2026-11-19", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=23.53, 200-day=23.52", "company": "Kimco Realty Corporation"}
+{"ticker": "KR", "date": "2026-11-19", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=63.45, 200-day=63.28", "company": "The Kroger Co."}
+{"ticker": "SW", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=42.61, 200-day=42.62", "company": "Smurfit Westrock Plc"}
+{"ticker": "WSM", "date": "2026-11-19", "trigger_type": "price_swing", "detail": "Daily move down -15.2% (close 260.09 -> 220.66)", "company": "Williams-Sonoma, Inc."}
