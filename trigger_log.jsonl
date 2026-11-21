@@ -1035,3 +1035,35 @@
 {"ticker": "KR", "date": "2026-11-19", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=63.45, 200-day=63.28", "company": "The Kroger Co."}
 {"ticker": "SW", "date": "2026-11-18", "trigger_type": "sma_cross", "detail": "death cross: 50-day=42.61, 200-day=42.62", "company": "Smurfit Westrock Plc"}
 {"ticker": "WSM", "date": "2026-11-19", "trigger_type": "price_swing", "detail": "Daily move down -15.2% (close 260.09 -> 220.66)", "company": "Williams-Sonoma, Inc."}
+{"ticker": "RDW", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -13.2% (close 6.51 -> 5.65)", "company": "Redwire Corporation"}
+{"ticker": "LUNR", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.3% (close 9.78 -> 8.77)", "company": "Intuitive Machines, Inc."}
+{"ticker": "NVDA", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -14.0% (close 145.98 -> 125.53)", "company": "NVIDIA Corporation"}
+{"ticker": "DELL", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -11.0% (close 312.54 -> 278.02)", "company": "Dell Technologies Inc."}
+{"ticker": "AMD", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -13.2% (close 489.19 -> 424.39)", "company": "Advanced Micro Devices, Inc."}
+{"ticker": "RKLB", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.9% (close 50.99 -> 45.42)", "company": "Rocket Lab Corporation"}
+{"ticker": "NBIS", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -16.1% (close 96.92 -> 81.31)", "company": "NBIS"}
+{"ticker": "CRWV", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -12.0% (close 44.91 -> 39.51)", "company": "CoreWeave, Inc."}
+{"ticker": "ALAB", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -14.8% (close 211.60 -> 180.35)", "company": "Astera Labs, Inc."}
+{"ticker": "AMAT", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.7% (close 338.93 -> 302.63)", "company": "Applied Materials, Inc."}
+{"ticker": "ANET", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -11.6% (close 189.59 -> 167.62)", "company": "Arista Networks, Inc."}
+{"ticker": "ARM", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -14.1% (close 177.17 -> 152.20)", "company": "Arm Holdings plc"}
+{"ticker": "AVGO", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -12.2% (close 346.65 -> 304.41)", "company": "Broadcom Inc."}
+{"ticker": "C", "date": "2026-11-20", "trigger_type": "sma_cross", "detail": "death cross: 50-day=125.26, 200-day=125.76", "company": "Citigroup Inc."}
+{"ticker": "CIEN", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.8% (close 262.63 -> 234.37)", "company": "Ciena Corporation"}
+{"ticker": "COHR", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -12.9% (close 214.94 -> 187.22)", "company": "Coherent Corp."}
+{"ticker": "CVS", "date": "2026-11-20", "trigger_type": "sma_cross", "detail": "death cross: 50-day=88.08, 200-day=88.32", "company": "CVS Health Corporation"}
+{"ticker": "FLEX", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.8% (close 74.22 -> 66.24)", "company": "Flex Ltd."}
+{"ticker": "GLW", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.9% (close 105.97 -> 94.38)", "company": "Corning Incorporated"}
+{"ticker": "HPE", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.1% (close 45.49 -> 40.91)", "company": "Hewlett Packard Enterprise Company"}
+{"ticker": "INTU", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -12.8% (close 310.02 -> 270.44)", "company": "Intuit Inc."}
+{"ticker": "KLAC", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.3% (close 141.48 -> 126.87)", "company": "KLA Corporation"}
+{"ticker": "LITE", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -13.9% (close 535.15 -> 460.54)", "company": "Lumentum Holdings Inc."}
+{"ticker": "LRCX", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.0% (close 203.68 -> 183.27)", "company": "Lam Research Corporation"}
+{"ticker": "MPWR", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -11.9% (close 1295.86 -> 1142.05)", "company": "Monolithic Power Systems, Inc."}
+{"ticker": "MRVL", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -11.7% (close 138.47 -> 122.28)", "company": "Marvell Technology, Inc."}
+{"ticker": "MU", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -13.9% (close 690.44 -> 594.51)", "company": "Micron Technology, Inc."}
+{"ticker": "PPG", "date": "2026-11-20", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=111.71, 200-day=111.69", "company": "PPG Industries, Inc."}
+{"ticker": "RCL", "date": "2026-11-20", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=286.02, 200-day=285.81", "company": "Royal Caribbean Cruises Ltd."}
+{"ticker": "STX", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -12.3% (close 521.39 -> 457.01)", "company": "Seagate Technology Holdings plc"}
+{"ticker": "VRT", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -10.1% (close 184.99 -> 166.24)", "company": "Vertiv Holdings Co"}
+{"ticker": "WDC", "date": "2026-11-20", "trigger_type": "price_swing", "detail": "Daily move down -12.0% (close 296.78 -> 261.11)", "company": "Western Digital Corporation"}
