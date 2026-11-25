@@ -1113,3 +1113,23 @@
 {"ticker": "TXN", "date": "2026-11-23", "trigger_type": "price_swing", "detail": "Daily move up +10.4% (close 263.75 -> 291.19)", "company": "Texas Instruments Incorporated"}
 {"ticker": "VRT", "date": "2026-11-23", "trigger_type": "price_swing", "detail": "Daily move up +12.1% (close 166.24 -> 186.35)", "company": "Vertiv Holdings Co"}
 {"ticker": "WDC", "date": "2026-11-23", "trigger_type": "price_swing", "detail": "Daily move up +13.8% (close 261.11 -> 297.25)", "company": "Western Digital Corporation"}
+{"ticker": "DELL", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -11.8% (close 334.91 -> 295.28)", "company": "Dell Technologies Inc."}
+{"ticker": "CRM", "date": "2026-11-25", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-02 (5 business days away)", "company": "Salesforce, Inc."}
+{"ticker": "SNOW", "date": "2026-11-25", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-02 (5 business days away)", "company": "Snowflake Inc."}
+{"ticker": "NBIS", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -10.7% (close 97.80 -> 87.31)", "company": "NBIS"}
+{"ticker": "CRWV", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -11.8% (close 48.33 -> 42.60)", "company": "CoreWeave, Inc."}
+{"ticker": "SBUX", "date": "2026-11-24", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=99.77, 200-day=99.72", "company": "Starbucks Corporation"}
+{"ticker": "ADI", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -17.4% (close 378.75 -> 312.95)", "company": "Analog Devices, Inc."}
+{"ticker": "ALAB", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -13.9% (close 222.12 -> 191.30)", "company": "Astera Labs, Inc."}
+{"ticker": "DLTR", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move up +11.2% (close 139.10 -> 154.65)", "company": "Dollar Tree, Inc."}
+{"ticker": "FANG", "date": "2026-11-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=188.65, 200-day=189.24", "company": "Diamondback Energy, Inc."}
+{"ticker": "FLEX", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -10.1% (close 73.94 -> 66.44)", "company": "Flex Ltd."}
+{"ticker": "HPE", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -16.3% (close 48.02 -> 40.19)", "company": "Hewlett Packard Enterprise Company"}
+{"ticker": "IBKR", "date": "2026-11-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=83.01, 200-day=83.08", "company": "Interactive Brokers Group, Inc."}
+{"ticker": "LIN", "date": "2026-11-24", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=496.80, 200-day=496.62", "company": "Linde plc"}
+{"ticker": "LITE", "date": "2026-11-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=813.21, 200-day=815.55", "company": "Lumentum Holdings Inc."}
+{"ticker": "LITE", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -10.5% (close 544.38 -> 487.12)", "company": "Lumentum Holdings Inc."}
+{"ticker": "MPWR", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -10.8% (close 1333.88 -> 1190.16)", "company": "Monolithic Power Systems, Inc."}
+{"ticker": "MU", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -11.0% (close 707.70 -> 629.79)", "company": "Micron Technology, Inc."}
+{"ticker": "SYF", "date": "2026-11-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=72.61, 200-day=72.73", "company": "Synchrony Financial"}
+{"ticker": "TXN", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -11.2% (close 291.19 -> 258.44)", "company": "Texas Instruments Incorporated"}
