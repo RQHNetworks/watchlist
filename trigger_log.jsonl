@@ -1133,3 +1133,13 @@
 {"ticker": "MU", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -11.0% (close 707.70 -> 629.79)", "company": "Micron Technology, Inc."}
 {"ticker": "SYF", "date": "2026-11-24", "trigger_type": "sma_cross", "detail": "death cross: 50-day=72.61, 200-day=72.73", "company": "Synchrony Financial"}
 {"ticker": "TXN", "date": "2026-11-24", "trigger_type": "price_swing", "detail": "Daily move down -11.2% (close 291.19 -> 258.44)", "company": "Texas Instruments Incorporated"}
+{"ticker": "ARM", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "death cross: 50-day=235.12, 200-day=235.14", "company": "Arm Holdings plc"}
+{"ticker": "COF", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "death cross: 50-day=196.81, 200-day=196.91", "company": "Capital One Financial Corporation"}
+{"ticker": "COO", "date": "2026-11-26", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-03 (5 business days away)", "company": "The Cooper Companies, Inc."}
+{"ticker": "DG", "date": "2026-11-26", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-03 (5 business days away)", "company": "Dollar General Corporation"}
+{"ticker": "HPQ", "date": "2026-11-25", "trigger_type": "price_swing", "detail": "Daily move up +11.5% (close 27.94 -> 31.15)", "company": "HP Inc."}
+{"ticker": "HRL", "date": "2026-11-26", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-03 (5 business days away)", "company": "Hormel Foods Corporation"}
+{"ticker": "KR", "date": "2026-11-26", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-03 (5 business days away)", "company": "The Kroger Co."}
+{"ticker": "ULTA", "date": "2026-11-26", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-03 (5 business days away)", "company": "Ulta Beauty, Inc."}
+{"ticker": "VEEV", "date": "2026-11-26", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-03 (5 business days away)", "company": "Veeva Systems Inc."}
+{"ticker": "WM", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=225.60, 200-day=225.29", "company": "Waste Management, Inc."}
