@@ -1143,3 +1143,7 @@
 {"ticker": "ULTA", "date": "2026-11-26", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-03 (5 business days away)", "company": "Ulta Beauty, Inc."}
 {"ticker": "VEEV", "date": "2026-11-26", "trigger_type": "earnings_countdown", "detail": "Earnings on 2026-12-03 (5 business days away)", "company": "Veeva Systems Inc."}
 {"ticker": "WM", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=225.60, 200-day=225.29", "company": "Waste Management, Inc."}
+{"ticker": "ARM", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "death cross: 50-day=235.12, 200-day=235.14", "company": "Arm Holdings plc"}
+{"ticker": "COF", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "death cross: 50-day=196.81, 200-day=196.91", "company": "Capital One Financial Corporation"}
+{"ticker": "HPQ", "date": "2026-11-25", "trigger_type": "price_swing", "detail": "Daily move up +11.5% (close 27.94 -> 31.15)", "company": "HP Inc."}
+{"ticker": "WM", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=225.60, 200-day=225.29", "company": "Waste Management, Inc."}
