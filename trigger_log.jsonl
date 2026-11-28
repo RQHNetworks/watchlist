@@ -1147,3 +1147,10 @@
 {"ticker": "COF", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "death cross: 50-day=196.81, 200-day=196.91", "company": "Capital One Financial Corporation"}
 {"ticker": "HPQ", "date": "2026-11-25", "trigger_type": "price_swing", "detail": "Daily move up +11.5% (close 27.94 -> 31.15)", "company": "HP Inc."}
 {"ticker": "WM", "date": "2026-11-25", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=225.60, 200-day=225.29", "company": "Waste Management, Inc."}
+{"ticker": "NVDA", "date": "2026-11-27", "trigger_type": "sma_cross", "detail": "death cross: 50-day=202.28, 200-day=202.43", "company": "NVIDIA Corporation"}
+{"ticker": "INTC", "date": "2026-11-27", "trigger_type": "sma_cross", "detail": "death cross: 50-day=86.67, 200-day=87.70", "company": "Intel Corporation"}
+{"ticker": "CCL", "date": "2026-11-27", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=26.80, 200-day=26.68", "company": "Carnival Corporation Ltd."}
+{"ticker": "COHR", "date": "2026-11-27", "trigger_type": "price_swing", "detail": "Daily move up +14.1% (close 196.19 -> 223.79)", "company": "Coherent Corp."}
+{"ticker": "DD", "date": "2026-11-27", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=139.47, 200-day=139.26", "company": "DuPont de Nemours, Inc."}
+{"ticker": "ISRG", "date": "2026-11-27", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=427.25, 200-day=426.36", "company": "Intuitive Surgical, Inc."}
+{"ticker": "LUV", "date": "2026-11-27", "trigger_type": "sma_cross", "detail": "golden cross: 50-day=43.07, 200-day=43.07", "company": "Southwest Airlines Co."}
